@@ -6,8 +6,8 @@ public class GridManager : MonoBehaviour
     [SerializeField, Min(0.01f)] private float tileWidth = 1.2f;
     [SerializeField, Min(0.01f)] private float tileHeight = 0.6f;
 
-    private const int Rows = 5;
-    private const int Columns = 5;
+    public const int Rows = 5;
+    public const int Columns = 5;
 
     private GridCell[,] cells;
     private bool isGenerated;
@@ -15,6 +15,12 @@ public class GridManager : MonoBehaviour
     private void Start()
     {
         GenerateGrid();
+    }
+
+    public bool IsValidCoordinate(int x, int y)
+    {
+        return x >= -Columns / 2 && x <= Columns / 2 &&
+               y >= -Rows / 2 && y <= Rows / 2;
     }
 
     public Vector3 GridToWorldPosition(int x, int y)

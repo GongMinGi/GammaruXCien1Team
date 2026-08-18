@@ -2,17 +2,41 @@ using UnityEngine;
 
 public class ActionBar : MonoBehaviour
 {
+    [Header("Slot Appearance")]
     [SerializeField] private float slotSize = 0.4f;
     [SerializeField] private float spacing = 0.05f;
     [SerializeField] private Color slotColor = new Color(0.4f, 0.45f, 0.55f);
     [SerializeField] private Color borderColor = new Color(0.2f, 0.22f, 0.3f);
 
-    private const int SlotCount = 10;
+    [Header("Action Colors")]
+    [SerializeField] private Color filledMoveColor = new Color(0.3f, 0.6f, 0.9f);
+    [SerializeField] private Color filledStayColor = new Color(0.6f, 0.6f, 0.3f);
+
+    public const int SlotCount = 10;
+
+    private SpriteRenderer[] slotRenderers;
     private bool isGenerated;
 
     private void Start()
     {
         GenerateSlots();
+    }
+
+    public void FillSlot(int index, ActionType type)
+    {
+        if (slotRenderers == null || index < 0 || index >= slotRenderers.Length)
+            return;
+
+        slotRenderers[index].color =
+            type == ActionType.Move ? filledMoveColor : filledStayColor;
+    }
+
+    public void ClearSlot(int index)
+    {
+        if (slotRenderers == null || index < 0 || index >= slotRenderers.Length)
+            return;
+
+        slotRenderers[index].color = Color.white;
     }
 
     private void GenerateSlots()
@@ -23,6 +47,8 @@ public class ActionBar : MonoBehaviour
         Sprite sprite = CreateSlotSprite();
         float step = slotSize + spacing;
         float startX = -(SlotCount - 1) * step * 0.5f;
+
+        slotRenderers = new SpriteRenderer[SlotCount];
 
         for (int i = 0; i < SlotCount; i++)
         {
@@ -36,6 +62,8 @@ public class ActionBar : MonoBehaviour
             SpriteRenderer renderer = slotObject.AddComponent<SpriteRenderer>();
             renderer.sprite = sprite;
             renderer.sortingOrder = 1;
+
+            slotRenderers[i] = renderer;
         }
 
         isGenerated = true;
