@@ -13,6 +13,7 @@ public class PlayerStats : MonoBehaviour
     public int MaxHp => maxHp;
     public int CurrentHp => currentHp;
     public int SpellPower => spellPower;
+    public bool IsDead => currentHp <= 0;
 
     private void Awake()
     {
@@ -23,6 +24,12 @@ public class PlayerStats : MonoBehaviour
     {
         if (amount <= 0) return;
         currentHp = Mathf.Max(0, currentHp - amount);
+        StatsChanged?.Invoke();
+    }
+
+    public void InstantKill()
+    {
+        currentHp = 0;
         StatsChanged?.Invoke();
     }
 

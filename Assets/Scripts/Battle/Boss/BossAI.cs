@@ -10,7 +10,10 @@ public class BossAI : MonoBehaviour
             {
                 timingSlot = 2,
                 arcanaIds = new[] { 2 },
-                targetCells = new[] { new Vector2Int(1, 0) }
+                targetCells = new[] { new Vector2Int(1, 0) },
+                baseDamage = 100,
+                isInstantKill = false,
+                element = DamageElement.Neutral
             },
             new BossAction
             {
@@ -21,7 +24,10 @@ public class BossAI : MonoBehaviour
                     new Vector2Int(0, -1),
                     new Vector2Int(0, 0),
                     new Vector2Int(0, 1)
-                }
+                },
+                baseDamage = 150,
+                isInstantKill = false,
+                element = DamageElement.Sun
             },
             new BossAction
             {
@@ -32,7 +38,10 @@ public class BossAI : MonoBehaviour
                     new Vector2Int(-1, 1),
                     new Vector2Int(0, 1),
                     new Vector2Int(1, 1)
-                }
+                },
+                baseDamage = 0,
+                isInstantKill = true,
+                element = DamageElement.Neutral
             }
         };
     }

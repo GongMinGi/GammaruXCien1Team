@@ -21,14 +21,22 @@ public class BossCardDisplay : MonoBehaviour
     [SerializeField] private float cardInGroupSpacing = 0.05f;
     [SerializeField] private Color timingTextColor = new Color(0.9f, 0.8f, 0.3f);
 
+    [Header("Instant Kill")]
+    [SerializeField] private Color instantKillCardColor = new Color(0.6f, 0.05f, 0.05f);
+    [SerializeField] private Color instantKillBorderColor = new Color(1f, 0.15f, 0.15f);
+    [SerializeField] private float glowSpeed = 3f;
+    [SerializeField] private float glowIntensity = 0.3f;
+
     private readonly List<Transform> cardTransforms = new();
     private readonly List<SpriteRenderer> cardRenderers = new();
     private readonly List<Vector3> restPositions = new();
     private readonly List<Vector3> restScales = new();
     private readonly List<int> restSortingOrders = new();
+    private readonly List<bool> cardIsInstantKill = new();
     private readonly List<GameObject> allObjects = new();
 
     private Sprite cachedCardSprite;
+    private Sprite cachedInstantKillSprite;
 
     private void Update()
     {
@@ -44,7 +52,9 @@ public class BossCardDisplay : MonoBehaviour
         ClearCards();
 
         if (cachedCardSprite == null)
-            cachedCardSprite = CreateCardSprite();
+            cachedCardSprite = CreateCardSprite(cardColor, borderColor);
+        if (cachedInstantKillSprite == null)
+            cachedInstantKillSprite = CreateCardSprite(instantKillCardColor, instantKillBorderColor);
 
         float totalWidth = CalculateTotalWidth(actions);
         float currentX = -totalWidth * 0.5f;
@@ -93,7 +103,7 @@ public class BossCardDisplay : MonoBehaviour
                 cardObj.transform.localScale = new Vector3(cardWidth, cardHeight, 1f);
 
                 SpriteRenderer renderer = cardObj.AddComponent<SpriteRenderer>();
-                renderer.sprite = cachedCardSprite;
+                renderer.sprite = action.isInstantKill ? cachedInstantKillSprite : cachedCardSprite;
                 renderer.sortingOrder = 2 + cardTransforms.Count;
 
                 cardObj.AddComponent<BoxCollider2D>();
@@ -120,6 +130,7 @@ public class BossCardDisplay : MonoBehaviour
                 restPositions.Add(cardObj.transform.localPosition);
                 restScales.Add(cardObj.transform.localScale);
                 restSortingOrders.Add(renderer.sortingOrder);
+                cardIsInstantKill.Add(action.isInstantKill);
                 allObjects.Add(cardObj);
             }
 
@@ -141,6 +152,7 @@ public class BossCardDisplay : MonoBehaviour
         restPositions.Clear();
         restScales.Clear();
         restSortingOrders.Clear();
+        cardIsInstantKill.Clear();
     }
 
     private float CalculateTotalWidth(BossAction[] actions)
@@ -202,10 +214,20 @@ public class BossCardDisplay : MonoBehaviour
                 cardTransforms[i].localPosition, targetPos, dt);
             cardTransforms[i].localScale = Vector3.Lerp(
                 cardTransforms[i].localScale, targetScale, dt);
+
+            if (i < cardIsInstantKill.Count && cardIsInstantKill[i])
+            {
+                float glow = Mathf.Sin(Time.time * glowSpeed) * glowIntensity;
+                cardRenderers[i].color = new Color(
+                    Mathf.Clamp01(1f + glow),
+                    Mathf.Clamp01(0f + glow * 0.3f),
+                    Mathf.Clamp01(0f + glow * 0.3f),
+                    1f);
+            }
         }
     }
 
-    private Sprite CreateCardSprite()
+    private Sprite CreateCardSprite(Color fill, Color border)
     {
         int w = 16;
         int h = 24;
@@ -217,7 +239,7 @@ public class BossCardDisplay : MonoBehaviour
             for (int x = 0; x < w; x++)
             {
                 bool isBorder = x == 0 || x == w - 1 || y == 0 || y == h - 1;
-                tex.SetPixel(x, y, isBorder ? borderColor : cardColor);
+                tex.SetPixel(x, y, isBorder ? border : fill);
             }
         }
 

@@ -649,6 +649,8 @@ GameObject:
   - component: {fileID: 900000012}
   - component: {fileID: 900000013}
   - component: {fileID: 900000014}
+  - component: {fileID: 900000016}
+  - component: {fileID: 900000015}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -696,6 +698,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossAI
+--- !u!114 &900000015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900000010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb27ffe753e7c8141b88611651ffd93f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossShadow
+  shadowWidth: 2.2
+  shadowHeight: 0.6
+  shadowColor: {r: 0, g: 0, b: 0, a: 0.4}
+--- !u!114 &900000016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900000010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f35cae247a1c534428b2f5ee2f99fbc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossStats
+  maxHp: 500
+  weakness: 0
 --- !u!1 &900000020
 GameObject:
   m_ObjectHideFlags: 0
@@ -786,6 +817,10 @@ MonoBehaviour:
   groupSpacing: 0.4
   cardInGroupSpacing: 0.05
   timingTextColor: {r: 0.9, g: 0.8, b: 0.3, a: 1}
+  instantKillCardColor: {r: 0.6, g: 0.05, b: 0.05, a: 1}
+  instantKillBorderColor: {r: 1, g: 0.15, b: 0.15, a: 1}
+  glowSpeed: 3
+  glowIntensity: 0.3
 --- !u!4 &900000032
 Transform:
   m_ObjectHideFlags: 0

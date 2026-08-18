@@ -45,24 +45,29 @@ public class BattlePhaseManager : MonoBehaviour
                 }
             }
 
-            bool hit = false;
             foreach (BossAction bossAction in bossPattern)
             {
-                if (bossAction.timingSlot == slot)
-                {
-                    foreach (Vector2Int cell in bossAction.targetCells)
-                    {
-                        GridCell gridCell = gridManager.GetCell(cell.x, cell.y);
-                        gridCell?.SetHighlight(attackHighlightColor);
+                if (bossAction.timingSlot != slot) continue;
 
-                        if (cell == currentPos)
-                            hit = true;
-                    }
+                bool hitByThis = false;
+                foreach (Vector2Int cell in bossAction.targetCells)
+                {
+                    GridCell gridCell = gridManager.GetCell(cell.x, cell.y);
+                    gridCell?.SetHighlight(attackHighlightColor);
+
+                    if (cell == currentPos)
+                        hitByThis = true;
+                }
+
+                if (hitByThis && playerStats != null)
+                {
+                    if (bossAction.isInstantKill)
+                        playerStats.InstantKill();
+                    else
+                        playerStats.TakeDamage(
+                            DamageCalculator.CalculateBossDamage(bossAction.baseDamage));
                 }
             }
-
-            if (hit && playerStats != null)
-                playerStats.TakeDamage(10);
 
             yield return new WaitForSeconds(slotDuration);
             gridManager.ClearAllHighlights();
