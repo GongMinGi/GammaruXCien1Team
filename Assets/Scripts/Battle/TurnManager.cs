@@ -11,13 +11,18 @@ public class TurnManager : MonoBehaviour
     [SerializeField] private ArcanaCatalog arcanaCatalog;
     [SerializeField] private HandDisplay handDisplay;
     [SerializeField] private ArcanaData[] selectedArcanaPool;
+    [SerializeField] private BossAI bossAI;
+    [SerializeField] private BattlePhaseManager battlePhaseManager;
+    [SerializeField] private BossCardDisplay bossCardDisplay;
 
     private readonly List<PlannedAction> plannedActions = new();
     private int usedSlots;
     private Vector2Int playerGridPos;
+    private Vector2Int battleStartPos;
     private bool planningActive;
     private ArcanaBag bag;
     private int dragStartIndex = -1;
+    private BossAction[] currentBossPattern;
 
     private void Start()
     {
@@ -35,7 +40,8 @@ public class TurnManager : MonoBehaviour
     private bool ValidateReferences()
     {
         if (gridManager == null || playerDisplay == null || actionBar == null ||
-            playerHand == null || arcanaCatalog == null || handDisplay == null)
+            playerHand == null || arcanaCatalog == null || handDisplay == null ||
+            bossAI == null || battlePhaseManager == null || bossCardDisplay == null)
         {
             Debug.LogError("TurnManager references are not assigned.", this);
             return false;
@@ -101,11 +107,30 @@ public class TurnManager : MonoBehaviour
     {
         plannedActions.Clear();
         usedSlots = 0;
-        playerGridPos = playerDisplay.GridPosition;
+        battleStartPos = playerDisplay.GridPosition;
+        playerGridPos = battleStartPos;
         actionBar.ClearAll();
         playerHand.DrawToCapacity();
         planningActive = true;
         CancelCardDrag();
+
+        currentBossPattern = bossAI.GeneratePattern();
+        bossCardDisplay.ShowPattern(currentBossPattern, arcanaCatalog);
+        ShowBossTargetsOnGrid();
+    }
+
+    private void ShowBossTargetsOnGrid()
+    {
+        gridManager.ClearAllHighlights();
+
+        foreach (BossAction action in currentBossPattern)
+        {
+            foreach (Vector2Int cell in action.targetCells)
+            {
+                GridCell gridCell = gridManager.GetCell(cell.x, cell.y);
+                gridCell?.SetHighlight(new Color(1f, 0.3f, 0.3f, 0.5f));
+            }
+        }
     }
 
     private void Update()
@@ -349,6 +374,7 @@ public class TurnManager : MonoBehaviour
             return;
 
         planningActive = false;
-        Debug.Log("전투 페이즈 시작");
+        battlePhaseManager.StartBattlePhase(
+            plannedActions, currentBossPattern, battleStartPos);
     }
 }
