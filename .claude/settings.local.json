@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__aseprite__draw_rectangle",
+      "mcp__aseprite__draw_circle",
+      "mcp__aseprite__draw_pixels",
+      "mcp__aseprite__draw_line"
+    ]
+  }
+}
