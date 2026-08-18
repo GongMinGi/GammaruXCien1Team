@@ -30,8 +30,13 @@ public class HandDisplay : MonoBehaviour
     private Quaternion[] restRotations;
     private Vector3[] restScales;
     private int[] restSortingOrders;
+    private Color[] cardBaseColors;
     private int activeCount;
     private bool isGenerated;
+    private int dragSourceIndex = -1;
+
+    [Header("Drag")]
+    [SerializeField] private Color dragHighlightColor = new Color(1f, 1f, 0.5f);
 
     private void Awake()
     {
@@ -60,7 +65,8 @@ public class HandDisplay : MonoBehaviour
             if (i < activeCount)
             {
                 cardTransforms[i].gameObject.SetActive(true);
-                cardRenderers[i].color = cards[i].CardColor;
+                cardBaseColors[i] = cards[i].CardColor;
+                cardRenderers[i].color = cardBaseColors[i];
                 numberTexts[i].text = cards[i].DisplayNumber;
             }
             else
@@ -85,6 +91,7 @@ public class HandDisplay : MonoBehaviour
         restRotations = new Quaternion[MaxCardCount];
         restScales = new Vector3[MaxCardCount];
         restSortingOrders = new int[MaxCardCount];
+        cardBaseColors = new Color[MaxCardCount];
 
         for (int i = 0; i < MaxCardCount; i++)
         {
@@ -155,6 +162,11 @@ public class HandDisplay : MonoBehaviour
         }
     }
 
+    public int GetHoveredCardIndex() => DetectHover();
+
+    public void SetDragSource(int index) { dragSourceIndex = index; }
+    public void ClearDragSource() { dragSourceIndex = -1; }
+
     private int DetectHover()
     {
         if (Mouse.current == null)
@@ -203,6 +215,10 @@ public class HandDisplay : MonoBehaviour
                 cardRenderers[i].sortingOrder = restSortingOrders[i];
                 numberRenderers[i].sortingOrder = restSortingOrders[i] + 1;
             }
+
+            cardRenderers[i].color = i == dragSourceIndex
+                ? dragHighlightColor
+                : cardBaseColors[i];
 
             cardTransforms[i].localPosition = Vector3.Lerp(
                 cardTransforms[i].localPosition, targetPos, dt);

@@ -775,6 +775,7 @@ MonoBehaviour:
   hoverRise: 0.5
   hoverScale: 1.3
   hoverSpeed: 10
+  dragHighlightColor: {r: 1, g: 1, b: 0.5, a: 1}
 --- !u!4 &900000042
 Transform:
   m_ObjectHideFlags: 0
@@ -966,6 +967,7 @@ MonoBehaviour:
   actionBar: {fileID: 900000021}
   playerHand: {fileID: 569059164}
   arcanaCatalog: {fileID: 11400000, guid: b0b0b0b0b0b0b0b0b0b0b0b0b0b0b000, type: 2}
+  handDisplay: {fileID: 900000041}
   selectedArcanaPool:
   - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a011, type: 2}
   - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a001, type: 2}

@@ -1,1 +1,1 @@
-public enum ActionType { Move, Stay, UseCard }
+public enum ActionType { Move, Stay, UseCard, MergeCards }

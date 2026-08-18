@@ -57,6 +57,33 @@ public class PlayerHand : MonoBehaviour
         RefreshDisplay();
     }
 
+    public bool TryMergeCards(int lo, int hi, ArcanaData result)
+    {
+        if (result == null || lo < 0 || hi <= lo || hi >= cards.Count)
+            return false;
+
+        cards.RemoveAt(hi);
+        cards.RemoveAt(lo);
+        cards.Insert(lo, result);
+        RefreshDisplay();
+        return true;
+    }
+
+    public void UndoMerge(int resultIndex, ArcanaData source1, int idx1,
+                           ArcanaData source2, int idx2)
+    {
+        if (resultIndex < 0 || resultIndex >= cards.Count)
+        {
+            Debug.LogError("Invalid merge undo state.", this);
+            return;
+        }
+
+        cards.RemoveAt(resultIndex);
+        cards.Insert(idx1, source1);
+        cards.Insert(idx2, source2);
+        RefreshDisplay();
+    }
+
     private void RefreshDisplay()
     {
         if (handDisplay != null)

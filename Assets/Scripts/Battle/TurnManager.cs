@@ -9,6 +9,7 @@ public class TurnManager : MonoBehaviour
     [SerializeField] private ActionBar actionBar;
     [SerializeField] private PlayerHand playerHand;
     [SerializeField] private ArcanaCatalog arcanaCatalog;
+    [SerializeField] private HandDisplay handDisplay;
     [SerializeField] private ArcanaData[] selectedArcanaPool;
 
     private readonly List<PlannedAction> plannedActions = new();
@@ -16,6 +17,7 @@ public class TurnManager : MonoBehaviour
     private Vector2Int playerGridPos;
     private bool planningActive;
     private ArcanaBag bag;
+    private int dragStartIndex = -1;
 
     private void Start()
     {
@@ -33,7 +35,7 @@ public class TurnManager : MonoBehaviour
     private bool ValidateReferences()
     {
         if (gridManager == null || playerDisplay == null || actionBar == null ||
-            playerHand == null || arcanaCatalog == null)
+            playerHand == null || arcanaCatalog == null || handDisplay == null)
         {
             Debug.LogError("TurnManager references are not assigned.", this);
             return false;
@@ -103,11 +105,109 @@ public class TurnManager : MonoBehaviour
         actionBar.ClearAll();
         playerHand.DrawToCapacity();
         planningActive = true;
+        CancelCardDrag();
     }
 
     private void Update()
     {
-        if (!planningActive || Keyboard.current == null)
+        if (!planningActive)
+            return;
+
+        if (HandleCardDrag())
+            return;
+
+        HandleKeyboardInput();
+    }
+
+    private bool HandleCardDrag()
+    {
+        if (Mouse.current == null)
+            return false;
+
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            int hovered = handDisplay.GetHoveredCardIndex();
+            if (hovered >= 0)
+            {
+                dragStartIndex = hovered;
+                handDisplay.SetDragSource(hovered);
+                return true;
+            }
+        }
+
+        if (dragStartIndex >= 0)
+        {
+            if (Mouse.current.leftButton.wasReleasedThisFrame)
+            {
+                int target = handDisplay.GetHoveredCardIndex();
+                if (target >= 0 && target != dragStartIndex)
+                    TryMerge(dragStartIndex, target);
+
+                CancelCardDrag();
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+    private void CancelCardDrag()
+    {
+        dragStartIndex = -1;
+        handDisplay.ClearDragSource();
+    }
+
+    private void TryMerge(int indexA, int indexB)
+    {
+        int lo = Mathf.Min(indexA, indexB);
+        int hi = Mathf.Max(indexA, indexB);
+
+        if (!playerHand.TryGetCard(lo, out ArcanaData sourceLo) ||
+            !playerHand.TryGetCard(hi, out ArcanaData sourceHi))
+            return;
+
+        int sumId = sourceLo.Id + sourceHi.Id;
+
+        const int minMergeResultId = 2;
+        const int maxMergeResultId = 20;
+
+        if (sumId < minMergeResultId || sumId > maxMergeResultId)
+        {
+            Debug.Log($"Merge rejected: result ID {sumId} out of range (valid: {minMergeResultId}~{maxMergeResultId}).");
+            return;
+        }
+
+        ArcanaData result = arcanaCatalog.GetById(sumId);
+        if (result == null)
+        {
+            Debug.Log($"Merge rejected: no arcana with ID {sumId}.");
+            return;
+        }
+
+        if (!playerHand.TryMergeCards(lo, hi, result))
+        {
+            Debug.LogError("Failed to merge cards.");
+            return;
+        }
+
+        plannedActions.Add(new PlannedAction
+        {
+            Type = ActionType.MergeCards,
+            Cost = 0,
+            CardData = result,
+            MergeSource1 = sourceLo,
+            MergeSourceIndex1 = lo,
+            MergeSource2 = sourceHi,
+            MergeSourceIndex2 = hi,
+            MergeResultIndex = lo
+        });
+
+        Debug.Log($"Merged {sourceLo.DisplayNumber} + {sourceHi.DisplayNumber} = {result.DisplayNumber}");
+    }
+
+    private void HandleKeyboardInput()
+    {
+        if (Keyboard.current == null)
             return;
 
         Keyboard kb = Keyboard.current;
@@ -233,6 +333,12 @@ public class TurnManager : MonoBehaviour
             case ActionType.UseCard:
                 actionBar.ClearRange(usedSlots, action.Cost);
                 playerHand.ReturnCard(action.OriginalHandIndex, action.CardData);
+                break;
+            case ActionType.MergeCards:
+                playerHand.UndoMerge(
+                    action.MergeResultIndex,
+                    action.MergeSource1, action.MergeSourceIndex1,
+                    action.MergeSource2, action.MergeSourceIndex2);
                 break;
         }
     }
