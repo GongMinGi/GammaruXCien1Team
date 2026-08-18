@@ -31,15 +31,20 @@ public class GridManager : MonoBehaviour
         int halfColumns = Columns / 2;
         cells = new GridCell[Columns, Rows];
 
+        float diagonal = cellSize * 0.7071f; // cellSize / sqrt(2)
+
         for (int y = -halfRows; y <= halfRows; y++)
         {
             for (int x = -halfColumns; x <= halfColumns; x++)
             {
-                Vector3 localPosition = new Vector3(x * cellSize, y * cellSize, 0f);
+                float worldX = (x - y) * diagonal;
+                float worldY = (x + y) * diagonal;
+                Vector3 localPosition = new Vector3(worldX, worldY, 0f);
 
                 GameObject cellObject = new GameObject($"Cell ({x}, {y})");
                 cellObject.transform.SetParent(transform);
                 cellObject.transform.localPosition = localPosition;
+                cellObject.transform.localRotation = Quaternion.Euler(0f, 0f, 45f);
 
                 SpriteRenderer renderer = cellObject.AddComponent<SpriteRenderer>();
                 renderer.sprite = cellSprite;
