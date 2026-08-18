@@ -15,8 +15,10 @@ MonoBehaviour:
   id: 0
   displayNumber: 0
   arcanaName: The Fool
-  koreanName: 바보
+  koreanName: "\uBC14\uBCF4"
   usageType: 0
   baseCost: 1
   cardColor: {r: 1, g: 1, b: 1, a: 1}
   timelineColor: {r: 0.7, g: 0.3, b: 0.5, a: 1}
+  defaultElement: 0
+  effectDescription: 

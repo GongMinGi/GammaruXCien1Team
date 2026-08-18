@@ -15,8 +15,11 @@ MonoBehaviour:
   id: 21
   displayNumber: XXI
   arcanaName: The World
-  koreanName: 세계
+  koreanName: "\uC138\uACC4"
   usageType: 5
   baseCost: 0
   cardColor: {r: 1, g: 1, b: 1, a: 1}
   timelineColor: {r: 0.7, g: 0.3, b: 0.5, a: 1}
+  defaultElement: 0
+  effectDescription: "\uBA78\uB9DD\uD558\uB294 \uC138\uACC4\uC758 \uC6B4\uBA85\uC744
+    \uB4A4\uC5CE\uACE0, \uC0C8\uB85C\uC6B4 \uC6B4\uBA85\uC744 \uCC3D\uC870\uD569\uB2C8\uB2E4."

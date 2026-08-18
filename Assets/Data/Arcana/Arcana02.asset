@@ -15,8 +15,11 @@ MonoBehaviour:
   id: 2
   displayNumber: II
   arcanaName: The High Priestess
-  koreanName: 여사제
+  koreanName: "\uC5EC\uC0AC\uC81C"
   usageType: 2
   baseCost: 0
   cardColor: {r: 1, g: 1, b: 1, a: 1}
   timelineColor: {r: 0.7, g: 0.3, b: 0.5, a: 1}
+  defaultElement: 0
+  effectDescription: "\uC18C\uBAA8\uD558\uC5EC \uCE74\uB4DC 1\uC7A5 \uB4DC\uB85C\uC6B0.
+    (\uAD00\uCE21 \uD398\uC774\uC988)"

@@ -15,8 +15,10 @@ MonoBehaviour:
   id: 7
   displayNumber: VII
   arcanaName: The Chariot
-  koreanName: 전차
+  koreanName: "\uC804\uCC28"
   usageType: 1
   baseCost: 2
   cardColor: {r: 1, g: 1, b: 1, a: 1}
   timelineColor: {r: 0.7, g: 0.3, b: 0.5, a: 1}
+  defaultElement: 0
+  effectDescription: "\uC9C0\uC815 \uBC29\uD5A5\uC73C\uB85C 3\uCE78 \uB3CC\uC9C4\uD569\uB2C8\uB2E4."

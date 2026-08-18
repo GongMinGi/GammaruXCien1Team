@@ -21,3 +21,5 @@ MonoBehaviour:
   cardColor: {r: 1, g: 1, b: 1, a: 1}
   timelineColor: {r: 0.7, g: 0.3, b: 0.5, a: 1}
   defaultElement: 3
+  effectDescription: "\uBCC4 \uC18D\uC131 \uAC15\uD55C \uD53C\uD574 3\uD68C. \uD53C\uD574
+    \uC2DC\uB9C8\uB2E4 \uCCB4\uB825 \uD68C\uBCF5."

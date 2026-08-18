@@ -15,8 +15,11 @@ MonoBehaviour:
   id: 9
   displayNumber: IX
   arcanaName: The Hermit
-  koreanName: 은둔자
+  koreanName: "\uC740\uB454\uC790"
   usageType: 1
   baseCost: 3
   cardColor: {r: 1, g: 1, b: 1, a: 1}
   timelineColor: {r: 0.7, g: 0.3, b: 0.5, a: 1}
+  defaultElement: 0
+  effectDescription: "\uD574\uB2F9 \uD0C0\uC774\uBC0D \uACF5\uACA9 \uD68C\uD53C.
+    \uC989\uC0AC\uAE30 \uBD88\uAC00. 3\uD134 \uC7AC\uC0AC\uC6A9 \uB300\uAE30."
