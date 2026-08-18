@@ -7,22 +7,101 @@ public class TurnManager : MonoBehaviour
     [SerializeField] private GridManager gridManager;
     [SerializeField] private PlayerDisplay playerDisplay;
     [SerializeField] private ActionBar actionBar;
+    [SerializeField] private PlayerHand playerHand;
+    [SerializeField] private ArcanaCatalog arcanaCatalog;
+    [SerializeField] private ArcanaData[] selectedArcanaPool;
 
     private readonly List<PlannedAction> plannedActions = new();
     private int usedSlots;
     private Vector2Int playerGridPos;
     private bool planningActive;
+    private ArcanaBag bag;
 
     private void Start()
     {
-        if (gridManager == null || playerDisplay == null || actionBar == null)
+        if (!ValidateReferences() || !ValidatePool())
         {
-            Debug.LogError("TurnManager references are not assigned.", this);
             enabled = false;
             return;
         }
 
+        bag = new ArcanaBag(selectedArcanaPool);
+        playerHand.Initialize(bag);
+        BeginPlanningPhase();
+    }
+
+    private bool ValidateReferences()
+    {
+        if (gridManager == null || playerDisplay == null || actionBar == null ||
+            playerHand == null || arcanaCatalog == null)
+        {
+            Debug.LogError("TurnManager references are not assigned.", this);
+            return false;
+        }
+
+        return true;
+    }
+
+    private bool ValidatePool()
+    {
+        if (selectedArcanaPool == null || selectedArcanaPool.Length == 0)
+        {
+            Debug.LogError("Arcana pool is empty.", this);
+            return false;
+        }
+
+        HashSet<int> ids = new();
+        foreach (ArcanaData a in selectedArcanaPool)
+        {
+            if (a == null)
+            {
+                Debug.LogError("Pool has null entry.", this);
+                return false;
+            }
+
+            if (!a.CanEnterPool)
+            {
+                Debug.LogError($"Arcana {a.DisplayNumber} cannot enter pool.", this);
+                return false;
+            }
+
+            if (!ids.Add(a.Id))
+            {
+                Debug.LogError($"Duplicate ID: {a.Id}", this);
+                return false;
+            }
+
+            if (a.CanPlaceOnTimeline &&
+                (a.BaseCost < 1 || a.BaseCost > ActionBar.SlotCount))
+            {
+                Debug.LogError($"Arcana {a.Id} invalid cost: {a.BaseCost}", this);
+                return false;
+            }
+
+            ArcanaData catalogEntry = arcanaCatalog.GetById(a.Id);
+            if (catalogEntry == null)
+            {
+                Debug.LogError($"Arcana {a.Id} missing from catalog.", this);
+                return false;
+            }
+
+            if (catalogEntry != a)
+            {
+                Debug.LogError($"Pool Arcana {a.Id} doesn't match catalog asset.", this);
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void BeginPlanningPhase()
+    {
+        plannedActions.Clear();
+        usedSlots = 0;
         playerGridPos = playerDisplay.GridPosition;
+        actionBar.ClearAll();
+        playerHand.DrawToCapacity();
         planningActive = true;
     }
 
@@ -39,6 +118,20 @@ public class TurnManager : MonoBehaviour
             ConfirmPlan();
         else if (kb.leftCtrlKey.wasPressedThisFrame || kb.rightCtrlKey.wasPressedThisFrame)
             QueueStay();
+        else if (kb.digit1Key.wasPressedThisFrame)
+            QueueCardUse(0);
+        else if (kb.digit2Key.wasPressedThisFrame)
+            QueueCardUse(1);
+        else if (kb.digit3Key.wasPressedThisFrame)
+            QueueCardUse(2);
+        else if (kb.digit4Key.wasPressedThisFrame)
+            QueueCardUse(3);
+        else if (kb.digit5Key.wasPressedThisFrame)
+            QueueCardUse(4);
+        else if (kb.digit6Key.wasPressedThisFrame)
+            QueueCardUse(5);
+        else if (kb.digit7Key.wasPressedThisFrame)
+            QueueCardUse(6);
         else if (kb.wKey.wasPressedThisFrame)
             QueueMove(Vector2Int.up);
         else if (kb.sKey.wasPressedThisFrame)
@@ -88,6 +181,35 @@ public class TurnManager : MonoBehaviour
         actionBar.FillSlot(usedSlots - 1, ActionType.Stay);
     }
 
+    private void QueueCardUse(int handIndex)
+    {
+        if (!playerHand.TryGetCard(handIndex, out ArcanaData card))
+            return;
+
+        if (!card.CanPlaceOnTimeline)
+        {
+            Debug.Log($"{card.DisplayNumber} cannot be used during the Planning Phase.");
+            return;
+        }
+
+        if (usedSlots + card.BaseCost > ActionBar.SlotCount)
+            return;
+
+        playerHand.TryTakeCard(handIndex, out _);
+
+        plannedActions.Add(new PlannedAction
+        {
+            Type = ActionType.UseCard,
+            Direction = Vector2Int.zero,
+            Cost = card.BaseCost,
+            CardData = card,
+            OriginalHandIndex = handIndex
+        });
+
+        actionBar.FillRange(usedSlots, card.BaseCost, card.TimelineColor);
+        usedSlots += card.BaseCost;
+    }
+
     private void UndoLastAction()
     {
         if (plannedActions.Count == 0)
@@ -98,13 +220,21 @@ public class TurnManager : MonoBehaviour
 
         usedSlots -= action.Cost;
 
-        if (action.Type == ActionType.Move)
+        switch (action.Type)
         {
-            playerGridPos -= action.Direction;
-            playerDisplay.UpdateGridPosition(playerGridPos.x, playerGridPos.y);
+            case ActionType.Move:
+                playerGridPos -= action.Direction;
+                playerDisplay.UpdateGridPosition(playerGridPos.x, playerGridPos.y);
+                actionBar.ClearSlot(usedSlots);
+                break;
+            case ActionType.Stay:
+                actionBar.ClearSlot(usedSlots);
+                break;
+            case ActionType.UseCard:
+                actionBar.ClearRange(usedSlots, action.Cost);
+                playerHand.ReturnCard(action.OriginalHandIndex, action.CardData);
+                break;
         }
-
-        actionBar.ClearSlot(usedSlots);
     }
 
     private void ConfirmPlan()

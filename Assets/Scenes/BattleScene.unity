@@ -256,6 +256,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &569059163
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 569059165}
+  - component: {fileID: 569059164}
+  m_Layer: 0
+  m_Name: PlayerHand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &569059164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569059163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHand
+  maxHandSize: 5
+  handDisplay: {fileID: 900000041}
+--- !u!4 &569059165
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569059163}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.91445, y: -0.3276, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,6 +667,8 @@ MonoBehaviour:
   spacing: 0.08
   slotColor: {r: 0.4, g: 0.45, b: 0.55, a: 1}
   borderColor: {r: 0.2, g: 0.22, b: 0.3, a: 1}
+  filledMoveColor: {r: 0.3, g: 0.6, b: 0.9, a: 1}
+  filledStayColor: {r: 0.6, g: 0.6, b: 0.3, a: 1}
 --- !u!4 &900000022
 Transform:
   m_ObjectHideFlags: 0
@@ -860,13 +908,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   gridManager: {fileID: 900000002}
   gridX: 0
   gridY: 0
   size: 0.5
   playerColor: {r: 1, g: 1, b: 1, a: 1}
+  moveDuration: 0.15
+  moveEase: 6
 --- !u!4 &900000062
 Transform:
   m_ObjectHideFlags: 0
@@ -909,11 +959,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   gridManager: {fileID: 900000002}
   playerDisplay: {fileID: 900000061}
   actionBar: {fileID: 900000021}
+  playerHand: {fileID: 569059164}
+  arcanaCatalog: {fileID: 11400000, guid: b0b0b0b0b0b0b0b0b0b0b0b0b0b0b000, type: 2}
+  selectedArcanaPool:
+  - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a011, type: 2}
+  - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a001, type: 2}
+  - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a002, type: 2}
+  - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a003, type: 2}
+  - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a004, type: 2}
+  - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a005, type: 2}
+  - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a006, type: 2}
+  - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a007, type: 2}
+  - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a008, type: 2}
+  - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a009, type: 2}
+  - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a010, type: 2}
 --- !u!4 &900000072
 Transform:
   m_ObjectHideFlags: 0
@@ -944,3 +1008,4 @@ SceneRoots:
   - {fileID: 900000042}
   - {fileID: 900000062}
   - {fileID: 900000072}
+  - {fileID: 569059165}

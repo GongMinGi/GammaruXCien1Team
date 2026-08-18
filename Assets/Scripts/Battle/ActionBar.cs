@@ -17,7 +17,7 @@ public class ActionBar : MonoBehaviour
     private SpriteRenderer[] slotRenderers;
     private bool isGenerated;
 
-    private void Start()
+    private void Awake()
     {
         GenerateSlots();
     }
@@ -31,12 +31,45 @@ public class ActionBar : MonoBehaviour
             type == ActionType.Move ? filledMoveColor : filledStayColor;
     }
 
+    public void FillRange(int startIndex, int cost, Color color)
+    {
+        if (slotRenderers == null)
+            return;
+
+        for (int i = startIndex; i < startIndex + cost && i < slotRenderers.Length; i++)
+        {
+            if (i >= 0)
+                slotRenderers[i].color = color;
+        }
+    }
+
     public void ClearSlot(int index)
     {
         if (slotRenderers == null || index < 0 || index >= slotRenderers.Length)
             return;
 
         slotRenderers[index].color = Color.white;
+    }
+
+    public void ClearRange(int startIndex, int cost)
+    {
+        if (slotRenderers == null)
+            return;
+
+        for (int i = startIndex; i < startIndex + cost && i < slotRenderers.Length; i++)
+        {
+            if (i >= 0)
+                slotRenderers[i].color = Color.white;
+        }
+    }
+
+    public void ClearAll()
+    {
+        if (slotRenderers == null)
+            return;
+
+        for (int i = 0; i < slotRenderers.Length; i++)
+            slotRenderers[i].color = Color.white;
     }
 
     private void GenerateSlots()

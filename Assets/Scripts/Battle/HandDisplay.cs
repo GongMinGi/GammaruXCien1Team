@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,59 +20,77 @@ public class HandDisplay : MonoBehaviour
     [SerializeField] private float hoverScale = 1.3f;
     [SerializeField] private float hoverSpeed = 10f;
 
-    private const int CardCount = 5;
+    private const int MaxCardCount = 7;
 
     private Transform[] cardTransforms;
     private SpriteRenderer[] cardRenderers;
+    private TextMesh[] numberTexts;
+    private MeshRenderer[] numberRenderers;
     private Vector3[] restPositions;
     private Quaternion[] restRotations;
     private Vector3[] restScales;
     private int[] restSortingOrders;
+    private int activeCount;
     private bool isGenerated;
 
-    private void Start()
+    private void Awake()
     {
-        GenerateHand();
+        GenerateCardObjects();
     }
 
     private void Update()
     {
-        if (!isGenerated)
+        if (!isGenerated || activeCount == 0)
             return;
 
         int hovered = DetectHover();
         AnimateCards(hovered);
     }
 
-    private void GenerateHand()
+    public void UpdateHand(IReadOnlyList<ArcanaData> cards)
+    {
+        if (!isGenerated)
+            return;
+
+        activeCount = Mathf.Min(cards.Count, MaxCardCount);
+        RecalculateLayout(activeCount);
+
+        for (int i = 0; i < MaxCardCount; i++)
+        {
+            if (i < activeCount)
+            {
+                cardTransforms[i].gameObject.SetActive(true);
+                cardRenderers[i].color = cards[i].CardColor;
+                numberTexts[i].text = cards[i].DisplayNumber;
+            }
+            else
+            {
+                cardTransforms[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    private void GenerateCardObjects()
     {
         if (isGenerated)
             return;
 
         Sprite sprite = CreateCardSprite();
 
-        cardTransforms = new Transform[CardCount];
-        cardRenderers = new SpriteRenderer[CardCount];
-        restPositions = new Vector3[CardCount];
-        restRotations = new Quaternion[CardCount];
-        restScales = new Vector3[CardCount];
-        restSortingOrders = new int[CardCount];
+        cardTransforms = new Transform[MaxCardCount];
+        cardRenderers = new SpriteRenderer[MaxCardCount];
+        numberTexts = new TextMesh[MaxCardCount];
+        numberRenderers = new MeshRenderer[MaxCardCount];
+        restPositions = new Vector3[MaxCardCount];
+        restRotations = new Quaternion[MaxCardCount];
+        restScales = new Vector3[MaxCardCount];
+        restSortingOrders = new int[MaxCardCount];
 
-        float spacing = CardCount > 1 ? totalWidth / (CardCount - 1) : 0f;
-
-        for (int i = 0; i < CardCount; i++)
+        for (int i = 0; i < MaxCardCount; i++)
         {
-            float centerOffset = i - (CardCount - 1) * 0.5f;
-            float t = CardCount > 1 ? centerOffset / ((CardCount - 1) * 0.5f) : 0f;
-
-            float x = centerOffset * spacing;
-            float y = -arcHeight * t * t;
-            float angle = -maxFanAngle * t;
-
             GameObject cardObj = new GameObject($"HandCard ({i + 1})");
             cardObj.transform.SetParent(transform);
-            cardObj.transform.localPosition = new Vector3(x, y, 0f);
-            cardObj.transform.localRotation = Quaternion.Euler(0f, 0f, angle);
+            cardObj.transform.localPosition = Vector3.zero;
             cardObj.transform.localScale = new Vector3(cardWidth, cardHeight, 1f);
 
             SpriteRenderer renderer = cardObj.AddComponent<SpriteRenderer>();
@@ -80,15 +99,60 @@ public class HandDisplay : MonoBehaviour
 
             cardObj.AddComponent<BoxCollider2D>();
 
+            GameObject textObj = new GameObject("Number");
+            textObj.transform.SetParent(cardObj.transform);
+            textObj.transform.localPosition = new Vector3(0f, 0.5f, -0.01f);
+            textObj.transform.localScale = new Vector3(
+                1f / cardWidth, 1f / cardHeight, 1f);
+
+            TextMesh textMesh = textObj.AddComponent<TextMesh>();
+            textMesh.anchor = TextAnchor.MiddleCenter;
+            textMesh.alignment = TextAlignment.Center;
+            textMesh.fontSize = 32;
+            textMesh.characterSize = 0.1f;
+            textMesh.color = Color.white;
+
+            MeshRenderer meshRenderer = textObj.GetComponent<MeshRenderer>();
+            meshRenderer.sortingOrder = 11 + i;
+
             cardTransforms[i] = cardObj.transform;
             cardRenderers[i] = renderer;
-            restPositions[i] = cardObj.transform.localPosition;
-            restRotations[i] = cardObj.transform.localRotation;
-            restScales[i] = cardObj.transform.localScale;
-            restSortingOrders[i] = renderer.sortingOrder;
+            numberTexts[i] = textMesh;
+            numberRenderers[i] = meshRenderer;
+            cardObj.SetActive(false);
         }
 
+        activeCount = 0;
         isGenerated = true;
+    }
+
+    private void RecalculateLayout(int count)
+    {
+        if (count == 0)
+            return;
+
+        float spacing = count > 1 ? totalWidth / (count - 1) : 0f;
+
+        for (int i = 0; i < count; i++)
+        {
+            float centerOffset = i - (count - 1) * 0.5f;
+            float t = count > 1 ? centerOffset / ((count - 1) * 0.5f) : 0f;
+
+            float x = centerOffset * spacing;
+            float y = -arcHeight * t * t;
+            float angle = -maxFanAngle * t;
+
+            restPositions[i] = new Vector3(x, y, 0f);
+            restRotations[i] = Quaternion.Euler(0f, 0f, angle);
+            restScales[i] = new Vector3(cardWidth, cardHeight, 1f);
+            restSortingOrders[i] = 10 + i;
+
+            cardTransforms[i].localPosition = restPositions[i];
+            cardTransforms[i].localRotation = restRotations[i];
+            cardTransforms[i].localScale = restScales[i];
+            cardRenderers[i].sortingOrder = restSortingOrders[i];
+            numberRenderers[i].sortingOrder = restSortingOrders[i] + 1;
+        }
     }
 
     private int DetectHover()
@@ -100,8 +164,11 @@ public class HandDisplay : MonoBehaviour
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, 0f));
         worldPos.z = 0f;
 
-        for (int i = CardCount - 1; i >= 0; i--)
+        for (int i = activeCount - 1; i >= 0; i--)
         {
+            if (!cardTransforms[i].gameObject.activeSelf)
+                continue;
+
             BoxCollider2D col = cardTransforms[i].GetComponent<BoxCollider2D>();
             if (col.OverlapPoint(worldPos))
                 return i;
@@ -114,7 +181,7 @@ public class HandDisplay : MonoBehaviour
     {
         float dt = hoverSpeed * Time.deltaTime;
 
-        for (int i = 0; i < CardCount; i++)
+        for (int i = 0; i < activeCount; i++)
         {
             Vector3 targetPos;
             Quaternion targetRot;
@@ -126,6 +193,7 @@ public class HandDisplay : MonoBehaviour
                 targetRot = Quaternion.identity;
                 targetScale = new Vector3(cardWidth * hoverScale, cardHeight * hoverScale, 1f);
                 cardRenderers[i].sortingOrder = 100;
+                numberRenderers[i].sortingOrder = 101;
             }
             else
             {
@@ -133,6 +201,7 @@ public class HandDisplay : MonoBehaviour
                 targetRot = restRotations[i];
                 targetScale = restScales[i];
                 cardRenderers[i].sortingOrder = restSortingOrders[i];
+                numberRenderers[i].sortingOrder = restSortingOrders[i] + 1;
             }
 
             cardTransforms[i].localPosition = Vector3.Lerp(
