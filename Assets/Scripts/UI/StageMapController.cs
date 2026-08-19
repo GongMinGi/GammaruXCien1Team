@@ -71,6 +71,7 @@ public class StageMapController : MonoBehaviour
             stageMapView.CreateCard(
                 i + 1,
                 stagePositions[i],
+                stageMapData.GetCardImage(i),
                 OpenStage);
         }
 
@@ -219,6 +220,7 @@ public class StageMapController : MonoBehaviour
         StageCardView cardView = stageMapView.CreateCard(
             stageIndex + 1,
             stagePositions[stageIndex],
+            stageMapData.GetCardImage(stageIndex),
             OpenStage);
         yield return cardView.PlayRevealRoutine();
     }

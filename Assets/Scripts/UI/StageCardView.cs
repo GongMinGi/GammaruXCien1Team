@@ -11,6 +11,7 @@ public class StageCardView : MonoBehaviour
 {
     [SerializeField] private RectTransform faceRoot;
     [SerializeField] private GameObject frontFace;
+    [SerializeField] private Image frontImage;
     [SerializeField] private GameObject backFace;
     [SerializeField] private Image flashImage;
     [SerializeField] private Text stageNumberText;
@@ -22,12 +23,16 @@ public class StageCardView : MonoBehaviour
     private bool isFrontShown = true;
 
     /// <summary>
-    /// 번호를 표시하고, 앞면이 보이는 상태에서 눌렀을 때의 처리를 연결한다.
+    /// 번호와 앞면 이미지를 표시하고, 앞면이 보이는 상태에서 눌렀을 때의 처리를 연결한다.
     /// 뒷면이 보이는 동안 누르면 스테이지를 열지 않고 카드를 뒤집는다.
     /// </summary>
-    public void Initialize(int stageNumber, UnityAction<int> stageOpenHandler)
+    public void Initialize(
+        int stageNumber,
+        Sprite cardImage,
+        UnityAction<int> stageOpenHandler)
     {
-        stageNumberText.text = stageNumber.ToString();
+        //stageNumberText.text = stageNumber.ToString();
+        frontImage.sprite = cardImage;
         cardButton.onClick.AddListener(delegate
         {
             if (!isFrontShown)

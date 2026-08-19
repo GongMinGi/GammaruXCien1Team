@@ -41,13 +41,14 @@ public class StageMapView : MonoBehaviour
     public StageCardView CreateCard(
         int stageNumber,
         Vector2 position,
+        Sprite cardImage,
         UnityAction<int> stageOpenHandler)
     {
         RectTransform card = Instantiate(cardPrefab, cardsRoot, false);
         StageCardView cardView = card.GetComponent<StageCardView>();
 
         card.anchoredPosition = position;
-        cardView.Initialize(stageNumber, stageOpenHandler);
+        cardView.Initialize(stageNumber, cardImage, stageOpenHandler);
         return cardView;
     }
 }
