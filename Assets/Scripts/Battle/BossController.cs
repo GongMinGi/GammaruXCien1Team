@@ -52,6 +52,8 @@ public class BossController : MonoBehaviour
         return true;
     }
 
+    private static readonly Color WarningBlinkOn = new Color(1f, 0.3f, 0.3f, 0.5f);
+
     public void ShowTargetsAtSlot(int slotIndex)
     {
         gridManager.ClearAllHighlights();
@@ -68,7 +70,7 @@ public class BossController : MonoBehaviour
             foreach (Vector2Int cell in action.targetCells)
             {
                 GridCell gridCell = gridManager.GetCell(cell.x, cell.y);
-                gridCell?.SetHighlight(new Color(1f, 0.3f, 0.3f, 0.5f));
+                gridCell?.StartBlink(WarningBlinkOn, gridCell.OriginalColor);
             }
         }
     }

@@ -14,6 +14,7 @@ public class PlayerDisplay : MonoBehaviour
     public Vector2Int GridPosition => new(gridX, gridY);
 
     private bool isGenerated;
+    private ParticleSystem dustParticle;
 
     private void Start()
     {
@@ -25,6 +26,7 @@ public class PlayerDisplay : MonoBehaviour
 
         transform.position = gridManager.GridToWorldPosition(gridX, gridY);
         GenerateVisual();
+        CreateDustParticle();
     }
 
     public void UpdateGridPosition(int x, int y)
@@ -34,6 +36,9 @@ public class PlayerDisplay : MonoBehaviour
         Vector3 target = gridManager.GridToWorldPosition(gridX, gridY);
         transform.DOKill();
         transform.DOMove(target, moveDuration).SetEase(moveEase);
+
+        if (dustParticle != null)
+            dustParticle.Play();
     }
 
     private void GenerateVisual()
@@ -62,5 +67,57 @@ public class PlayerDisplay : MonoBehaviour
         renderer.sortingOrder = 3;
 
         isGenerated = true;
+    }
+
+    private void CreateDustParticle()
+    {
+        GameObject particleObj = new GameObject("DustParticle");
+        particleObj.transform.SetParent(transform, false);
+        particleObj.transform.localPosition = Vector3.zero;
+
+        dustParticle = particleObj.AddComponent<ParticleSystem>();
+        dustParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+
+        ParticleSystem.MainModule main = dustParticle.main;
+        main.duration = 0.3f;
+        main.loop = false;
+        main.startLifetime = 0.3f;
+        main.startSpeed = 0.8f;
+        main.startSize = 0.08f;
+        main.startColor = new Color(0.8f, 0.7f, 0.5f, 0.7f);
+        main.simulationSpace = ParticleSystemSimulationSpace.World;
+        main.gravityModifier = 0.5f;
+
+        ParticleSystem.EmissionModule emission = dustParticle.emission;
+        emission.rateOverTime = 0f;
+        emission.SetBursts(new[] {
+            new ParticleSystem.Burst(0f, 6, 10)
+        });
+
+        ParticleSystem.ShapeModule shape = dustParticle.shape;
+        shape.shapeType = ParticleSystemShapeType.Circle;
+        shape.radius = 0.15f;
+
+        ParticleSystem.ColorOverLifetimeModule colorOverLifetime = dustParticle.colorOverLifetime;
+        colorOverLifetime.enabled = true;
+        Gradient gradient = new Gradient();
+        gradient.SetKeys(
+            new[] {
+                new GradientColorKey(new Color(0.8f, 0.7f, 0.5f), 0f),
+                new GradientColorKey(new Color(0.8f, 0.7f, 0.5f), 1f)
+            },
+            new[] {
+                new GradientAlphaKey(0.7f, 0f),
+                new GradientAlphaKey(0f, 1f)
+            }
+        );
+        colorOverLifetime.color = gradient;
+
+        ParticleSystem.SizeOverLifetimeModule sizeOverLifetime = dustParticle.sizeOverLifetime;
+        sizeOverLifetime.enabled = true;
+        sizeOverLifetime.size = new ParticleSystem.MinMaxCurve(1f, 0.3f);
+
+        ParticleSystemRenderer psRenderer = particleObj.GetComponent<ParticleSystemRenderer>();
+        psRenderer.sortingOrder = 4;
     }
 }

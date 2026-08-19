@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerHand : MonoBehaviour
 {
-    [SerializeField, Range(5, 7)] private int maxHandSize = 5;
+    [SerializeField, Range(5, 7)] private int maxHandSize = 7;
     [SerializeField] private HandDisplay handDisplay;
 
     private readonly List<ArcanaData> cards = new();

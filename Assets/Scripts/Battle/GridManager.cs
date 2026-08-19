@@ -115,6 +115,6 @@ public class GridManager : MonoBehaviour
         int halfRows = Rows / 2;
         for (int y = -halfRows; y <= halfRows; y++)
             for (int x = -halfColumns; x <= halfColumns; x++)
-                cells[x + halfColumns, y + halfRows].ClearHighlight();
+                cells[x + halfColumns, y + halfRows].StopBlink();
     }
 }

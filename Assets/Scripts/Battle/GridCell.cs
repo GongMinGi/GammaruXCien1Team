@@ -12,6 +12,7 @@ public class GridCell : MonoBehaviour
 
     public int X => x;
     public int Y => y;
+    public Color OriginalColor => originalColor;
 
     public void Initialize(int x, int y, SpriteRenderer renderer)
     {
