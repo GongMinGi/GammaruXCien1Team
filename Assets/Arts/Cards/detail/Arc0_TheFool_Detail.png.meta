@@ -1,0 +1,266 @@
+fileFormatVersion: 2
+guid: ad0b8b780d7cfdc46a52431c012eb3ba
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3582684000642679918
+    second: Arc0_TheFool_Detail_0
+  - first:
+      213: 5536358517092846432
+    second: Arc0_TheFool_Detail_1
+  - first:
+      213: 5299899628306949751
+    second: Arc0_TheFool_Detail_2
+  - first:
+      213: -6650361103555305450
+    second: Arc0_TheFool_Detail_3
+  - first:
+      213: 6033531944377056707
+    second: Arc0_TheFool_Detail_4
+  - first:
+      213: 13547955727567246
+    second: Arc0_TheFool_Detail_5
+  - first:
+      213: -7734801492691970571
+    second: Arc0_TheFool_Detail_6
+  - first:
+      213: -5403876770070922189
+    second: Arc0_TheFool_Detail_7
+  - first:
+      213: 7074978753741949096
+    second: Arc0_TheFool_Detail_8
+  - first:
+      213: -3566767464883838107
+    second: Arc0_TheFool_Detail_9
+  - first:
+      213: 6155484963489184678
+    second: Arc0_TheFool_Detail_10
+  - first:
+      213: 7190896020309248786
+    second: Arc0_TheFool_Detail_11
+  - first:
+      213: -1143646238260139104
+    second: Arc0_TheFool_Detail_12
+  - first:
+      213: 1801933526955251914
+    second: Arc0_TheFool_Detail_13
+  - first:
+      213: -7770023497413104810
+    second: Arc0_TheFool_Detail_14
+  - first:
+      213: -584785535837266777
+    second: Arc0_TheFool_Detail_15
+  - first:
+      213: 4917366063826761577
+    second: Arc0_TheFool_Detail_16
+  - first:
+      213: 896964348510674398
+    second: Arc0_TheFool_Detail_17
+  - first:
+      213: 5699424078154188539
+    second: Arc0_TheFool_Detail_18
+  - first:
+      213: 6996316544628322333
+    second: Arc0_TheFool_Detail_19
+  - first:
+      213: -1892439936002851790
+    second: Arc0_TheFool_Detail_20
+  - first:
+      213: 4074856940383330252
+    second: Arc0_TheFool_Detail_21
+  - first:
+      213: -1334230132570229171
+    second: Arc0_TheFool_Detail_22
+  - first:
+      213: -1410927133301746983
+    second: Arc0_TheFool_Detail_23
+  - first:
+      213: -8015328050133341133
+    second: Arc0_TheFool_Detail_24
+  - first:
+      213: 1719593192067681217
+    second: Arc0_TheFool_Detail_25
+  - first:
+      213: -2797691407032360821
+    second: Arc0_TheFool_Detail_26
+  - first:
+      213: -4959023802654873521
+    second: Arc0_TheFool_Detail_27
+  - first:
+      213: -8005199815293949059
+    second: Arc0_TheFool_Detail_28
+  - first:
+      213: -8218977945221833083
+    second: Arc0_TheFool_Detail_29
+  - first:
+      213: 3674237435712663677
+    second: Arc0_TheFool_Detail_30
+  - first:
+      213: -3775684610999384478
+    second: Arc0_TheFool_Detail_31
+  - first:
+      213: -601331800267583483
+    second: Arc0_TheFool_Detail_32
+  - first:
+      213: -1031894536452938133
+    second: Arc0_TheFool_Detail_33
+  - first:
+      213: 3202958458104325047
+    second: Arc0_TheFool_Detail_34
+  - first:
+      213: 9077096969903722621
+    second: Arc0_TheFool_Detail_35
+  - first:
+      213: 5951340778800777707
+    second: Arc0_TheFool_Detail_36
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Arc0_TheFool_Detail_0
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 292
+        width: 216
+        height: 224
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6448c0ed1048b130800000000000000
+      internalID: 3582684000642679918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 4680f7727f80761429f9e4ac11788b13
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":970.0,"y":580.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Arc0_TheFool_Detail_0: 3582684000642679918
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

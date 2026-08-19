@@ -1,0 +1,239 @@
+fileFormatVersion: 2
+guid: b4e16b4ea065a00408a7999e34035de4
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2886889720946902447
+    second: Arc1_TheMagician_Detail_0
+  - first:
+      213: 5844911063167828979
+    second: Arc1_TheMagician_Detail_1
+  - first:
+      213: 7841979144096195644
+    second: Arc1_TheMagician_Detail_2
+  - first:
+      213: 1024145194951206439
+    second: Arc1_TheMagician_Detail_3
+  - first:
+      213: 1117965450421621516
+    second: Arc1_TheMagician_Detail_4
+  - first:
+      213: -2883855261482087693
+    second: Arc1_TheMagician_Detail_5
+  - first:
+      213: -3223840856241924427
+    second: Arc1_TheMagician_Detail_6
+  - first:
+      213: 4948547735314283609
+    second: Arc1_TheMagician_Detail_7
+  - first:
+      213: 1034472851072927946
+    second: Arc1_TheMagician_Detail_8
+  - first:
+      213: -7659054493588752398
+    second: Arc1_TheMagician_Detail_9
+  - first:
+      213: -2432384416261119438
+    second: Arc1_TheMagician_Detail_10
+  - first:
+      213: -6726885255885263595
+    second: Arc1_TheMagician_Detail_11
+  - first:
+      213: 8154780764209044951
+    second: Arc1_TheMagician_Detail_12
+  - first:
+      213: 1571219600740078316
+    second: Arc1_TheMagician_Detail_13
+  - first:
+      213: 8061770612840479093
+    second: Arc1_TheMagician_Detail_14
+  - first:
+      213: -3614152631973334588
+    second: Arc1_TheMagician_Detail_15
+  - first:
+      213: -6570797145464433038
+    second: Arc1_TheMagician_Detail_16
+  - first:
+      213: 6757323229400680143
+    second: Arc1_TheMagician_Detail_17
+  - first:
+      213: -2584820317885158117
+    second: Arc1_TheMagician_Detail_18
+  - first:
+      213: -5832818769798430648
+    second: Arc1_TheMagician_Detail_19
+  - first:
+      213: 8450934765387771731
+    second: Arc1_TheMagician_Detail_20
+  - first:
+      213: 1634210248340275853
+    second: Arc1_TheMagician_Detail_21
+  - first:
+      213: -965968971712255889
+    second: Arc1_TheMagician_Detail_22
+  - first:
+      213: -700333893247047609
+    second: Arc1_TheMagician_Detail_23
+  - first:
+      213: -6792504991458577969
+    second: Arc1_TheMagician_Detail_24
+  - first:
+      213: 6303060760271312908
+    second: Arc1_TheMagician_Detail_25
+  - first:
+      213: 6258969376436959242
+    second: Arc1_TheMagician_Detail_26
+  - first:
+      213: -2139955436188792688
+    second: Arc1_TheMagician_Detail_27
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Arc1_TheMagician_Detail_0
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 251
+        width: 207
+        height: 220
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15abb3d1815bfe7d0800000000000000
+      internalID: -2886889720946902447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 2675f4e6eacd9c740b0551132cac40bb
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":970.0,"y":580.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Arc1_TheMagician_Detail_0: -2886889720946902447
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

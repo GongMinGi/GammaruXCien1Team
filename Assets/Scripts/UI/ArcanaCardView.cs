@@ -13,8 +13,7 @@ public class ArcanaCardView : MonoBehaviour,
     IPointerClickHandler
 {
     [SerializeField] private RectTransform cardRectTransform;
-    [SerializeField] private Text arcanaNumberText;
-    [SerializeField] private Text arcanaNameText;
+    [SerializeField] private Image cardImage;
     [SerializeField] private Text cardCostText;
     [SerializeField] private float hoverRise = 36f;
     [SerializeField] private float hoverScale = 1.08f;
@@ -50,7 +49,7 @@ public class ArcanaCardView : MonoBehaviour,
     }
 
     /// <summary>
-    /// 카드 데이터와 좌우 클릭 처리 메서드를 연결하고 앞면 텍스트를 표시한다.
+    /// 카드 데이터와 좌우 클릭 처리 메서드를 연결하고 앞면 그림과 코스트를 표시한다.
     /// </summary>
     public void Initialize(
         ArcanaData arcanaData,
@@ -60,8 +59,7 @@ public class ArcanaCardView : MonoBehaviour,
         cardData = arcanaData;
         leftClickHandler = leftHandler;
         rightClickHandler = rightHandler;
-        arcanaNumberText.text = arcanaData.DisplayNumber;
-        arcanaNameText.text = arcanaData.ArcanaName;
+        cardImage.sprite = arcanaData.CardImage;
         cardCostText.text = "Cost " + arcanaData.BaseCost;
         isInDeck = true;
     }

@@ -18,6 +18,8 @@ MonoBehaviour:
   koreanName: "\uC8FD\uC74C"
   usageType: 1
   baseCost: 3
+  cardImage: {fileID: 21300000, guid: 977eca25018a5a745a732c94b6595e8d, type: 3}
+  detailImage: {fileID: 2211497478798114005, guid: 7d8dfed0c5428b94e848726db3b02746, type: 3}
   cardColor: {r: 1, g: 1, b: 1, a: 1}
   timelineColor: {r: 0.7, g: 0.3, b: 0.5, a: 1}
   defaultElement: 0
@@ -28,3 +30,6 @@ MonoBehaviour:
   effectDescription: "\uC2DC\uC804 \uC911 \uBC1B\uB294 \uD53C\uD574\uB7C9\uC774 \uC99D\uAC00\uD558\uBA70,
     \uC2DC\uC804 \uC644\uB8CC \uC2DC \uCE7C\uB0A0\uC744 \uBC1C\uC0AC\uD574 \uBB34\uC18D\uC131
     \uAC15\uD55C \uD53C\uD574\uB97C \uC785\uD799\uB2C8\uB2E4."
+  zeroCostUnlimited: 0
+  cooldownTurns: 0
+  blocksCostModifiers: 0
