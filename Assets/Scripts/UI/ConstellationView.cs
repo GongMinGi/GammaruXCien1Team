@@ -1,6 +1,7 @@
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// 별자리 위에 놓이는 별 노드의 크기 단계.
@@ -90,17 +91,23 @@ public class ConstellationView : MonoBehaviour
     /// <summary>
     /// 별 → 선 → 별 순서로 이어지는 연출로 별자리 한 구간을 표시한다.
     /// isClosedLoop가 참이면 마지막 별에서 첫 별로 돌아오는 선을 하나 더 그린다.
+    /// 별을 만들 때마다 그 위치를 starCreatedHandler로 알려 화면이 따라오게 한다.
     /// </summary>
-    public IEnumerator PlayLinkRoutine(StarPoint[] starPoints, bool isClosedLoop)
+    public IEnumerator PlayLinkRoutine(
+        StarPoint[] starPoints,
+        bool isClosedLoop,
+        UnityAction<Vector2> starCreatedHandler)
     {
-        RectTransform star = CreateStar(starPoints[0]);
-        yield return PlayStarPop(star).WaitForCompletion();
-
-        for (int i = 0; i < starPoints.Length - 1; i++)
+        for (int i = 0; i < starPoints.Length; i++)
         {
-            yield return DrawSegment(starPoints[i], starPoints[i + 1]);
+            if (i > 0)
+            {
+                yield return DrawSegment(starPoints[i - 1], starPoints[i]);
+            }
 
-            star = CreateStar(starPoints[i + 1]);
+            RectTransform star = CreateStar(starPoints[i]);
+
+            starCreatedHandler(starPoints[i].Position);
             yield return PlayStarPop(star).WaitForCompletion();
         }
 

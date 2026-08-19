@@ -204,7 +204,8 @@ public class StageMapController : MonoBehaviour
         UpdateContentWidth(nextStageIndex + 1);
         yield return constellationView.PlayLinkRoutine(
             BuildConstellationPoints(nextStageIndex - 1),
-            false);
+            false,
+            stageMapView.FocusOn);
         yield return RevealStageCardRoutine(nextStageIndex);
     }
 
@@ -215,7 +216,8 @@ public class StageMapController : MonoBehaviour
     {
         yield return constellationView.PlayLinkRoutine(
             BuildCardBorderPoints(stageIndex),
-            true);
+            true,
+            stageMapView.FocusOn);
 
         StageCardView cardView = stageMapView.CreateCard(
             stageIndex + 1,

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,6 +11,22 @@ public class StageMapView : MonoBehaviour
     [SerializeField] private RectTransform content;
     [SerializeField] private RectTransform cardsRoot;
     [SerializeField] private RectTransform cardPrefab;
+    [SerializeField] private float focusDuration = 0.35f;
+
+    /// <summary>
+    /// 지정한 콘텐츠 좌표가 화면 가운데 오도록 스크롤을 옮긴다.
+    /// </summary>
+    public void FocusOn(Vector2 contentPosition)
+    {
+        float viewportWidth = viewport.rect.width;
+        float targetX = Mathf.Clamp(
+            viewportWidth * 0.5f - contentPosition.x,
+            viewportWidth - content.rect.width,
+            0f);
+
+        content.DOKill();
+        content.DOAnchorPosX(targetX, focusDuration).SetEase(Ease.OutSine);
+    }
 
     /// <summary>
     /// 스테이지 카드가 표시되는 영역의 높이를 반환한다.
