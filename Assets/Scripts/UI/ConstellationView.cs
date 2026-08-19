@@ -89,10 +89,25 @@ public class ConstellationView : MonoBehaviour
 
     /// <summary>
     /// 별 → 선 → 별 순서로 이어지는 연출로 별자리 한 구간을 표시한다.
+    /// isClosedLoop가 참이면 마지막 별에서 첫 별로 돌아오는 선을 하나 더 그린다.
     /// </summary>
-    public void PlayLinkAnimation(StarPoint[] starPoints)
+    public IEnumerator PlayLinkRoutine(StarPoint[] starPoints, bool isClosedLoop)
     {
-        StartCoroutine(GrowLink(starPoints));
+        RectTransform star = CreateStar(starPoints[0]);
+        yield return PlayStarPop(star).WaitForCompletion();
+
+        for (int i = 0; i < starPoints.Length - 1; i++)
+        {
+            yield return DrawSegment(starPoints[i], starPoints[i + 1]);
+
+            star = CreateStar(starPoints[i + 1]);
+            yield return PlayStarPop(star).WaitForCompletion();
+        }
+
+        if (isClosedLoop)
+        {
+            yield return DrawSegment(starPoints[starPoints.Length - 1], starPoints[0]);
+        }
     }
 
     /// <summary>
@@ -106,29 +121,16 @@ public class ConstellationView : MonoBehaviour
     }
 
     /// <summary>
-    /// 별 하나를 띄우고 다음 별까지 선을 이어 그리는 과정을 반복한다.
+    /// 두 별 사이에 선 하나를 만들어 다 그려질 때까지 기다린다.
+    /// 여백을 빼고 남는 길이가 없으면 선을 그리지 않고 넘어간다.
     /// </summary>
-    private IEnumerator GrowLink(StarPoint[] starPoints)
+    private IEnumerator DrawSegment(StarPoint from, StarPoint to)
     {
-        if (starPoints.Length == 0)
+        RectTransform segment = CreateSegment(from, to);
+
+        if (segment != null)
         {
-            yield break;
-        }
-
-        RectTransform star = CreateStar(starPoints[0]);
-        yield return PlayStarPop(star).WaitForCompletion();
-
-        for (int i = 0; i < starPoints.Length - 1; i++)
-        {
-            RectTransform segment = CreateSegment(starPoints[i], starPoints[i + 1]);
-
-            if (segment != null)
-            {
-                yield return PlaySegmentDraw(segment).WaitForCompletion();
-            }
-
-            star = CreateStar(starPoints[i + 1]);
-            yield return PlayStarPop(star).WaitForCompletion();
+            yield return PlaySegmentDraw(segment).WaitForCompletion();
         }
     }
 

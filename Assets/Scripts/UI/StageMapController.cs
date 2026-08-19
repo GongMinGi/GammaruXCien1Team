@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -64,13 +65,16 @@ public class StageMapController : MonoBehaviour
             constellationView.ShowLink(BuildConstellationPoints(i));
         }
 
-        for (int i = 0; i < unlockedStageCount; i++)
+        // 첫 스테이지는 클리어 때와 같은 연출로 등장하고, 나머지는 바로 표시한다.
+        for (int i = 1; i < unlockedStageCount; i++)
         {
             stageMapView.CreateCard(
                 i + 1,
                 stagePositions[i],
                 OpenStage);
         }
+
+        StartCoroutine(RevealStageCardRoutine(0));
     }
 
     /// <summary>
@@ -188,14 +192,59 @@ public class StageMapController : MonoBehaviour
             return;
         }
 
-        int nextStageIndex = StageProgressData.UnlockedStageCount - 1;
-        UpdateContentWidth(StageProgressData.UnlockedStageCount);
-        constellationView.PlayLinkAnimation(
-            BuildConstellationPoints(nextStageIndex - 1));
-        stageMapView.CreateCard(
-            nextStageIndex + 1,
-            stagePositions[nextStageIndex],
+        StartCoroutine(OpenNextStageRoutine(StageProgressData.UnlockedStageCount - 1));
+    }
+
+    /// <summary>
+    /// 별자리 선, 카드 테두리, 반짝임, 뒷면 등장을 순서대로 진행한다.
+    /// </summary>
+    private IEnumerator OpenNextStageRoutine(int nextStageIndex)
+    {
+        UpdateContentWidth(nextStageIndex + 1);
+        yield return constellationView.PlayLinkRoutine(
+            BuildConstellationPoints(nextStageIndex - 1),
+            false);
+        yield return RevealStageCardRoutine(nextStageIndex);
+    }
+
+    /// <summary>
+    /// 카드 테두리를 그린 뒤 반짝임과 함께 카드 뒷면을 띄운다.
+    /// </summary>
+    private IEnumerator RevealStageCardRoutine(int stageIndex)
+    {
+        yield return constellationView.PlayLinkRoutine(
+            BuildCardBorderPoints(stageIndex),
+            true);
+
+        StageCardView cardView = stageMapView.CreateCard(
+            stageIndex + 1,
+            stagePositions[stageIndex],
             OpenStage);
+        yield return cardView.PlayRevealRoutine();
+    }
+
+    /// <summary>
+    /// 카드 테두리를 왼쪽 위부터 시계 방향으로 도는 꼭짓점을 계산한다.
+    /// </summary>
+    private StarPoint[] BuildCardBorderPoints(int stageIndex)
+    {
+        Vector2 cardCenter = stagePositions[stageIndex];
+        Vector2 halfCardSize = stageCardSize * 0.5f;
+        StarPoint[] cornerPoints = new StarPoint[4];
+
+        cornerPoints[0] = new StarPoint(
+            cardCenter + new Vector2(-halfCardSize.x, halfCardSize.y),
+            StarNodeSize.Large);
+        cornerPoints[1] = new StarPoint(
+            cardCenter + new Vector2(halfCardSize.x, halfCardSize.y),
+            StarNodeSize.Large);
+        cornerPoints[2] = new StarPoint(
+            cardCenter + new Vector2(halfCardSize.x, -halfCardSize.y),
+            StarNodeSize.Large);
+        cornerPoints[3] = new StarPoint(
+            cardCenter + new Vector2(-halfCardSize.x, -halfCardSize.y),
+            StarNodeSize.Large);
+        return cornerPoints;
     }
 
     /// <summary>

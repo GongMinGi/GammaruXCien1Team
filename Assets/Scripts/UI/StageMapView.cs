@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 /// <summary>
 /// 계산된 위치에 스테이지 카드를 표시한다.
@@ -39,20 +38,16 @@ public class StageMapView : MonoBehaviour
     /// <summary>
     /// 지정한 번호와 위치, 클릭 처리 메서드로 스테이지 카드를 생성한다.
     /// </summary>
-    public void CreateCard(
+    public StageCardView CreateCard(
         int stageNumber,
         Vector2 position,
-        UnityAction<int> cardClickHandler)
+        UnityAction<int> stageOpenHandler)
     {
         RectTransform card = Instantiate(cardPrefab, cardsRoot, false);
-        Text numberText = card.GetComponentInChildren<Text>(true);
-        Button cardButton = card.GetComponent<Button>();
+        StageCardView cardView = card.GetComponent<StageCardView>();
 
         card.anchoredPosition = position;
-        numberText.text = stageNumber.ToString();
-        cardButton.onClick.AddListener(delegate
-        {
-            cardClickHandler(stageNumber);
-        });
+        cardView.Initialize(stageNumber, stageOpenHandler);
+        return cardView;
     }
 }
