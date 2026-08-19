@@ -42,7 +42,7 @@ public class BossPatternTests
         GameObject go = new GameObject("BossTest");
         BossStats stats = go.AddComponent<BossStats>();
         SetCurrentHp(stats);
-        BossAI ai = CreateGolemAI(go, out var definition);
+        BossAI ai = CreateGolemAI(go, stats, out var definition, out var data);
 
         BossPatternPlan plan = ai.GeneratePattern(Vector2Int.zero);
 
@@ -56,6 +56,7 @@ public class BossPatternTests
         Assert.IsTrue(plan.Actions.All(action => action.baseDamage == 10));
 
         Object.DestroyImmediate(definition);
+        Object.DestroyImmediate(data);
         Object.DestroyImmediate(go);
     }
 
@@ -65,7 +66,7 @@ public class BossPatternTests
         GameObject go = new GameObject("BossTest");
         BossStats stats = go.AddComponent<BossStats>();
         SetCurrentHp(stats);
-        BossAI ai = CreateGolemAI(go, out var definition);
+        BossAI ai = CreateGolemAI(go, stats, out var definition, out var data);
 
         Assert.IsNotNull(ai.GeneratePattern(Vector2Int.zero));
         stats.TakeDamage(stats.MaxHp / 2);
@@ -82,6 +83,7 @@ public class BossPatternTests
         Assert.AreEqual(8, plan.Actions[2].targetCells.Length);
 
         Object.DestroyImmediate(definition);
+        Object.DestroyImmediate(data);
         Object.DestroyImmediate(go);
     }
 
@@ -98,18 +100,28 @@ public class BossPatternTests
 
     private static BossAI CreateGolemAI(
         GameObject go,
-        out AbandonedMagicGolemPatternDefinition definition)
+        BossStats stats,
+        out AbandonedMagicGolemPatternDefinition definition,
+        out BossData data)
     {
         BossAI ai = go.AddComponent<BossAI>();
         definition =
             ScriptableObject.CreateInstance<AbandonedMagicGolemPatternDefinition>();
+        data = ScriptableObject.CreateInstance<BossData>();
+        SetField(data, "maxHp", 500);
+        SetField(data, "pattern", definition);
+        SetField(stats, "bossData", data);
+        SetCurrentHp(stats);
+        return ai;
+    }
 
-        var field = typeof(BossAI).GetField("patternDefinition",
+    private static void SetField(object target, string fieldName, object value)
+    {
+        var field = target.GetType().GetField(fieldName,
             System.Reflection.BindingFlags.NonPublic |
             System.Reflection.BindingFlags.Instance);
         Assert.IsNotNull(field);
-        field.SetValue(ai, definition);
-        return ai;
+        field.SetValue(target, value);
     }
 
 
@@ -119,7 +131,7 @@ public class BossPatternTests
         GameObject go = new GameObject("BossTest");
         BossStats stats = go.AddComponent<BossStats>();
         SetCurrentHp(stats);
-        BossAI ai = CreateGolemAI(go, out var definition);
+        BossAI ai = CreateGolemAI(go, stats, out var definition, out var data);
 
         Assert.IsNotNull(ai.GeneratePattern(Vector2Int.zero));
 
@@ -135,6 +147,7 @@ public class BossPatternTests
         Assert.IsFalse(plan.Actions[0].targetCells.Contains(Vector2Int.zero));
 
         Object.DestroyImmediate(definition);
+        Object.DestroyImmediate(data);
         Object.DestroyImmediate(go);
     }
 }

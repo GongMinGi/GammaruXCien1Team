@@ -16,6 +16,7 @@ public struct PlannedAction
     public InstantModifierType ConsumedCostModifier;
     public bool ConsumedElementBuff;
     public DamageElement ConsumedElement;
+    public Vector2Int PreCardPosition;  // 카드 사용 전 위치 (이동 카드 undo용)
 
     // 합치기 전용
     public ArcanaData MergeSource1;
@@ -27,6 +28,7 @@ public struct PlannedAction
     // 관측 카드 전용 (undo용)
     public ObservationActionType ObservationAction;
     public ArcanaData DrawnCard;           // DrawCard: 드로우된 카드
+    public int DrawnCardIndex;             // DrawCard: 드로우된 카드 핸드 인덱스
     public int TransformTargetIndex;       // TransformCard: 교체 대상 위치
     public ArcanaData TransformOriginal;   // TransformCard: 교체 전 원본 카드
     public ArcanaData TransformReplacement; // TransformCard: 교체된 카드

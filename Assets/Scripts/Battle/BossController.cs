@@ -130,7 +130,17 @@ public class BossController : MonoBehaviour
                 return null;
 
             if (action.Type == ActionType.Move)
+            {
                 currentPosition += action.Direction;
+            }
+            else if (action.Type == ActionType.UseCard &&
+                     action.Direction != Vector2Int.zero &&
+                     action.CardData != null &&
+                     action.CardData.EffectDefinition != null)
+            {
+                currentPosition = SimulateCardMovement(
+                    currentPosition, action.Direction, action.CardData);
+            }
 
             for (int i = 0; i < action.Cost; i++)
                 positions[slotCursor + i] = currentPosition;
@@ -142,5 +152,39 @@ public class BossController : MonoBehaviour
             positions[slot] = currentPosition;
 
         return positions;
+    }
+
+    private static Vector2Int SimulateCardMovement(
+        Vector2Int currentPos, Vector2Int direction, ArcanaData card)
+    {
+        ScheduledEffect[][] effects = card.EffectDefinition.Expand(card);
+        if (effects == null)
+            return currentPos;
+
+        foreach (ScheduledEffect[] slotEffects in effects)
+        {
+            if (slotEffects == null) continue;
+            foreach (ScheduledEffect effect in slotEffects)
+            {
+                if (effect.Type != EffectType.Move)
+                    continue;
+
+                int dist = effect.BaseValue > 0 ? effect.BaseValue : 1;
+                Vector2Int target = currentPos;
+                for (int step = 1; step <= dist; step++)
+                {
+                    Vector2Int check = currentPos + direction * step;
+                    if (check.x < -GridManager.Columns / 2 ||
+                        check.x > GridManager.Columns / 2 ||
+                        check.y < -GridManager.Rows / 2 ||
+                        check.y > GridManager.Rows / 2)
+                        break;
+                    target = check;
+                }
+                currentPos = target;
+            }
+        }
+
+        return currentPos;
     }
 }

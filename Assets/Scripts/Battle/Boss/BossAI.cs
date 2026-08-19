@@ -4,7 +4,6 @@ using UnityEngine;
 public class BossAI : MonoBehaviour
 {
     [SerializeField] private BossStats bossStats;
-    [SerializeField] private BossPatternDefinition patternDefinition;
 
     private int currentPhase;
     private int phaseTurnIndex;
@@ -27,13 +26,13 @@ public class BossAI : MonoBehaviour
             return false;
         }
 
-        if (patternDefinition == null)
+        if (bossStats.Data == null || bossStats.Data.Pattern == null)
         {
             Debug.LogError("BossAI pattern definition is not assigned.", this);
             return false;
         }
 
-        return patternDefinition.ValidateDefinition();
+        return bossStats.Data.Pattern.ValidateDefinition();
     }
 
     public BossPatternPlan GeneratePattern(Vector2Int playerPosition)
@@ -42,7 +41,7 @@ public class BossAI : MonoBehaviour
             return null;
 
         int resolvedPhase =
-            patternDefinition.ResolvePhase(bossStats, currentPhase);
+            bossStats.Data.Pattern.ResolvePhase(bossStats, currentPhase);
         if (resolvedPhase != currentPhase)
         {
             currentPhase = resolvedPhase;
@@ -50,7 +49,7 @@ public class BossAI : MonoBehaviour
         }
 
         currentPatternIndex =
-            patternDefinition.SelectPatternIndex(currentPhase, phaseTurnIndex);
+            bossStats.Data.Pattern.SelectPatternIndex(currentPhase, phaseTurnIndex);
         phaseTurnIndex++;
 
         return BuildCurrentPattern(
@@ -69,7 +68,7 @@ public class BossAI : MonoBehaviour
     private BossPatternPlan BuildCurrentPattern(
         IReadOnlyList<Vector2Int> playerPositionsBySlot)
     {
-        BossPatternPlan plan = patternDefinition.BuildPattern(
+        BossPatternPlan plan = bossStats.Data.Pattern.BuildPattern(
             currentPhase,
             currentPatternIndex,
             playerPositionsBySlot);
@@ -120,4 +119,3 @@ public class BossAI : MonoBehaviour
         return true;
     }
 }
-

@@ -403,6 +403,15 @@ public class PlanningController : MonoBehaviour
         activeCostModifier = InstantModifierType.None;
         activeElementBuff = false;
 
+        Vector2Int prePos = playerGridPos;
+
+        if (direction != Vector2Int.zero && card.EffectDefinition != null)
+        {
+            playerGridPos = SimulateCardMovement(playerGridPos, direction, card);
+            if (playerGridPos != prePos)
+                playerDisplay.UpdateGridPosition(playerGridPos.x, playerGridPos.y);
+        }
+
         plannedActions.Add(new PlannedAction
         {
             Type = ActionType.UseCard,
@@ -412,7 +421,8 @@ public class PlanningController : MonoBehaviour
             OriginalHandIndex = handIndex,
             ConsumedCostModifier = consumedCost,
             ConsumedElementBuff = consumedElement,
-            ConsumedElement = consumedElementValue
+            ConsumedElement = consumedElementValue,
+            PreCardPosition = prePos
         });
 
         actionBar.FillRange(usedSlots, effectiveCost, card.TimelineColor);
@@ -443,6 +453,11 @@ public class PlanningController : MonoBehaviour
             case ActionType.UseCard:
                 actionBar.ClearRange(usedSlots, action.Cost);
                 playerHand.ReturnCard(action.OriginalHandIndex, action.CardData);
+                if (action.PreCardPosition != playerGridPos)
+                {
+                    playerGridPos = action.PreCardPosition;
+                    playerDisplay.UpdateGridPosition(playerGridPos.x, playerGridPos.y);
+                }
                 if (action.ConsumedCostModifier != InstantModifierType.None)
                     activeCostModifier = action.ConsumedCostModifier;
                 if (action.ConsumedElementBuff)
@@ -467,13 +482,20 @@ public class PlanningController : MonoBehaviour
             case ActionType.UseObservationCard:
                 if (action.ObservationAction == ObservationActionType.DrawCard)
                 {
-                    // 드로우된 카드 제거 후 관측 카드 복원
-                    for (int i = 0; i < playerHand.Cards.Count; i++)
+                    // 드로우된 카드를 인덱스로 제거 후 관측 카드 복원
+                    int removeIndex = Mathf.Min(action.DrawnCardIndex, playerHand.Cards.Count - 1);
+                    if (removeIndex >= 0 && playerHand.Cards[removeIndex] == action.DrawnCard)
+                        playerHand.TryTakeCard(removeIndex, out _);
+                    else
                     {
-                        if (playerHand.Cards[i] == action.DrawnCard)
+                        // 인덱스 밀림 — 폴백 탐색
+                        for (int i = playerHand.Cards.Count - 1; i >= 0; i--)
                         {
-                            playerHand.TryTakeCard(i, out _);
-                            break;
+                            if (playerHand.Cards[i] == action.DrawnCard)
+                            {
+                                playerHand.TryTakeCard(i, out _);
+                                break;
+                            }
                         }
                     }
                     playerHand.ReturnCard(action.OriginalHandIndex, action.CardData);
@@ -524,8 +546,17 @@ public class PlanningController : MonoBehaviour
         {
             case ObservationActionType.DrawCard:
                 playerHand.TryTakeCard(handIndex, out _);
+                int countBefore = playerHand.Cards.Count;
                 playerHand.DrawOne(bag);
-                ArcanaData drawn = playerHand.Cards[playerHand.Cards.Count - 1];
+                if (playerHand.Cards.Count <= countBefore)
+                {
+                    // 드로우 실패 — 관측 카드 복원
+                    playerHand.ReturnCard(handIndex, card);
+                    Debug.Log("드로우 실패: 백이 비어있습니다.");
+                    return;
+                }
+                int drawnIndex = playerHand.Cards.Count - 1;
+                ArcanaData drawn = playerHand.Cards[drawnIndex];
                 plannedActions.Add(new PlannedAction
                 {
                     Type = ActionType.UseObservationCard,
@@ -533,7 +564,8 @@ public class PlanningController : MonoBehaviour
                     CardData = card,
                     OriginalHandIndex = handIndex,
                     ObservationAction = ObservationActionType.DrawCard,
-                    DrawnCard = drawn
+                    DrawnCard = drawn,
+                    DrawnCardIndex = drawnIndex
                 });
                 Debug.Log($"{card.DisplayNumber} {card.KoreanName}: 카드 1장 드로우.");
                 break;
@@ -586,13 +618,16 @@ public class PlanningController : MonoBehaviour
     private void CancelTransformCard()
     {
         transformTargetSelectionActive = false;
-        // 마지막 PlannedAction 제거하고 카드 복원
-        if (plannedActions.Count > 0 && plannedActions[^1].ObservationAction == ObservationActionType.TransformCard
-            && plannedActions[^1].TransformOriginal == null)
+        if (plannedActions.Count > 0)
         {
-            PlannedAction action = plannedActions[^1];
-            plannedActions.RemoveAt(plannedActions.Count - 1);
-            playerHand.ReturnCard(action.OriginalHandIndex, action.CardData);
+            PlannedAction last = plannedActions[^1];
+            if (last.Type == ActionType.UseObservationCard &&
+                last.ObservationAction == ObservationActionType.TransformCard &&
+                last.TransformOriginal == null)
+            {
+                plannedActions.RemoveAt(plannedActions.Count - 1);
+                playerHand.ReturnCard(last.OriginalHandIndex, last.CardData);
+            }
         }
     }
 
@@ -716,6 +751,37 @@ public class PlanningController : MonoBehaviour
     {
         ClearDirectionTargets();
         directionSelectionActive = false;
+    }
+
+    private Vector2Int SimulateCardMovement(
+        Vector2Int currentPos, Vector2Int direction, ArcanaData card)
+    {
+        ScheduledEffect[][] effects = card.EffectDefinition.Expand(card);
+        if (effects == null)
+            return currentPos;
+
+        foreach (ScheduledEffect[] slotEffects in effects)
+        {
+            if (slotEffects == null) continue;
+            foreach (ScheduledEffect effect in slotEffects)
+            {
+                if (effect.Type != EffectType.Move)
+                    continue;
+
+                int dist = effect.BaseValue > 0 ? effect.BaseValue : 1;
+                Vector2Int target = currentPos;
+                for (int step = 1; step <= dist; step++)
+                {
+                    Vector2Int check = currentPos + direction * step;
+                    if (!gridManager.IsValidCoordinate(check.x, check.y))
+                        break;
+                    target = check;
+                }
+                currentPos = target;
+            }
+        }
+
+        return currentPos;
     }
 
     private static InstantModifierType GetModifierType(ArcanaData card)

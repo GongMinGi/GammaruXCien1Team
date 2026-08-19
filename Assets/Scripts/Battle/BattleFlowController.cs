@@ -12,7 +12,6 @@ public class BattleFlowController : MonoBehaviour
     [SerializeField] private BossStats bossStats;
     [SerializeField] private PlayerDisplay playerDisplay;
     [SerializeField] private ArcanaCatalog arcanaCatalog;
-    [SerializeField] private ObservationController observationController;
     [SerializeField] private ArcanaData[] selectedArcanaPool;
 
     private BattlePhase currentPhase;
@@ -470,14 +469,15 @@ public class BattleFlowController : MonoBehaviour
     private void InjectDamageSpread(
         TimelineSlot[] timeline, int startSlot, int duration)
     {
-        for (int i = 0; i < duration && startSlot + i < timeline.Length; i++)
+        if (startSlot >= timeline.Length)
+            return;
+
+        int spreadSlots = Mathf.Min(duration, timeline.Length - startSlot);
+        timeline[startSlot].Effects.Insert(0, new ScheduledEffect
         {
-            timeline[startSlot + i].Effects.Insert(0, new ScheduledEffect
-            {
-                Type = EffectType.DamageSpread,
-                BaseValue = 3
-            });
-        }
+            Type = EffectType.DamageSpread,
+            BaseValue = spreadSlots
+        });
     }
 
     private bool ValidateReferences()
@@ -485,8 +485,7 @@ public class BattleFlowController : MonoBehaviour
         if (planningController == null || battleExecutor == null ||
             bossController == null || playerHand == null ||
             playerStats == null || bossStats == null ||
-            playerDisplay == null || arcanaCatalog == null ||
-            observationController == null)
+            playerDisplay == null || arcanaCatalog == null)
         {
             Debug.LogError("BattleFlowController references are not assigned.", this);
             return false;
@@ -499,9 +498,6 @@ public class BattleFlowController : MonoBehaviour
             return false;
 
         if (!bossController.ValidateReferences())
-            return false;
-
-        if (!observationController.ValidateReferences())
             return false;
 
         return true;
