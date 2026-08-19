@@ -64,6 +64,7 @@ public class StageMapEditorWindow : EditorWindow
         amount = Mathf.Max(1, EditorGUILayout.IntField("수량", amount));
         DrawEditButtons(dataObject, verticalRates);
         dataObject.ApplyModifiedProperties();
+        DrawStageClearTestButton();
     }
 
     /// <summary>
@@ -177,5 +178,27 @@ public class StageMapEditorWindow : EditorWindow
         selectedIndex = Mathf.Min(removeIndex, verticalRates.arraySize - 1);
         dataObject.ApplyModifiedProperties();
         EditorUtility.SetDirty(stageMapData);
+    }
+
+    /// <summary>
+    /// Play Mode에서 현재 마지막 스테이지의 클리어를 시험하는 버튼을 그린다.
+    /// </summary>
+    private void DrawStageClearTestButton()
+    {
+        EditorGUILayout.Space();
+        EditorGUI.BeginDisabledGroup(!EditorApplication.isPlaying);
+
+        if (GUILayout.Button("스테이지 클리어 시험"))
+        {
+            StageMapController stageMapController
+                = Object.FindFirstObjectByType<StageMapController>();
+
+            if (stageMapController != null)
+            {
+                stageMapController.CompleteLatestStageForTest();
+            }
+        }
+
+        EditorGUI.EndDisabledGroup();
     }
 }

@@ -58,7 +58,7 @@ public class StageMapView : MonoBehaviour
     public void CreateCard(
         int stageNumber,
         Vector2 position,
-        UnityAction cardClickHandler)
+        UnityAction<int> cardClickHandler)
     {
         RectTransform card = Instantiate(cardPrefab, cardsRoot, false);
         Text numberText = card.GetComponentInChildren<Text>(true);
@@ -66,6 +66,9 @@ public class StageMapView : MonoBehaviour
 
         card.anchoredPosition = position;
         numberText.text = stageNumber.ToString();
-        cardButton.onClick.AddListener(cardClickHandler);
+        cardButton.onClick.AddListener(delegate
+        {
+            cardClickHandler(stageNumber);
+        });
     }
 }
