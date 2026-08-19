@@ -432,7 +432,7 @@ public class BattleExecutor : MonoBehaviour
                     {
                         TowerState tw = towers[t];
                         tw.IsDebris = true;
-                        tw.DebrisRemainingSlots = 3;
+                        tw.DebrisRemainingSlots = 2;
                         if (tw.Visual != null)
                             Destroy(tw.Visual);
                         tw.Visual = CreateTowerVisual(tw.Position, true);
