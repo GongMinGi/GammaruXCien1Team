@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__aseprite__get_sprite_info"
+    ]
+  }
+}

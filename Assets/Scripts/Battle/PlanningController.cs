@@ -38,6 +38,9 @@ public class PlanningController : MonoBehaviour
     private bool transformTargetSelectionActive;
     private int observationSourceHandIndex;
 
+    private static readonly Color TowerPreviewColor = new Color(0.55f, 0.35f, 0.15f, 0.8f);
+    private readonly List<GameObject> towerPreviewObjects = new();
+
     private GameObject elementPromptObject;
     private readonly List<GridCell> blinkingCells = new();
 
@@ -92,6 +95,7 @@ public class PlanningController : MonoBehaviour
         arcanaPool = pool;
         HideElementPrompt();
         ClearDirectionTargets();
+        ClearTowerPreviews();
         CancelCardDrag();
         NotifyPlanningSlotChanged();
     }
@@ -404,12 +408,21 @@ public class PlanningController : MonoBehaviour
         activeElementBuff = false;
 
         Vector2Int prePos = playerGridPos;
+        bool placedTower = false;
+        Vector2Int towerPos = Vector2Int.zero;
 
         if (direction != Vector2Int.zero && card.EffectDefinition != null)
         {
             playerGridPos = SimulateCardMovement(playerGridPos, direction, card);
             if (playerGridPos != prePos)
                 playerDisplay.UpdateGridPosition(playerGridPos.x, playerGridPos.y);
+
+            towerPos = SimulateTowerPlacement(prePos, direction, card);
+            if (towerPos != Vector2Int.zero)
+            {
+                placedTower = true;
+                towerPreviewObjects.Add(CreateTowerPreview(towerPos));
+            }
         }
 
         plannedActions.Add(new PlannedAction
@@ -422,7 +435,9 @@ public class PlanningController : MonoBehaviour
             ConsumedCostModifier = consumedCost,
             ConsumedElementBuff = consumedElement,
             ConsumedElement = consumedElementValue,
-            PreCardPosition = prePos
+            PreCardPosition = prePos,
+            PlacedTower = placedTower,
+            TowerPlacedPosition = towerPos
         });
 
         actionBar.FillRange(usedSlots, effectiveCost, card.TimelineColor);
@@ -457,6 +472,12 @@ public class PlanningController : MonoBehaviour
                 {
                     playerGridPos = action.PreCardPosition;
                     playerDisplay.UpdateGridPosition(playerGridPos.x, playerGridPos.y);
+                }
+                if (action.PlacedTower && towerPreviewObjects.Count > 0)
+                {
+                    GameObject last = towerPreviewObjects[^1];
+                    towerPreviewObjects.RemoveAt(towerPreviewObjects.Count - 1);
+                    Destroy(last);
                 }
                 if (action.ConsumedCostModifier != InstantModifierType.None)
                     activeCostModifier = action.ConsumedCostModifier;
@@ -751,6 +772,70 @@ public class PlanningController : MonoBehaviour
     {
         ClearDirectionTargets();
         directionSelectionActive = false;
+    }
+
+    private GameObject CreateTowerPreview(Vector2Int gridPos)
+    {
+        GameObject obj = new GameObject("TowerPreview");
+        obj.transform.SetParent(transform, false);
+        obj.transform.position = gridManager.GridToWorldPosition(gridPos.x, gridPos.y);
+
+        int texSize = 16;
+        Texture2D tex = new Texture2D(texSize, texSize);
+        tex.filterMode = FilterMode.Point;
+        for (int y = 0; y < texSize; y++)
+            for (int x = 0; x < texSize; x++)
+                tex.SetPixel(x, y, Color.white);
+        tex.Apply();
+
+        Sprite sprite = Sprite.Create(
+            tex, new Rect(0, 0, texSize, texSize),
+            new Vector2(0.5f, 0f), texSize);
+
+        GameObject visual = new GameObject("Visual");
+        visual.transform.SetParent(obj.transform, false);
+        visual.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
+
+        SpriteRenderer renderer = visual.AddComponent<SpriteRenderer>();
+        renderer.sprite = sprite;
+        renderer.color = TowerPreviewColor;
+        renderer.sortingOrder = 2;
+
+        return obj;
+    }
+
+    private Vector2Int SimulateTowerPlacement(
+        Vector2Int currentPos, Vector2Int direction, ArcanaData card)
+    {
+        ScheduledEffect[][] effects = card.EffectDefinition.Expand(card);
+        if (effects == null)
+            return Vector2Int.zero;
+
+        foreach (ScheduledEffect[] slotEffects in effects)
+        {
+            if (slotEffects == null) continue;
+            foreach (ScheduledEffect effect in slotEffects)
+            {
+                if (effect.Type != EffectType.PlaceTower)
+                    continue;
+
+                Vector2Int towerPos = currentPos + direction;
+                if (gridManager.IsValidCoordinate(towerPos.x, towerPos.y))
+                    return towerPos;
+            }
+        }
+
+        return Vector2Int.zero;
+    }
+
+    private void ClearTowerPreviews()
+    {
+        foreach (GameObject obj in towerPreviewObjects)
+        {
+            if (obj != null)
+                Destroy(obj);
+        }
+        towerPreviewObjects.Clear();
     }
 
     private Vector2Int SimulateCardMovement(

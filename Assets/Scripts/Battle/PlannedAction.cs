@@ -17,6 +17,8 @@ public struct PlannedAction
     public bool ConsumedElementBuff;
     public DamageElement ConsumedElement;
     public Vector2Int PreCardPosition;  // 카드 사용 전 위치 (이동 카드 undo용)
+    public Vector2Int TowerPlacedPosition; // 타워 배치 위치 (undo용)
+    public bool PlacedTower;               // 타워 배치 여부
 
     // 합치기 전용
     public ArcanaData MergeSource1;
