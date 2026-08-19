@@ -17,4 +17,8 @@ MonoBehaviour:
   maxHp: 600
   weakness: 1
   burnDamagePerStack: 2
+  burnDurationTurns: 3
   pattern: {fileID: 11400000, guid: 7c1f4a2b9e6d40a1b3c58d2f0a47e6b1, type: 2}
+  stageId: 2
+  battleBackground: {fileID: 0}
+  battleBgm: {fileID: 0}
