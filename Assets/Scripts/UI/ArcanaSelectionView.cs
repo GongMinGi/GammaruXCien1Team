@@ -7,12 +7,16 @@ using UnityEngine.UI;
 /// </summary>
 public class ArcanaSelectionView : MonoBehaviour
 {
+    private const int SelectedCardsPerRow = 5;
+
     [SerializeField] private GameObject selectionOverlay;
     [SerializeField] private RectTransform deckRoot;
-    [SerializeField] private RectTransform inventoryRoot;
+    [SerializeField] private RectTransform selectedCardTopRow;
+    [SerializeField] private RectTransform selectedCardBottomRow;
     [SerializeField] private ArcanaCardView arcanaCardPrefab;
     [SerializeField] private GameObject cardDetailPanel;
     [SerializeField] private Text detailTitleText;
+    [SerializeField] private Button battleStartButton;
     [SerializeField] private float fanWidth = 1080f;
     [SerializeField] private float fanVerticalDrop = 70f;
     [SerializeField] private float maximumFanAngle = 24f;
@@ -77,18 +81,41 @@ public class ArcanaSelectionView : MonoBehaviour
     }
 
     /// <summary>
-    /// 클릭한 더미 카드를 상단 인벤토리 영역으로 옮긴다.
+    /// 클릭한 더미 카드를 최대 5장씩 나뉜 선택 카드 행으로 옮긴다.
     /// </summary>
     public void MoveCardToInventory(ArcanaCardView arcanaCardView)
     {
-        arcanaCardView.MoveToInventory(inventoryRoot);
+        RectTransform targetRow = selectedCardTopRow;
+
+        if (selectedCardTopRow.childCount >= SelectedCardsPerRow)
+        {
+            targetRow = selectedCardBottomRow;
+        }
+
+        arcanaCardView.MoveToInventory(targetRow);
     }
 
     /// <summary>
-    /// 우클릭으로 선택을 취소한 카드를 하단 더미로 되돌린다.
+    /// 우클릭으로 선택을 취소한 카드를 더미로 되돌리고 두 행을 다시 채운다.
     /// </summary>
     public void ReturnCardToDeck(ArcanaCardView arcanaCardView)
     {
         arcanaCardView.ReturnToDeck(deckRoot);
+
+        if (selectedCardTopRow.childCount < SelectedCardsPerRow
+            && selectedCardBottomRow.childCount > 0)
+        {
+            selectedCardBottomRow
+                .GetChild(0)
+                .SetParent(selectedCardTopRow, false);
+        }
+    }
+
+    /// <summary>
+    /// 전투 시작 버튼의 상호작용 가능 상태를 설정한다.
+    /// </summary>
+    public void SetBattleStartButtonInteractable(bool isInteractable)
+    {
+        battleStartButton.interactable = isInteractable;
     }
 }
