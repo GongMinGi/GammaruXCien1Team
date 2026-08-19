@@ -1,37 +1,13 @@
 fileFormatVersion: 2
-guid: d5a1cba7249e2eb4fb2fe7c1c5b03097
+guid: 7fd5db5b7b8210c41beb991a9ccb991c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1326470208626907868
-    second: ArcanaBook_0
+      213: 5408410555901569584
+    second: ArcanaBookAtlas_0
   - first:
-      213: -3882616521787917734
-    second: ArcanaBook_1
-  - first:
-      213: 4594788064653850950
-    second: ArcanaBook_2
-  - first:
-      213: 7707486903087370109
-    second: ArcanaBook_3
-  - first:
-      213: 3650093495997207843
-    second: ArcanaBook_4
-  - first:
-      213: 5927496884670182622
-    second: ArcanaBook_5
-  - first:
-      213: -7412706437969962941
-    second: ArcanaBook_6
-  - first:
-      213: -3505036786735029260
-    second: ArcanaBook_7
-  - first:
-      213: -7580045567887058079
-    second: ArcanaBook_8
-  - first:
-      213: -7341406863364506199
-    second: ArcanaBook_9
+      213: 5947246868420931096
+    second: ArcanaBookAtlas_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -64,7 +40,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -140,221 +116,177 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ArcanaBook_0
+      name: ArcanaBookAtlas_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 23
-        width: 1122
-        height: 1371
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        y: 512
+        width: 384
+        height: 512
+      alignment: 9
+      pivot: {x: 0.5, y: 0.23}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 425a7a98f5e679de0800000000000000
-      internalID: -1326470208626907868
+      spriteID: 03a6cffdeb88e0b40800000000000000
+      internalID: 5408410555901569584
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ArcanaBook_1
+      name: ArcanaBookAtlas_1
       rect:
         serializedVersion: 2
-        x: 78
-        y: 1338
-        width: 15
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 384
+        y: 512
+        width: 384
+        height: 512
+      alignment: 9
+      pivot: {x: 0.5, y: 0.23}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a5ab4cb28dc2e1ac0800000000000000
-      internalID: -3882616521787917734
+      spriteID: 81ea8c7548dd88250800000000000000
+      internalID: 5947246868420931096
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ArcanaBook_2
+      name: ArcanaBookAtlas_2
       rect:
         serializedVersion: 2
-        x: 1048
-        y: 1345
-        width: 9
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 768
+        y: 512
+        width: 384
+        height: 512
+      alignment: 9
+      pivot: {x: 0.5, y: 0.23}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 649b5eb8667f3cf30800000000000000
-      internalID: 4594788064653850950
+      spriteID: 15393470e10ba0d4697b7a5bc4dad141
+      internalID: 688052017
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ArcanaBook_3
+      name: ArcanaBookAtlas_3
       rect:
         serializedVersion: 2
-        x: 777
-        y: 140
-        width: 7
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 1152
+        y: 512
+        width: 384
+        height: 512
+      alignment: 9
+      pivot: {x: 0.5, y: 0.23}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: d7f8f79908e76fa60800000000000000
-      internalID: 7707486903087370109
+      spriteID: f42cd16a15721494fa288692e47e3318
+      internalID: -2142279025
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ArcanaBook_4
+      name: ArcanaBookAtlas_4
       rect:
         serializedVersion: 2
-        x: 791
-        y: 130
-        width: 24
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 32590e112bcb7a230800000000000000
-      internalID: 3650093495997207843
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ArcanaBook_5
-      rect:
-        serializedVersion: 2
-        x: 481
-        y: 86
-        width: 14
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ed4300ae203b24250800000000000000
-      internalID: 5927496884670182622
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ArcanaBook_6
-      rect:
-        serializedVersion: 2
-        x: 1026
-        y: 69
-        width: 35
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3489c84d4c6c02990800000000000000
-      internalID: -7412706437969962941
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ArcanaBook_7
-      rect:
-        serializedVersion: 2
-        x: 533
+        x: 0
         y: 0
-        width: 23
-        height: 54
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 384
+        height: 512
+      alignment: 9
+      pivot: {x: 0.5, y: 0.27}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 4f36bf9ec9b9b5fc0800000000000000
-      internalID: -3505036786735029260
+      spriteID: b2a4830a386b8ae42a9cc2d7da36b733
+      internalID: 1717973931
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ArcanaBook_8
+      name: ArcanaBookAtlas_5
       rect:
         serializedVersion: 2
-        x: 1014
-        y: 53
-        width: 25
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 384
+        y: 0
+        width: 384
+        height: 512
+      alignment: 9
+      pivot: {x: 0.5, y: 0.27}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 16b51d087b44ec690800000000000000
-      internalID: -7580045567887058079
+      spriteID: 1f9418d45d1c1ce42a1daba85acc6bc1
+      internalID: -783090873
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ArcanaBook_9
+      name: ArcanaBookAtlas_6
       rect:
         serializedVersion: 2
-        x: 1065
-        y: 47
-        width: 34
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 768
+        y: 0
+        width: 384
+        height: 512
+      alignment: 9
+      pivot: {x: 0.5, y: 0.27}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 9ad3b8daa551e1a90800000000000000
-      internalID: -7341406863364506199
+      spriteID: dada50f9bfd165246a5ca2e606e9fb93
+      internalID: 795423196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ArcanaBookAtlas_7
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 0
+        width: 384
+        height: 512
+      alignment: 9
+      pivot: {x: 0.5, y: 0.27}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38d41b5832fd0284489af8a551089cc4
+      internalID: -1305887515
       vertices: []
       indices: 
       edges: []
@@ -363,7 +295,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 0b8e55c188691134b9342fbd24f2e52a
     internalID: 0
     vertices: []
     indices: 
@@ -371,18 +303,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":4.0,"y":2.0},"gridSpriteSize":{"x":384.0,"y":512.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":9,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      ArcanaBook_0: -1326470208626907868
-      ArcanaBook_1: -3882616521787917734
-      ArcanaBook_2: 4594788064653850950
-      ArcanaBook_3: 7707486903087370109
-      ArcanaBook_4: 3650093495997207843
-      ArcanaBook_5: 5927496884670182622
-      ArcanaBook_6: -7412706437969962941
-      ArcanaBook_7: -3505036786735029260
-      ArcanaBook_8: -7580045567887058079
-      ArcanaBook_9: -7341406863364506199
+      ArcanaBookAtlas_0: 5408410555901569584
+      ArcanaBookAtlas_1: 5947246868420931096
+      ArcanaBookAtlas_2: 688052017
+      ArcanaBookAtlas_3: -2142279025
+      ArcanaBookAtlas_4: 1717973931
+      ArcanaBookAtlas_5: -783090873
+      ArcanaBookAtlas_6: 795423196
+      ArcanaBookAtlas_7: -1305887515
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
