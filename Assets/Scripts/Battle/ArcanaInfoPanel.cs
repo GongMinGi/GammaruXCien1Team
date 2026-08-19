@@ -95,7 +95,7 @@ public class ArcanaInfoPanel : MonoBehaviour
         return text;
     }
 
-    private static string UsageLabel(ArcanaUsageType type)
+    public static string UsageLabel(ArcanaUsageType type)
     {
         return type switch
         {
