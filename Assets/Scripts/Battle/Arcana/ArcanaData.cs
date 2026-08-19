@@ -12,6 +12,10 @@ public class ArcanaData : ScriptableObject
     [SerializeField] private Color cardColor = Color.white;
     [SerializeField] private Color timelineColor = new Color(0.7f, 0.3f, 0.5f);
     [SerializeField] private DamageElement defaultElement = DamageElement.Neutral;
+    [SerializeField] private ArcanaEffectDefinition effectDefinition;
+    [SerializeField] private bool requiresEffectDefinition;
+    [SerializeField] private int instantValue;
+    [SerializeField] private ObservationActionType observationAction;
     [SerializeField, TextArea(2, 5)] private string effectDescription;
 
     public int Id => id;
@@ -23,6 +27,10 @@ public class ArcanaData : ScriptableObject
     public Color CardColor => cardColor;
     public Color TimelineColor => timelineColor;
     public DamageElement DefaultElement => defaultElement;
+    public ArcanaEffectDefinition EffectDefinition => effectDefinition;
+    public bool RequiresEffectDefinition => requiresEffectDefinition;
+    public int InstantValue => instantValue;
+    public ObservationActionType ObservationAction => observationAction;
     public string EffectDescription => effectDescription;
 
     public bool CanEnterPool =>

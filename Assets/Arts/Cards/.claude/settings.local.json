@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__aseprite__get_sprite_info",
+      "Bash(cat)",
+      "Bash(python3 /tmp/extract_letters.py)",
+      "Bash(python3 \"C:/Users/oyoin/AppData/Local/Temp/lovers_notext.py\")"
+    ]
+  }
+}

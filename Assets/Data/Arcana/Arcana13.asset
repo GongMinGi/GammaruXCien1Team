@@ -21,5 +21,7 @@ MonoBehaviour:
   cardColor: {r: 1, g: 1, b: 1, a: 1}
   timelineColor: {r: 0.7, g: 0.3, b: 0.5, a: 1}
   defaultElement: 0
+  effectDefinition: {fileID: 11400000, guid: 69597879800ddaf46b211c76822e0390, type: 2}
+  requiresEffectDefinition: 1
   effectDescription: "\uC2DC\uC804 \uC911 \uBC1B\uB294 \uD53C\uD574 \uC99D\uAC00.
     \uC644\uB8CC \uC2DC \uBB34\uC18D\uC131 \uAC15\uD55C \uD53C\uD574."

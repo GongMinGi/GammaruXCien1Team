@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e87fda13cb984daf81ce101e4f61cc09, type: 3}
+  m_Name: AbandonedMagicGolemData
+  m_EditorClassIdentifier: Assembly-CSharp::BossData
+  bossName: Abandoned Magic Golem
+  portrait: {fileID: 0}
+  maxHp: 300
+  weakness: 2
+  burnDamagePerStack: 2
+  pattern: {fileID: 11400000, guid: 00f3339e8d57351408e8e887b04db3a6, type: 2}

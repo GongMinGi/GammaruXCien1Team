@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ public class BattleFlowController : MonoBehaviour
     private CombatResolver combatResolver;
     private int turnNumber;
     private bool battleEnded;
+    private bool heldPassiveReviveUsed;
 
     private void Start()
     {
@@ -35,8 +37,18 @@ public class BattleFlowController : MonoBehaviour
         playerHand.Initialize(bag);
         combatResolver = new CombatResolver();
         battleExecutor.Initialize(combatResolver);
+        battleExecutor.ClearTowers();
+        planningController.PlanningStateChanged += bossController.UpdatePlanningPreview;
+
         StartTurn();
     }
+
+    private void OnDestroy()
+    {
+        if (planningController != null && bossController != null)
+            planningController.PlanningStateChanged -= bossController.UpdatePlanningPreview;
+    }
+
 
     private void StartTurn()
     {
@@ -45,39 +57,51 @@ public class BattleFlowController : MonoBehaviour
 
         turnNumber++;
         currentPhase = BattlePhase.TurnStart;
-        Debug.Log($"턴 {turnNumber} 시작");
+        Debug.Log($"Turn {turnNumber} started.");
 
+        bossStats.ClearBurn();
         playerHand.DrawToCapacity();
-        bossController.GenerateAndShow();
 
-        EnterObservation();
-    }
+        if (!bossController.GenerateAndShow(playerDisplay.GridPosition))
+        {
+            Debug.LogError("Boss pattern generation failed. Battle stopped.", this);
+            EndBattleDueToError();
+            return;
+        }
 
-    private void EnterObservation()
-    {
-        currentPhase = BattlePhase.Observation;
-        // MVP: 빈 패스스루 — 관측 전용 카드 처리는 Phase E5에서 추가
         EnterPlanning();
     }
 
     private void EnterPlanning()
     {
         currentPhase = BattlePhase.Planning;
-        planningController.BeginPlanning(playerDisplay.GridPosition, OnPlanConfirmed);
+        planningController.BeginPlanning(
+            playerDisplay.GridPosition, OnPlanConfirmed, bag, selectedArcanaPool);
     }
 
     private void OnPlanConfirmed(List<PlannedAction> actions, Vector2Int startPos)
     {
-        currentPhase = BattlePhase.Execution;
-
         TimelineSlot[] timeline = ConvertToTimeline(actions);
+        if (timeline == null)
+        {
+            Debug.LogError("Timeline 변환 실패. 전투 중단.", this);
+            EndBattleDueToError();
+            return;
+        }
 
         IReadOnlyList<BossAction> pattern = bossController.LockedPattern;
         BossAction[] patternCopy = new BossAction[pattern.Count];
         for (int i = 0; i < pattern.Count; i++)
             patternCopy[i] = pattern[i];
 
-        battleExecutor.Execute(timeline, patternCopy, startPos, OnExecutionComplete);
+        if (!battleExecutor.Execute(timeline, patternCopy, startPos, OnExecutionComplete))
+        {
+            Debug.LogError("전투 실행 시작 실패. 전투 중단.", this);
+            EndBattleDueToError();
+            return;
+        }
+
+        currentPhase = BattlePhase.Execution;
     }
 
     private void OnExecutionComplete()
@@ -86,6 +110,11 @@ public class BattleFlowController : MonoBehaviour
 
         if (playerStats.IsDead)
         {
+            if (TryHeldPassiveRevive())
+            {
+                StartTurn();
+                return;
+            }
             EndBattle(false);
             return;
         }
@@ -99,6 +128,25 @@ public class BattleFlowController : MonoBehaviour
         StartTurn();
     }
 
+    private bool TryHeldPassiveRevive()
+    {
+        if (heldPassiveReviveUsed) return false;
+
+        for (int i = 0; i < playerHand.Cards.Count; i++)
+        {
+            if (playerHand.Cards[i].UsageType == ArcanaUsageType.HeldPassive)
+            {
+                playerHand.TryTakeCard(i, out _);
+                int reviveHp = Mathf.Max(1, playerStats.MaxHp / 10);
+                playerStats.Heal(reviveHp);
+                heldPassiveReviveUsed = true;
+                Debug.Log($"HeldPassive 발동: 체력 {reviveHp}으로 부활.");
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void EndBattle(bool victory)
     {
         battleEnded = true;
@@ -110,22 +158,92 @@ public class BattleFlowController : MonoBehaviour
             Debug.Log("전투 패배...");
     }
 
+    private void EndBattleDueToError()
+    {
+        battleEnded = true;
+        planningController.enabled = false;
+        battleExecutor.ForceStop();
+        Debug.LogError("전투가 오류로 인해 중단되었습니다.", this);
+    }
+
     private TimelineSlot[] ConvertToTimeline(List<PlannedAction> actions)
     {
+        if (actions == null)
+        {
+            Debug.LogError("Actions가 null.", this);
+            return null;
+        }
+
         TimelineSlot[] timeline = new TimelineSlot[ActionBar.SlotCount];
         for (int i = 0; i < timeline.Length; i++)
             timeline[i] = new TimelineSlot(i);
 
         int slotCursor = 0;
+        InstantModifierType pendingCostModifier = InstantModifierType.None;
+        bool pendingElementBuff = false;
+        DamageElement pendingElement = DamageElement.Neutral;
 
         foreach (PlannedAction action in actions)
         {
-            if (action.Type == ActionType.MergeCards)
+            if (action.Type == ActionType.MergeCards ||
+                action.Type == ActionType.UseObservationCard)
+            {
+                if (action.Cost != 0)
+                {
+                    Debug.LogError(
+                        $"{action.Type} 행동의 Cost가 0이 아님: {action.Cost}", this);
+                    return null;
+                }
                 continue;
+            }
+
+            if (action.Type == ActionType.UseInstantCard)
+            {
+                if (action.Cost != 0)
+                {
+                    Debug.LogError(
+                        $"UseInstantCard 행동의 Cost가 0이 아님: {action.Cost}", this);
+                    return null;
+                }
+
+                switch (action.ModifierType)
+                {
+                    case InstantModifierType.DamageReduction:
+                        InjectDamageReduction(timeline, slotCursor,
+                            3, action.CardData);
+                        break;
+                    case InstantModifierType.DamageSpread:
+                        InjectDamageSpread(timeline, slotCursor, 4);
+                        break;
+                    case InstantModifierType.CostReduction:
+                    case InstantModifierType.EffectDuplication:
+                        pendingCostModifier = action.ModifierType;
+                        break;
+                    case InstantModifierType.ElementBuff:
+                        pendingElementBuff = true;
+                        pendingElement = action.SelectedElement;
+                        break;
+                }
+                continue;
+            }
+
+            // 공통 범위 검증
+            if (action.Cost < 0 || slotCursor + action.Cost > ActionBar.SlotCount)
+            {
+                Debug.LogError(
+                    $"행동이 타임라인 범위 초과: cursor={slotCursor}, cost={action.Cost}", this);
+                return null;
+            }
 
             switch (action.Type)
             {
                 case ActionType.Move:
+                    if (action.Cost != 1)
+                    {
+                        Debug.LogError(
+                            $"Move 행동의 Cost가 1이 아님: {action.Cost}", this);
+                        return null;
+                    }
                     timeline[slotCursor].HasMainAction = true;
                     timeline[slotCursor].MainAction = action;
                     timeline[slotCursor].Effects.Add(new ScheduledEffect
@@ -137,6 +255,12 @@ public class BattleFlowController : MonoBehaviour
                     break;
 
                 case ActionType.Stay:
+                    if (action.Cost != 1)
+                    {
+                        Debug.LogError(
+                            $"Stay 행동의 Cost가 1이 아님: {action.Cost}", this);
+                        return null;
+                    }
                     timeline[slotCursor].HasMainAction = true;
                     timeline[slotCursor].MainAction = action;
                     timeline[slotCursor].Effects.Add(new ScheduledEffect
@@ -147,43 +271,213 @@ public class BattleFlowController : MonoBehaviour
                     break;
 
                 case ActionType.UseCard:
-                    ScheduledEffect[] effects = ExpandCard(action.CardData);
+                    if (action.CardData == null)
+                    {
+                        Debug.LogError("UseCard 행동에 CardData가 null.", this);
+                        return null;
+                    }
+                    if (action.Cost <= 0)
+                    {
+                        Debug.LogError(
+                            $"UseCard 행동의 Cost가 유효하지 않음: {action.Cost}", this);
+                        return null;
+                    }
+
+                    ScheduledEffect[][] slotEffects;
+                    if (pendingCostModifier != InstantModifierType.None ||
+                        pendingElementBuff)
+                    {
+                        slotEffects = ExpandCardWithModifiers(
+                            action.CardData, action.Cost,
+                            pendingCostModifier, pendingElementBuff,
+                            pendingElement);
+                        pendingCostModifier = InstantModifierType.None;
+                        pendingElementBuff = false;
+                    }
+                    else
+                    {
+                        slotEffects = ExpandCard(action.CardData);
+                    }
+
+                    if (slotEffects == null || slotEffects.Length != action.Cost)
+                    {
+                        Debug.LogError(
+                            $"ExpandCard 결과 불일치: expected {action.Cost}, " +
+                            $"got {slotEffects?.Length}", this);
+                        return null;
+                    }
+
                     for (int i = 0; i < action.Cost; i++)
                     {
+                        if (slotEffects[i] == null || slotEffects[i].Length == 0)
+                        {
+                            Debug.LogError(
+                                $"ExpandCard 결과 슬롯 {i}이 null 또는 빈 배열.", this);
+                            return null;
+                        }
+
                         if (i == 0)
                         {
                             timeline[slotCursor + i].HasMainAction = true;
                             timeline[slotCursor + i].MainAction = action;
                         }
-
-                        if (i < effects.Length)
-                            timeline[slotCursor + i].Effects.Add(effects[i]);
+                        foreach (ScheduledEffect effect in slotEffects[i])
+                        {
+                            ScheduledEffect e = effect;
+                            if ((e.Type == EffectType.Move ||
+                                 e.Type == EffectType.PlaceTower) &&
+                                action.Direction != Vector2Int.zero)
+                                e.Direction = action.Direction;
+                            timeline[slotCursor + i].Effects.Add(e);
+                        }
                     }
                     slotCursor += action.Cost;
                     break;
+
+                default:
+                    Debug.LogError(
+                        $"지원하지 않는 ActionType: {action.Type}", this);
+                    return null;
             }
         }
 
-        Debug.Assert(slotCursor == ActionBar.SlotCount,
-            $"Timeline slot count mismatch: expected {ActionBar.SlotCount}, got {slotCursor}");
+        if (slotCursor != ActionBar.SlotCount)
+        {
+            Debug.LogError(
+                $"Timeline 슬롯 수 불일치: expected {ActionBar.SlotCount}, " +
+                $"got {slotCursor}", this);
+            return null;
+        }
 
         return timeline;
     }
 
-    private ScheduledEffect[] ExpandCard(ArcanaData card)
+    private ScheduledEffect[][] ExpandCard(ArcanaData card)
     {
-        // MVP: 전부 Cast 반환. Phase D에서 카드별 효과 추가.
-        ScheduledEffect[] effects = new ScheduledEffect[card.BaseCost];
+        ArcanaEffectDefinition definition = card.EffectDefinition;
+
+        if (definition == null)
+        {
+            Debug.LogWarning(
+                $"Arcana {card.Id}({card.ArcanaName}): EffectDefinition 미구현. Cast 폴백.",
+                card);
+            return CreateCastFallback(card);
+        }
+
+        ScheduledEffect[][] effects = definition.Expand(card);
+
+        if (effects == null || effects.Length != card.BaseCost)
+        {
+            Debug.LogError(
+                $"Arcana {card.Id}: {definition.name} 확장 결과가 유효하지 않음. " +
+                $"expected {card.BaseCost}, got {effects?.Length}.",
+                definition);
+            return null;
+        }
+
+        return effects;
+    }
+
+    private ScheduledEffect[][] CreateCastFallback(ArcanaData card)
+    {
+        ScheduledEffect[][] effects = new ScheduledEffect[card.BaseCost][];
         for (int i = 0; i < effects.Length; i++)
         {
-            effects[i] = new ScheduledEffect
+            effects[i] = new[] { new ScheduledEffect
             {
                 Type = EffectType.Cast,
                 SourceCard = card,
                 Element = card.DefaultElement
-            };
+            }};
         }
         return effects;
+    }
+
+    private ScheduledEffect[][] ExpandCardWithModifiers(
+        ArcanaData card, int effectiveCost,
+        InstantModifierType costModifier, bool elementBuff,
+        DamageElement element)
+    {
+        ScheduledEffect[][] effects = ExpandCard(card);
+        if (effects == null)
+            return null;
+
+        return ApplyInstantModifiers(effects, costModifier, elementBuff, element);
+    }
+
+    public static ScheduledEffect[][] ApplyInstantModifiers(
+        ScheduledEffect[][] effects,
+        InstantModifierType costModifier, bool elementBuff,
+        DamageElement element)
+    {
+        switch (costModifier)
+        {
+            case InstantModifierType.CostReduction:
+                if (effects.Length > 1)
+                {
+                    ScheduledEffect[][] trimmed =
+                        new ScheduledEffect[effects.Length - 1][];
+                    Array.Copy(effects, 1, trimmed, 0, trimmed.Length);
+                    effects = trimmed;
+                }
+                break;
+
+            case InstantModifierType.EffectDuplication:
+                ScheduledEffect[][] extended =
+                    new ScheduledEffect[effects.Length + 1][];
+                Array.Copy(effects, extended, effects.Length);
+                extended[effects.Length] =
+                    (ScheduledEffect[])effects[^1].Clone();
+                effects = extended;
+                break;
+        }
+
+        if (elementBuff)
+        {
+            for (int s = 0; s < effects.Length; s++)
+            {
+                for (int e = 0; e < effects[s].Length; e++)
+                {
+                    if (effects[s][e].Type == EffectType.DealDamage)
+                    {
+                        effects[s][e].Element = element;
+                        return effects;
+                    }
+                }
+            }
+        }
+
+        return effects;
+    }
+
+    private void InjectDamageReduction(
+        TimelineSlot[] timeline, int startSlot, int duration,
+        ArcanaData sourceCard)
+    {
+        int reductionValue = sourceCard.InstantValue;
+        for (int i = 0; i < duration && startSlot + i < timeline.Length; i++)
+        {
+            timeline[startSlot + i].Effects.Insert(0, new ScheduledEffect
+            {
+                Type = EffectType.IncomingDamageModifier,
+                BaseValue = reductionValue,
+                SourceCard = sourceCard
+            });
+        }
+    }
+
+    private void InjectDamageSpread(
+        TimelineSlot[] timeline, int startSlot, int duration)
+    {
+        if (startSlot >= timeline.Length)
+            return;
+
+        int spreadSlots = Mathf.Min(duration, timeline.Length - startSlot);
+        timeline[startSlot].Effects.Insert(0, new ScheduledEffect
+        {
+            Type = EffectType.DamageSpread,
+            BaseValue = spreadSlots
+        });
     }
 
     private bool ValidateReferences()
@@ -255,6 +549,14 @@ public class BattleFlowController : MonoBehaviour
             if (catalogEntry != a)
             {
                 Debug.LogError($"Pool Arcana {a.Id} doesn't match catalog asset.", this);
+                return false;
+            }
+
+            if (a.RequiresEffectDefinition && a.EffectDefinition == null)
+            {
+                Debug.LogError(
+                    $"Arcana {a.Id}({a.ArcanaName}): " +
+                    $"EffectDefinition이 필수이나 할당되지 않음.", a);
                 return false;
             }
         }

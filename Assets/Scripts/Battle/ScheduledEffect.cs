@@ -8,7 +8,11 @@ public enum EffectType
     Heal,
     Dodge,
     Cast,
-    ApplyModifier
+    IncomingDamageModifier,
+    CounterStance,
+    ApplyBurn,
+    DamageSpread,
+    PlaceTower
 }
 
 [System.Serializable]
