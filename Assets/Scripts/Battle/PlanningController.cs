@@ -59,6 +59,11 @@ public class PlanningController : MonoBehaviour
         public InstantModifierType ConsumedCost;
         public bool ConsumedElement;
         public DamageElement ConsumedElementValue;
+        public bool NeedsTwoDirections;
+        public Vector2Int FirstDirection;
+        public Vector2Int FirstTowerPos;
+        public GameObject FirstTowerPreview;
+        public Vector2Int PreFirstMovePos;   // 첫 이동 시뮬 전 위치 (Move 카드용)
     }
 
     public bool ValidateReferences()
@@ -110,6 +115,8 @@ public class PlanningController : MonoBehaviour
         {
             if (directionSelectionActive)
                 HandleDirectionClick();
+            if (transformTargetSelectionActive && HandleTransformClick())
+                return;
             HandleKeyboardInput();
             return;
         }
@@ -377,6 +384,8 @@ public class PlanningController : MonoBehaviour
 
         if (card.EffectDefinition != null && card.EffectDefinition.RequiresDirection)
         {
+            bool needsTwo = activeCostModifier == InstantModifierType.EffectDuplication
+                && HasDirectionalEffectInLastSlot(card);
             pendingCardUse = new PendingCardUse
             {
                 HandIndex = handIndex,
@@ -384,7 +393,8 @@ public class PlanningController : MonoBehaviour
                 Card = card,
                 ConsumedCost = activeCostModifier,
                 ConsumedElement = activeElementBuff,
-                ConsumedElementValue = activeElement
+                ConsumedElementValue = activeElement,
+                NeedsTwoDirections = needsTwo
             };
             directionSelectionAllowedDirs = card.EffectDefinition.AllowedDirections;
             directionSelectionActive = true;
@@ -463,6 +473,72 @@ public class PlanningController : MonoBehaviour
         NotifyPlanningSlotChanged();
     }
 
+    private void FinalizeCardUseWithTwoDirections(int handIndex, int effectiveCost,
+        ArcanaData card, Vector2Int firstDirection, Vector2Int secondDirection)
+    {
+        playerHand.TryTakeCard(handIndex, out _);
+
+        InstantModifierType consumedCost = activeCostModifier;
+        bool consumedElement = activeElementBuff;
+        DamageElement consumedElementValue = activeElement;
+
+        activeCostModifier = InstantModifierType.None;
+        activeElementBuff = false;
+
+        bool isMove = HasMoveInLastSlot(card);
+        // Move 카드: prePos는 첫 이동 시뮬 전 위치 (ConfirmDirectionSelection에서 저장)
+        Vector2Int prePos = isMove ? pendingCardUse.PreFirstMovePos : playerGridPos;
+
+        bool placedTower = false;
+        Vector2Int towerPos = Vector2Int.zero;
+        bool placedSecondTower = false;
+        Vector2Int secondTowerPos = Vector2Int.zero;
+
+        if (isMove)
+        {
+            // 첫 이동은 이미 시뮬됨 (ConfirmDirectionSelection에서)
+            // 두 번째 이동 시뮬
+            playerGridPos = SimulateCardMovement(playerGridPos, secondDirection, card);
+            playerDisplay.UpdateGridPosition(playerGridPos.x, playerGridPos.y);
+        }
+        else
+        {
+            // 타워 카드: 첫 타워 프리뷰 이미 생성됨
+            placedTower = true;
+            towerPos = pendingCardUse.FirstTowerPos;
+
+            Vector2Int secondTarget = prePos + secondDirection;
+            if (gridManager.IsValidCoordinate(secondTarget.x, secondTarget.y))
+            {
+                placedSecondTower = true;
+                secondTowerPos = secondTarget;
+                towerPreviewObjects.Add(CreateTowerPreview(secondTowerPos));
+            }
+        }
+
+        plannedActions.Add(new PlannedAction
+        {
+            Type = ActionType.UseCard,
+            Direction = firstDirection,
+            DuplicatedDirection = secondDirection,
+            Cost = effectiveCost,
+            CardData = card,
+            OriginalHandIndex = handIndex,
+            ConsumedCostModifier = consumedCost,
+            ConsumedElementBuff = consumedElement,
+            ConsumedElement = consumedElementValue,
+            PreCardPosition = prePos,
+            PlacedTower = placedTower,
+            TowerPlacedPosition = towerPos,
+            PlacedSecondTower = placedSecondTower,
+            SecondTowerPlacedPosition = secondTowerPos
+        });
+
+        actionBar.FillRange(usedSlots, effectiveCost, card.TimelineColor);
+        usedSlots += effectiveCost;
+        NotifyPlanningSlotChanged();
+    }
+
     private void UndoLastAction()
     {
         if (plannedActions.Count == 0)
@@ -493,11 +569,17 @@ public class PlanningController : MonoBehaviour
                     playerGridPos = action.PreCardPosition;
                     playerDisplay.UpdateGridPosition(playerGridPos.x, playerGridPos.y);
                 }
+                if (action.PlacedSecondTower && towerPreviewObjects.Count > 0)
+                {
+                    GameObject second = towerPreviewObjects[^1];
+                    towerPreviewObjects.RemoveAt(towerPreviewObjects.Count - 1);
+                    Destroy(second);
+                }
                 if (action.PlacedTower && towerPreviewObjects.Count > 0)
                 {
-                    GameObject last = towerPreviewObjects[^1];
+                    GameObject first = towerPreviewObjects[^1];
                     towerPreviewObjects.RemoveAt(towerPreviewObjects.Count - 1);
-                    Destroy(last);
+                    Destroy(first);
                 }
                 if (action.ConsumedCostModifier != InstantModifierType.None)
                     activeCostModifier = action.ConsumedCostModifier;
@@ -612,6 +694,11 @@ public class PlanningController : MonoBehaviour
                 break;
 
             case ObservationActionType.TransformCard:
+                if (playerHand.Cards.Count <= 1)
+                {
+                    Debug.Log("변환할 대상 카드가 없습니다.");
+                    return;
+                }
                 playerHand.TryTakeCard(handIndex, out _);
                 observationSourceHandIndex = handIndex;
                 transformTargetSelectionActive = true;
@@ -623,12 +710,26 @@ public class PlanningController : MonoBehaviour
                     OriginalHandIndex = handIndex,
                     ObservationAction = ObservationActionType.TransformCard
                 });
-                Debug.Log("변환할 카드를 선택하세요 (숫자키). ESC: 취소.");
+                Debug.Log("변환할 카드를 선택하세요 (클릭 또는 숫자키). ESC: 취소.");
                 break;
 
             default:
                 return;
         }
+    }
+
+    private bool HandleTransformClick()
+    {
+        if (Mouse.current == null || !Mouse.current.leftButton.wasPressedThisFrame)
+            return false;
+
+        int hovered = handDisplay.GetHoveredCardIndex();
+        if (hovered >= 0)
+        {
+            CompleteTransformCard(hovered);
+            return true;
+        }
+        return false;
     }
 
     private void CompleteTransformCard(int targetIndex)
@@ -779,17 +880,103 @@ public class PlanningController : MonoBehaviour
         if (!gridManager.IsValidCoordinate(target.x, target.y))
             return;
 
+        if (IsTowerPositionOccupied(target))
+            return;
+
+        if (pendingCardUse.FirstDirection != Vector2Int.zero &&
+            target == pendingCardUse.FirstTowerPos)
+            return;
+
+        if (pendingCardUse.NeedsTwoDirections &&
+            pendingCardUse.FirstDirection == Vector2Int.zero)
+        {
+            pendingCardUse.FirstDirection = direction;
+
+            if (HasMoveInLastSlot(pendingCardUse.Card))
+            {
+                // Move 카드: 첫 돌진 시뮬레이션 후 새 위치에서 두 번째 방향 선택
+                pendingCardUse.PreFirstMovePos = playerGridPos;
+                playerGridPos = SimulateCardMovement(playerGridPos, direction,
+                    pendingCardUse.Card);
+                if (playerGridPos != pendingCardUse.PreFirstMovePos)
+                    playerDisplay.UpdateGridPosition(playerGridPos.x, playerGridPos.y);
+            }
+            else
+            {
+                // 타워 카드: 첫 타워 프리뷰 생성
+                pendingCardUse.FirstTowerPos = target;
+                GameObject preview = CreateTowerPreview(target);
+                pendingCardUse.FirstTowerPreview = preview;
+                towerPreviewObjects.Add(preview);
+            }
+
+            ClearDirectionTargets();
+            ShowDirectionTargets();
+            return;
+        }
+
         ClearDirectionTargets();
         directionSelectionActive = false;
-        FinalizeCardUse(
-            pendingCardUse.HandIndex,
-            pendingCardUse.EffectiveCost,
-            pendingCardUse.Card,
-            direction);
+
+        if (pendingCardUse.NeedsTwoDirections)
+        {
+            FinalizeCardUseWithTwoDirections(
+                pendingCardUse.HandIndex,
+                pendingCardUse.EffectiveCost,
+                pendingCardUse.Card,
+                pendingCardUse.FirstDirection,
+                direction);
+        }
+        else
+        {
+            FinalizeCardUse(
+                pendingCardUse.HandIndex,
+                pendingCardUse.EffectiveCost,
+                pendingCardUse.Card,
+                direction);
+        }
+    }
+
+    private bool IsTowerPositionOccupied(Vector2Int pos)
+    {
+        foreach (PlannedAction action in plannedActions)
+        {
+            if (action.PlacedTower && action.TowerPlacedPosition == pos)
+                return true;
+            if (action.PlacedSecondTower && action.SecondTowerPlacedPosition == pos)
+                return true;
+        }
+        return false;
     }
 
     private void CancelDirectionSelection()
     {
+        if (pendingCardUse.NeedsTwoDirections &&
+            pendingCardUse.FirstDirection != Vector2Int.zero)
+        {
+            // 두 번째 선택 중 ESC: 첫 번째로 되돌리기
+            if (pendingCardUse.FirstTowerPreview != null)
+            {
+                towerPreviewObjects.Remove(pendingCardUse.FirstTowerPreview);
+                Destroy(pendingCardUse.FirstTowerPreview);
+            }
+
+            // Move 카드: 첫 이동 시뮬 되돌리기
+            if (pendingCardUse.PreFirstMovePos != Vector2Int.zero)
+            {
+                playerGridPos = pendingCardUse.PreFirstMovePos;
+                playerDisplay.UpdateGridPosition(playerGridPos.x, playerGridPos.y);
+                pendingCardUse.PreFirstMovePos = Vector2Int.zero;
+            }
+
+            pendingCardUse.FirstDirection = Vector2Int.zero;
+            pendingCardUse.FirstTowerPos = Vector2Int.zero;
+            pendingCardUse.FirstTowerPreview = null;
+            ClearDirectionTargets();
+            ShowDirectionTargets();
+            return;
+        }
+
         ClearDirectionTargets();
         directionSelectionActive = false;
     }
@@ -889,6 +1076,31 @@ public class PlanningController : MonoBehaviour
         return currentPos;
     }
 
+    private static bool HasDirectionalEffectInLastSlot(ArcanaData card)
+    {
+        if (card.EffectDefinition == null) return false;
+        ScheduledEffect[][] effects = card.EffectDefinition.Expand(card);
+        if (effects == null || effects.Length == 0) return false;
+        ScheduledEffect[] last = effects[^1];
+        if (last == null) return false;
+        foreach (ScheduledEffect e in last)
+            if (e.Type == EffectType.PlaceTower || e.Type == EffectType.Move)
+                return true;
+        return false;
+    }
+
+    private static bool HasMoveInLastSlot(ArcanaData card)
+    {
+        if (card.EffectDefinition == null) return false;
+        ScheduledEffect[][] effects = card.EffectDefinition.Expand(card);
+        if (effects == null || effects.Length == 0) return false;
+        ScheduledEffect[] last = effects[^1];
+        if (last == null) return false;
+        foreach (ScheduledEffect e in last)
+            if (e.Type == EffectType.Move) return true;
+        return false;
+    }
+
     private static InstantModifierType GetModifierType(ArcanaData card)
     {
         return card.Id switch
@@ -940,18 +1152,38 @@ public class PlanningController : MonoBehaviour
         Color blinkA = new Color(0.3f, 0.9f, 0.3f, 0.8f);
         Color blinkB = new Color(0.3f, 0.9f, 0.3f, 0.2f);
 
+        HashSet<Vector2Int> occupied = GetOccupiedTowerPositions();
+
         foreach (Vector2Int dir in CardinalDirs)
-            TryBlinkCell(dir, blinkA, blinkB);
+            TryBlinkCell(dir, blinkA, blinkB, occupied);
 
         if (directionSelectionAllowedDirs >= 8)
             foreach (Vector2Int dir in DiagonalDirs)
-                TryBlinkCell(dir, blinkA, blinkB);
+                TryBlinkCell(dir, blinkA, blinkB, occupied);
     }
 
-    private void TryBlinkCell(Vector2Int dir, Color a, Color b)
+    private HashSet<Vector2Int> GetOccupiedTowerPositions()
+    {
+        var occupied = new HashSet<Vector2Int>();
+        foreach (PlannedAction action in plannedActions)
+        {
+            if (action.PlacedTower)
+                occupied.Add(action.TowerPlacedPosition);
+            if (action.PlacedSecondTower)
+                occupied.Add(action.SecondTowerPlacedPosition);
+        }
+        if (pendingCardUse.FirstDirection != Vector2Int.zero)
+            occupied.Add(pendingCardUse.FirstTowerPos);
+        return occupied;
+    }
+
+    private void TryBlinkCell(Vector2Int dir, Color a, Color b,
+        HashSet<Vector2Int> occupied)
     {
         Vector2Int target = playerGridPos + dir;
         if (!gridManager.IsValidCoordinate(target.x, target.y))
+            return;
+        if (occupied.Contains(target))
             return;
         GridCell cell = gridManager.GetCell(target.x, target.y);
         if (cell == null) return;

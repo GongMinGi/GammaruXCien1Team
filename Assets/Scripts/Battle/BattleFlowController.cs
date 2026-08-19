@@ -327,6 +327,7 @@ public class BattleFlowController : MonoBehaviour
                         return null;
                     }
 
+                    int placeTowerIndex = 0;
                     for (int i = 0; i < action.Cost; i++)
                     {
                         if (slotEffects[i] == null || slotEffects[i].Length == 0)
@@ -341,13 +342,26 @@ public class BattleFlowController : MonoBehaviour
                             timeline[slotCursor + i].HasMainAction = true;
                             timeline[slotCursor + i].MainAction = action;
                         }
+                        bool isDuplicatedSlot =
+                            action.ConsumedCostModifier == InstantModifierType.EffectDuplication
+                            && i == action.Cost - 1;
                         foreach (ScheduledEffect effect in slotEffects[i])
                         {
                             ScheduledEffect e = effect;
-                            if ((e.Type == EffectType.Move ||
-                                 e.Type == EffectType.PlaceTower) &&
+                            if (e.Type == EffectType.Move &&
                                 action.Direction != Vector2Int.zero)
-                                e.Direction = action.Direction;
+                            {
+                                e.Direction = isDuplicatedSlot && action.DuplicatedDirection != Vector2Int.zero
+                                    ? action.DuplicatedDirection
+                                    : action.Direction;
+                            }
+                            else if (e.Type == EffectType.PlaceTower)
+                            {
+                                e.Direction = placeTowerIndex == 0
+                                    ? action.Direction
+                                    : action.DuplicatedDirection;
+                                placeTowerIndex++;
+                            }
                             timeline[slotCursor + i].Effects.Add(e);
                         }
                     }

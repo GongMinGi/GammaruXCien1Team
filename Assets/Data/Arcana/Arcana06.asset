@@ -21,6 +21,11 @@ MonoBehaviour:
   cardColor: {r: 1, g: 1, b: 1, a: 1}
   timelineColor: {r: 0.7, g: 0.3, b: 0.5, a: 1}
   defaultElement: 0
-  effectDescription: "\uBCF4\uC720 \uC2DC \uC0AC\uB9DD\uD560 \uACBD\uC6B0 \uCCB4\uB825
-    10%\uB85C \uBD80\uD65C. \uB4DC\uB85C\uC6B0 1\uC7A5 \uAC10\uC18C. \uC804\uD22C
-    \uB2F9 1\uD68C."
+  effectDefinition: {fileID: 0}
+  requiresEffectDefinition: 0
+  instantValue: 0
+  observationAction: 0
+  effectDescription: "\uBCF4\uC720\uD558\uACE0 \uC788\uC744 \uACBD\uC6B0, \uC0AC\uB9DD\uD560
+    \uC2DC \uB2E4\uC74C \uD134\uC5D0 \uCCB4\uB825 10%\uB97C \uAC00\uC9C0\uACE0 \uB4DC\uB85C\uC6B0\uB97C
+    1\uC7A5 \uB35C \uD55C \uCC44 \uBD80\uD65C\uD569\uB2C8\uB2E4. \uC804\uD22C \uB2F9
+    1\uBC88\uB9CC \uC0AC\uC6A9 \uAC00\uB2A5\uD569\uB2C8\uB2E4."

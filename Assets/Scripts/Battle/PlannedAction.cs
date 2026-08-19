@@ -19,6 +19,9 @@ public struct PlannedAction
     public Vector2Int PreCardPosition;  // 카드 사용 전 위치 (이동 카드 undo용)
     public Vector2Int TowerPlacedPosition; // 타워 배치 위치 (undo용)
     public bool PlacedTower;               // 타워 배치 여부
+    public Vector2Int DuplicatedDirection;       // 악마 복제 두 번째 방향 (타워/이동 겸용)
+    public bool PlacedSecondTower;             // 두 번째 타워 배치 여부 (undo용)
+    public Vector2Int SecondTowerPlacedPosition; // 두 번째 타워 위치 (undo용)
 
     // 핸드 소거 undo용 (ConsumesHand 카드)
     public ArcanaData[] ConsumedHandCards;

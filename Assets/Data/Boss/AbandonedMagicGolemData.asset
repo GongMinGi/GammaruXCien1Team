@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BossData
   bossName: Abandoned Magic Golem
   portrait: {fileID: 0}
-  maxHp: 300
+  maxHp: 500
   weakness: 2
   burnDamagePerStack: 2
   pattern: {fileID: 11400000, guid: 00f3339e8d57351408e8e887b04db3a6, type: 2}
