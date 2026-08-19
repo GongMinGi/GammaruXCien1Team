@@ -12,9 +12,7 @@
       "Bash(python3 \"C:/Users/oyoin/AppData/Local/Temp/draw_strength2.py\")",
       "Bash(python3:*)",
       "Bash(python \"C:/Users/oyoin/AppData/Local/Temp/draw_temperance3.py\")",
-      "Bash(python -c ':*)",
-      "mcp__aseprite__export_sprite",
-      "Bash(python:*)"
+      "Bash(python -c ':*)"
     ]
   }
 }
