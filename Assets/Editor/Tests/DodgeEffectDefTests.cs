@@ -5,7 +5,7 @@ using UnityEngine;
 public class DodgeEffectDefTests
 {
     [Test]
-    public void Expand_AllSlotsDodge()
+    public void Expand_DodgesUntilLastSlotThenCasts()
     {
         DodgeEffectDef def = ScriptableObject.CreateInstance<DodgeEffectDef>();
 
@@ -16,12 +16,17 @@ public class DodgeEffectDefTests
         ScheduledEffect[][] effects = def.Expand(card);
 
         Assert.AreEqual(3, effects.Length);
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < effects.Length - 1; i++)
         {
             Assert.AreEqual(1, effects[i].Length);
             Assert.AreEqual(EffectType.Dodge, effects[i][0].Type);
             Assert.AreEqual(card, effects[i][0].SourceCard);
         }
+
+        // 마지막 슬롯은 회피가 아니라 Cast로 끝난다
+        Assert.AreEqual(1, effects[^1].Length);
+        Assert.AreEqual(EffectType.Cast, effects[^1][0].Type);
+        Assert.AreEqual(card, effects[^1][0].SourceCard);
 
         UnityEngine.Object.DestroyImmediate(def);
         UnityEngine.Object.DestroyImmediate(card);

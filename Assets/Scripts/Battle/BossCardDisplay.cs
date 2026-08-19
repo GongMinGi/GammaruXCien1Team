@@ -62,7 +62,10 @@ public class BossCardDisplay : MonoBehaviour
         for (int g = 0; g < actions.Length; g++)
         {
             BossAction action = actions[g];
-            int displayTiming = action.timingSlot + 1;
+            // timingSlot -1 = 타임라인 밖에서 시전되는 턴 종료 그룹
+            string timingLabel = action.timingSlot < 0
+                ? "종료"
+                : (action.timingSlot + 1).ToString();
 
             // 그룹 중앙 계산
             int cardCount = action.arcanaIds.Length;
@@ -70,12 +73,12 @@ public class BossCardDisplay : MonoBehaviour
             float groupCenter = currentX + groupWidth * 0.5f;
 
             // 타이밍 번호 텍스트
-            GameObject timingObj = new GameObject($"Timing ({displayTiming})");
+            GameObject timingObj = new GameObject($"Timing ({timingLabel})");
             timingObj.transform.SetParent(transform);
             timingObj.transform.localPosition = new Vector3(groupCenter, cardHeight * 0.5f + 0.15f, -0.01f);
 
             TextMesh timingText = timingObj.AddComponent<TextMesh>();
-            timingText.text = displayTiming.ToString();
+            timingText.text = timingLabel;
             timingText.anchor = TextAnchor.MiddleCenter;
             timingText.alignment = TextAlignment.Center;
             timingText.fontSize = 32;
