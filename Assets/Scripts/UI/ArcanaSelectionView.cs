@@ -27,6 +27,7 @@ public class ArcanaSelectionView : MonoBehaviour
     [SerializeField] private RectTransform selectedCardBottomRow;
     [SerializeField] private ArcanaCardView arcanaCardPrefab;
     [SerializeField] private GameObject cardDetailPanel;
+    [SerializeField] private Image detailImage;
     [SerializeField] private Text detailTitleText;
     [SerializeField] private Text detailEffectText;
     [SerializeField] private Animator bookFlipAnimator;
@@ -134,6 +135,7 @@ public class ArcanaSelectionView : MonoBehaviour
             + "\n"
             + arcanaData.ArcanaName;
         detailEffectText.text = arcanaData.EffectDescription;
+        detailImage.sprite = arcanaData.DetailImage;
         cardDetailPanel.SetActive(false);
         bookFlipAnimator.gameObject.SetActive(true);
         bookFlipAnimator.Play(BookFlipAnimationStateName, 0, 0f);

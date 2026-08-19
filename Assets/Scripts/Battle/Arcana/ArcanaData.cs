@@ -9,6 +9,8 @@ public class ArcanaData : ScriptableObject
     [SerializeField] private string koreanName;
     [SerializeField] private ArcanaUsageType usageType;
     [SerializeField, Min(0)] private int baseCost;
+    [SerializeField] private Sprite cardImage;
+    [SerializeField] private Sprite detailImage;
     [SerializeField] private Color cardColor = Color.white;
     [SerializeField] private Color timelineColor = new Color(0.7f, 0.3f, 0.5f);
     [SerializeField] private DamageElement defaultElement = DamageElement.Neutral;
@@ -27,6 +29,8 @@ public class ArcanaData : ScriptableObject
     public string KoreanName => koreanName;
     public ArcanaUsageType UsageType => usageType;
     public int BaseCost => baseCost;
+    public Sprite CardImage => cardImage;
+    public Sprite DetailImage => detailImage;
     public Color CardColor => cardColor;
     public Color TimelineColor => timelineColor;
     public DamageElement DefaultElement => defaultElement;

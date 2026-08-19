@@ -1075,18 +1075,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1180452500}
-  m_LocalRotation: {x: 0, y: 0, z: -0.043619405, w: 0.9990483}
+  m_LocalRotation: {x: 0, y: 0, z: -0.06540306, w: 0.99785894}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1803310623}
   m_Father: {fileID: 1743531129}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -5}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -7.5}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -13, y: 108}
-  m_SizeDelta: {x: 307, y: 395}
+  m_SizeDelta: {x: 311.84, y: 395}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1180452502
 MonoBehaviour:
@@ -1100,15 +1100,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.16, g: 0.13, b: 0.2, a: 1}
+  m_Material: {fileID: 2100000, guid: 6c395d52dc345834ca094240e2727780, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 3582684000642679918, guid: ad0b8b780d7cfdc46a52431c012eb3ba, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1160,6 +1160,7 @@ MonoBehaviour:
   content: {fileID: 862479167}
   cardsRoot: {fileID: 227875635}
   cardPrefab: {fileID: 2272758179885698880, guid: df8005789954db14eb1ae74e1356f6ce, type: 3}
+  focusDuration: 0.35
 --- !u!224 &1260956708
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1701,7 +1702,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1803310623
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1799,6 +1800,7 @@ MonoBehaviour:
   selectedCardBottomRow: {fileID: 786000005}
   arcanaCardPrefab: {fileID: 8118689131198739343, guid: dbbc7e29fa203824783cd0ee60322ce7, type: 3}
   cardDetailPanel: {fileID: 1743531128}
+  detailImage: {fileID: 1180452502}
   detailTitleText: {fileID: 1932314221}
   detailEffectText: {fileID: 2130108428}
   bookFlipAnimator: {fileID: 167254676}
@@ -2072,7 +2074,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uCE74\uB4DC \uD6A8\uACFC\n\uCD94\uD6C4 \uCD94\uAC00"
+  m_Text: "\uC544\uBB34 \uBC29\uD5A5\uC73C\uB85C \uD55C \uCE78 \uC774\uB3D9\uD569\uB2C8\uB2E4."
 --- !u!222 &2130108429
 CanvasRenderer:
   m_ObjectHideFlags: 0

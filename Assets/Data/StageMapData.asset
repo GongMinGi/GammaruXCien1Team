@@ -17,7 +17,7 @@ MonoBehaviour:
     cardImage: {fileID: -5531398936627394812, guid: d782201493e51284c8657433c5f790f1, type: 3}
     bossData: {fileID: 11400000, guid: 29a5176c23cd47f8be4be2f8ec118df4, type: 2}
   - verticalRate: -0.26349914
-    cardImage: {fileID: 0}
+    cardImage: {fileID: 1203700571141837082, guid: fb8e6dc82fad64e4993954fd72a8154b, type: 3}
     bossData: {fileID: 11400000, guid: 4e8b3d17a05c42f9840b76c1de92f3a5, type: 2}
   - verticalRate: 0.49392888
     cardImage: {fileID: 0}
