@@ -69,9 +69,11 @@ public class ThreadBoundClownPatternDefinition : BossPatternDefinition
         {
             if (phaseTwoTurn % 2 == 0)      // 1페이즈 전체 및 t 짝수: 0
                 return TurnEndOp.Rotate;
-            if (phaseTwoTurn % 4 == 1)      // t = 1, 5, 9…: V + 0
-                return TurnEndOp.OppositeThenRotate;
-            return TurnEndOp.ForceFour;     // t = 3, 7, 11…: IV
+            // t = 1, 5, 9…: IV — 수레바퀴를 4번으로 보내 실타래를 확정 생성한다.
+            // 다음 턴(t = 2, 6, 10…)의 8: I, I는 반드시 명중이라 실타래가 유일한 대응책이다.
+            if (phaseTwoTurn % 4 == 1)
+                return TurnEndOp.ForceFour;
+            return TurnEndOp.OppositeThenRotate;   // t = 3, 7, 11…: V + 0
         }
     }
 

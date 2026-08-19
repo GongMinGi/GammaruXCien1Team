@@ -1135,7 +1135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
   maxHp: 100
-  spellPower: 10
+  spellPower: 20
 --- !u!1 &1305633215
 GameObject:
   m_ObjectHideFlags: 0
