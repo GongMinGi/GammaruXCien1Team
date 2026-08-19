@@ -15,13 +15,18 @@ MonoBehaviour:
   stages:
   - verticalRate: -0.8651149
     cardImage: {fileID: -5531398936627394812, guid: d782201493e51284c8657433c5f790f1, type: 3}
+    bossData: {fileID: 11400000, guid: 29a5176c23cd47f8be4be2f8ec118df4, type: 2}
   - verticalRate: -0.26349914
     cardImage: {fileID: 0}
+    bossData: {fileID: 11400000, guid: 4e8b3d17a05c42f9840b76c1de92f3a5, type: 2}
   - verticalRate: 0.49392888
     cardImage: {fileID: 0}
+    bossData: {fileID: 0}
   - verticalRate: -0.6179302
     cardImage: {fileID: 0}
+    bossData: {fileID: 0}
   - verticalRate: 0.6089549
     cardImage: {fileID: 0}
+    bossData: {fileID: 0}
   horizontalSpacing: 1000
   starNodeCountPerLink: 6
