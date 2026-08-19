@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class ActionBar : MonoBehaviour
@@ -12,6 +13,11 @@ public class ActionBar : MonoBehaviour
     [SerializeField] private Color filledMoveColor = new Color(0.3f, 0.6f, 0.9f);
     [SerializeField] private Color filledStayColor = new Color(0.6f, 0.6f, 0.3f);
 
+    [Header("Execution")]
+    [SerializeField] private Color executionColor = Color.black;
+    [SerializeField, Min(0f)] private float shakeMagnitude = 0.02f;
+    [SerializeField, Min(0.01f)] private float shakeCycleDuration = 0.5f;
+
     public const int SlotCount = 10;
 
     public float VisualWidth =>
@@ -19,6 +25,9 @@ public class ActionBar : MonoBehaviour
 
     private SpriteRenderer[] slotRenderers;
     private bool isGenerated;
+    private int activeExecutionSlot = -1;
+    private Tween activeShakeTween;
+    private Vector3 savedSlotLocalPosition;
 
     private void Awake()
     {
@@ -68,11 +77,51 @@ public class ActionBar : MonoBehaviour
 
     public void ClearAll()
     {
+        ClearExecutingSlot();
+
         if (slotRenderers == null)
             return;
 
         for (int i = 0; i < slotRenderers.Length; i++)
             slotRenderers[i].color = Color.white;
+    }
+
+    public void MarkExecutingSlot(int index)
+    {
+        ClearExecutingSlot();
+
+        if (slotRenderers == null || index < 0 || index >= slotRenderers.Length)
+            return;
+
+        activeExecutionSlot = index;
+        SpriteRenderer renderer = slotRenderers[index];
+        renderer.color = executionColor;
+
+        Transform slotTransform = renderer.transform;
+        savedSlotLocalPosition = slotTransform.localPosition;
+        activeShakeTween = slotTransform
+            .DOShakePosition(shakeCycleDuration, shakeMagnitude, 20, 90f, false, false)
+            .SetLoops(-1, LoopType.Restart);
+    }
+
+    public void ClearExecutingSlot()
+    {
+        activeShakeTween?.Kill();
+        activeShakeTween = null;
+
+        if (slotRenderers != null && activeExecutionSlot >= 0 &&
+            activeExecutionSlot < slotRenderers.Length)
+        {
+            slotRenderers[activeExecutionSlot].transform.localPosition =
+                savedSlotLocalPosition;
+        }
+
+        activeExecutionSlot = -1;
+    }
+
+    private void OnDisable()
+    {
+        ClearExecutingSlot();
     }
 
     private void GenerateSlots()

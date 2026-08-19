@@ -27,15 +27,24 @@ public class PlayerDisplay : MonoBehaviour
         transform.position = gridManager.GridToWorldPosition(gridX, gridY);
         GenerateVisual();
         CreateDustParticle();
+
+        GridCell startCell = gridManager.GetCell(gridX, gridY);
+        startCell?.StartPulse();
     }
 
     public void UpdateGridPosition(int x, int y)
     {
+        GridCell prevCell = gridManager.GetCell(gridX, gridY);
+        prevCell?.StopPulse();
+
         gridX = x;
         gridY = y;
         Vector3 target = gridManager.GridToWorldPosition(gridX, gridY);
         transform.DOKill();
         transform.DOMove(target, moveDuration).SetEase(moveEase);
+
+        GridCell newCell = gridManager.GetCell(gridX, gridY);
+        newCell?.StartPulse();
 
         if (dustParticle != null)
             dustParticle.Play();

@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 454cc7a7ca1990546ac514c573d012a9
+guid: ecdbdd56db16f1741a96328f89b1b122
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 501241878917194457
-    second: (only name)justicecard_0
+      213: -3508249495133443482
+    second: tower_illust_0
+  - first:
+      213: 2763620628239138870
+    second: tower_illust_1
+  - first:
+      213: 4183856022941914329
+    second: tower_illust_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +52,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,13 +106,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: (only name)justicecard_0
+      name: tower_illust_0
       rect:
         serializedVersion: 2
-        x: 82
-        y: 122
-        width: 227
-        height: 402
+        x: 0
+        y: 45
+        width: 55
+        height: 164
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +121,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9d2a86b45d4c4f600800000000000000
-      internalID: 501241878917194457
+      spriteID: 66aa023fba1305fc0800000000000000
+      internalID: -3508249495133443482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tower_illust_1
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 5
+        width: 138
+        height: 207
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 630c220b15a5a5620800000000000000
+      internalID: 2763620628239138870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tower_illust_2
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 198
+        width: 43
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d4d4d6c2ea001a30800000000000000
+      internalID: 4183856022941914329
       vertices: []
       indices: 
       edges: []
@@ -125,7 +175,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +185,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      (only name)justicecard_0: 501241878917194457
+      tower_illust_0: -3508249495133443482
+      tower_illust_1: 2763620628239138870
+      tower_illust_2: 4183856022941914329
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

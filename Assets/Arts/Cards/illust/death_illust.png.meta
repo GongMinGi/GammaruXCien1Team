@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 454cc7a7ca1990546ac514c573d012a9
+guid: c626b07471042994182fd5c354270b2f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 501241878917194457
-    second: (only name)justicecard_0
+      213: -5152177885296509313
+    second: death_illust_0
+  - first:
+      213: 4114667891727519474
+    second: death_illust_1
+  - first:
+      213: -3621600535901320567
+    second: death_illust_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +52,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,13 +106,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: (only name)justicecard_0
+      name: death_illust_0
       rect:
         serializedVersion: 2
-        x: 82
-        y: 122
-        width: 227
-        height: 402
+        x: 0
+        y: 7
+        width: 164
+        height: 197
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +121,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9d2a86b45d4c4f600800000000000000
-      internalID: 501241878917194457
+      spriteID: f7e374fb289cf78b0800000000000000
+      internalID: -5152177885296509313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: death_illust_1
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 114
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fecf17a5ac3a1930800000000000000
+      internalID: 4114667891727519474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: death_illust_2
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 4
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98acc3b208d7dbdc0800000000000000
+      internalID: -3621600535901320567
       vertices: []
       indices: 
       edges: []
@@ -125,7 +175,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +185,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      (only name)justicecard_0: 501241878917194457
+      death_illust_0: -5152177885296509313
+      death_illust_1: 4114667891727519474
+      death_illust_2: -3621600535901320567
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
