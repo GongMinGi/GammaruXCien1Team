@@ -18,10 +18,17 @@ MonoBehaviour:
   koreanName: "\uBCC4"
   usageType: 1
   baseCost: 4
+  cardImage: {fileID: 21300000, guid: f941da4acfbeecc44b424037460728f3, type: 3}
+  detailImage: {fileID: 1662352922451056365, guid: 3fe2cf206126bc2409dc1c6d3ca611be, type: 3}
   cardColor: {r: 1, g: 1, b: 1, a: 1}
   timelineColor: {r: 0.7, g: 0.3, b: 0.5, a: 1}
   defaultElement: 3
   effectDefinition: {fileID: 11400000, guid: 0c750643df7c4374f8df5eb7b25d5f26, type: 2}
   requiresEffectDefinition: 1
+  instantValue: 0
+  observationAction: 0
   effectDescription: "\uBCC4 \uC18D\uC131 \uAC15\uD55C \uD53C\uD574 3\uD68C. \uD53C\uD574
     \uC2DC\uB9C8\uB2E4 \uCCB4\uB825 \uD68C\uBCF5."
+  zeroCostUnlimited: 0
+  cooldownTurns: 0
+  blocksCostModifiers: 0

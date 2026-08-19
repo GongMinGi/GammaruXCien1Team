@@ -18,11 +18,18 @@ MonoBehaviour:
   koreanName: "\uC815\uC758"
   usageType: 1
   baseCost: 3
+  cardImage: {fileID: 501241878917194457, guid: 168a14d40ab5697458d28ab8a775da80, type: 3}
+  detailImage: {fileID: 21300000, guid: 13692fde9db9ad24fac8b04d930309c9, type: 3}
   cardColor: {r: 1, g: 1, b: 1, a: 1}
   timelineColor: {r: 0.7, g: 0.3, b: 0.5, a: 1}
   defaultElement: 0
   effectDefinition: {fileID: 11400000, guid: 6aa67e1967da0ff4794392bef626d39e, type: 2}
   requiresEffectDefinition: 1
+  instantValue: 0
+  observationAction: 0
   effectDescription: "\uC2DC\uC804 \uC911 \uD53C\uD574 \uAC10\uC18C. \uC644\uB8CC
     \uC2DC \uBB34\uC18D\uC131 \uC911\uAC04 \uD53C\uD574. \uD53C\uACA9 \uC2DC \uD53C\uD574\uB7C9
     \uC99D\uAC00."
+  zeroCostUnlimited: 0
+  cooldownTurns: 0
+  blocksCostModifiers: 0
