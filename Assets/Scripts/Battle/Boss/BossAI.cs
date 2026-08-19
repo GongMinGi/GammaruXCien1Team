@@ -15,6 +15,12 @@ public class BossAI : MonoBehaviour
             bossStats = GetComponent<BossStats>();
     }
 
+    /// 이번 턴 종료에 시전되는 아르카나 (표시용)
+    public int[] TurnEndArcanaIds =>
+        bossStats != null && bossStats.Data != null && bossStats.Data.Pattern != null
+            ? bossStats.Data.Pattern.TurnEndArcanaIds
+            : System.Array.Empty<int>();
+
     public bool ValidateReferences()
     {
         if (bossStats == null)

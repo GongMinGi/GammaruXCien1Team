@@ -222,6 +222,63 @@ public class ThreadBoundClownPatternTests
     }
 
     [Test]
+    public void TurnEndArcanaIds_AnnounceExactlyWhatTheWheelDoes()
+    {
+        var definition =
+            ScriptableObject.CreateInstance<ThreadBoundClownPatternDefinition>();
+        definition.ResetRuntimeState();
+
+        // 1페이즈: 턴 종료 0만
+        CollectionAssert.AreEqual(new[] { 0 }, definition.TurnEndArcanaIds);
+
+        int[][] expected =
+        {
+            new[] { 5, 0 },  // t=1  V + 0
+            new[] { 0 },     // t=2  0
+            new[] { 4 },     // t=3  IV
+            new[] { 0 }      // t=4  0
+        };
+
+        for (int turn = 1; turn <= 8; turn++)
+        {
+            definition.SelectPatternIndex(1, turn - 1);
+
+            int[] announced = definition.TurnEndArcanaIds;
+            CollectionAssert.AreEqual(expected[(turn - 1) % 4], announced,
+                $"t={turn}의 턴 종료 예고가 4턴 주기와 어긋남");
+
+            // 예고한 아르카나가 실제 수레바퀴 이동과 일치해야 한다
+            int before = definition.WheelPosition;
+            int after = definition.ApplyTurnEndWheel();
+
+            int predicted;
+            if (announced.SequenceEqual(new[] { 4 }))
+                predicted = 4;
+            else if (announced.SequenceEqual(new[] { 5, 0 }))
+                predicted = ClownWheel.Rotate(ClownWheel.Opposite(before));
+            else
+                predicted = ClownWheel.Rotate(before);
+
+            Assert.AreEqual(predicted, after,
+                $"t={turn}: 예고({string.Join("+", announced)})와 실제 이동이 다름");
+        }
+
+        Object.DestroyImmediate(definition);
+    }
+
+    [Test]
+    public void TurnEndArcanaIds_IsEmptyForBossesWithoutTurnEndCasts()
+    {
+        var golem =
+            ScriptableObject.CreateInstance<AbandonedMagicGolemPatternDefinition>();
+
+        Assert.IsEmpty(golem.TurnEndArcanaIds,
+            "골렘은 턴 종료 카드가 붙지 않아야 한다");
+
+        Object.DestroyImmediate(golem);
+    }
+
+    [Test]
     public void BuildPattern_IsPureAcrossRepeatedCalls()
     {
         var definition =

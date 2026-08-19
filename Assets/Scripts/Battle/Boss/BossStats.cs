@@ -23,6 +23,11 @@ public class BossStats : MonoBehaviour
 
     private void Awake()
     {
+        BossData transferredBossData = BattleLoadoutData.TakeSelectedBossData();
+
+        if (transferredBossData != null)
+            bossData = transferredBossData;
+
         if (bossData == null)
         {
             Debug.LogError("BossData is not assigned.", this);

@@ -37,7 +37,11 @@ public class BossController : MonoBehaviour
 
         currentPattern = plan.Actions;
 
-        BossAction[] displayActions = new BossAction[plan.Intents.Length];
+        int[] turnEndArcanaIds = bossAI.TurnEndArcanaIds;
+        bool hasTurnEnd = turnEndArcanaIds != null && turnEndArcanaIds.Length > 0;
+
+        BossAction[] displayActions =
+            new BossAction[plan.Intents.Length + (hasTurnEnd ? 1 : 0)];
         for (int i = 0; i < plan.Intents.Length; i++)
         {
             BossIntent intent = plan.Intents[i];
@@ -46,6 +50,17 @@ public class BossController : MonoBehaviour
                 timingSlot = intent.timingSlot,
                 arcanaIds = intent.arcanaIds,
                 isInstantKill = intent.isInstantKill
+            };
+        }
+
+        if (hasTurnEnd)
+        {
+            // 타임라인 슬롯을 쓰지 않는 턴 종료 시전(0 / V+0 / IV).
+            // timingSlot -1은 BossCardDisplay가 "종료" 라벨로 읽는 표시 전용 값이다.
+            displayActions[^1] = new BossAction
+            {
+                timingSlot = -1,
+                arcanaIds = turnEndArcanaIds
             };
         }
 
