@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class PlanningController : MonoBehaviour
 {
+    public event Action<IReadOnlyList<PlannedAction>, Vector2Int, int> PlanningStateChanged;
+
     [SerializeField] private GridManager gridManager;
     [SerializeField] private PlayerDisplay playerDisplay;
     [SerializeField] private ActionBar actionBar;
@@ -45,6 +47,7 @@ public class PlanningController : MonoBehaviour
         planningActive = true;
         onPlanConfirmed = onConfirmed;
         CancelCardDrag();
+        NotifyPlanningSlotChanged();
     }
 
     private void Update()
@@ -204,6 +207,8 @@ public class PlanningController : MonoBehaviour
         playerGridPos = newPos;
         playerDisplay.UpdateGridPosition(newPos.x, newPos.y);
         actionBar.FillSlot(usedSlots - 1, ActionType.Move);
+        NotifyPlanningSlotChanged();
+
     }
 
     private void QueueStay()
@@ -220,6 +225,8 @@ public class PlanningController : MonoBehaviour
 
         usedSlots++;
         actionBar.FillSlot(usedSlots - 1, ActionType.Stay);
+        NotifyPlanningSlotChanged();
+
     }
 
     private void QueueCardUse(int handIndex)
@@ -249,6 +256,8 @@ public class PlanningController : MonoBehaviour
 
         actionBar.FillRange(usedSlots, card.BaseCost, card.TimelineColor);
         usedSlots += card.BaseCost;
+        NotifyPlanningSlotChanged();
+
     }
 
     private void UndoLastAction()
@@ -282,6 +291,9 @@ public class PlanningController : MonoBehaviour
                     action.MergeSource2, action.MergeSourceIndex2);
                 break;
         }
+
+        NotifyPlanningSlotChanged();
+
     }
 
     private void ConfirmPlan()
@@ -293,8 +305,17 @@ public class PlanningController : MonoBehaviour
             return;
 
         planningActive = false;
+        PlanningStateChanged?.Invoke(plannedActions, battleStartPos, -1);
+
         var confirmed = new List<PlannedAction>(plannedActions);
         plannedActions.Clear();
         onPlanConfirmed?.Invoke(confirmed, battleStartPos);
+    }
+
+
+    private void NotifyPlanningSlotChanged()
+    {
+        int slotIndex = usedSlots < ActionBar.SlotCount ? usedSlots : -1;
+        PlanningStateChanged?.Invoke(plannedActions, battleStartPos, slotIndex);
     }
 }

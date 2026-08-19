@@ -7,7 +7,10 @@ public enum EffectType
     DealDamage,
     Heal,
     Dodge,
-    Cast
+    Cast,
+    IncomingDamageModifier,
+    CounterStance,
+    ApplyBurn
 }
 
 [System.Serializable]

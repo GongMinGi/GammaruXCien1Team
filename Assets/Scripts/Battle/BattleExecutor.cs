@@ -16,6 +16,21 @@ public class BattleExecutor : MonoBehaviour
     private Action completionCallback;
     private bool isExecuting;
 
+    private struct SlotModifiers
+    {
+        public int IncomingDamageModifier;
+        public bool CounterStanceActive;
+        public int CounterStanceBonusPerHit;
+        public int AccumulatedBonusDamage;
+
+        public void ResetPerSlot()
+        {
+            IncomingDamageModifier = 0;
+            CounterStanceActive = false;
+            CounterStanceBonusPerHit = 0;
+        }
+    }
+
     public bool ValidateReferences()
     {
         if (gridManager == null || playerDisplay == null ||
@@ -107,16 +122,24 @@ public class BattleExecutor : MonoBehaviour
             playerDisplay.UpdateGridPosition(startPos.x, startPos.y);
             yield return new WaitForSeconds(0.3f);
 
+            SlotModifiers modifiers = default;
+
             for (int slot = 0; slot < timeline.Length; slot++)
             {
+                modifiers.ResetPerSlot();
+
+                bossStats.ProcessBurn();
+                if (bossStats.IsDead)
+                    break;
+
                 bool isDodgingThisSlot = false;
 
-                ProcessPlayerEffects(timeline[slot], ref currentPos, ref isDodgingThisSlot);
+                ProcessPlayerEffects(timeline[slot], ref currentPos, ref isDodgingThisSlot, ref modifiers);
 
                 if (bossStats.IsDead)
                     break;
 
-                ProcessBossActions(slot, bossPattern, currentPos, isDodgingThisSlot);
+                ProcessBossActions(slot, bossPattern, currentPos, isDodgingThisSlot, ref modifiers);
 
                 if (playerStats.IsDead)
                     break;
@@ -139,7 +162,8 @@ public class BattleExecutor : MonoBehaviour
     private void ProcessPlayerEffects(
         TimelineSlot slot,
         ref Vector2Int currentPos,
-        ref bool isDodging)
+        ref bool isDodging,
+        ref SlotModifiers modifiers)
     {
         foreach (ScheduledEffect effect in slot.Effects)
         {
@@ -160,6 +184,8 @@ public class BattleExecutor : MonoBehaviour
                 case EffectType.DealDamage:
                     int damage = combatResolver.ResolvePlayerDamage(
                         effect, playerStats.SpellPower, bossStats.Weakness);
+                    damage += modifiers.AccumulatedBonusDamage;
+                    modifiers.AccumulatedBonusDamage = 0;
                     bossStats.TakeDamage(damage);
                     break;
 
@@ -170,6 +196,18 @@ public class BattleExecutor : MonoBehaviour
                 case EffectType.Cast:
                     break;
 
+                case EffectType.IncomingDamageModifier:
+                    modifiers.IncomingDamageModifier += effect.BaseValue;
+                    break;
+
+                case EffectType.CounterStance:
+                    modifiers.CounterStanceActive = true;
+                    modifiers.CounterStanceBonusPerHit = effect.BaseValue;
+                    break;
+
+                case EffectType.ApplyBurn:
+                    bossStats.AddBurnStacks(effect.BaseValue);
+                    break;
             }
         }
     }
@@ -178,7 +216,8 @@ public class BattleExecutor : MonoBehaviour
         int slotIndex,
         BossAction[] bossPattern,
         Vector2Int playerPos,
-        bool isDodging)
+        bool isDodging,
+        ref SlotModifiers modifiers)
     {
         foreach (BossAction bossAction in bossPattern)
         {
@@ -196,10 +235,19 @@ public class BattleExecutor : MonoBehaviour
 
             if (combatResolver.IsHit(playerPos, bossAction.targetCells, isDodging))
             {
+                if (modifiers.CounterStanceActive)
+                    modifiers.AccumulatedBonusDamage += modifiers.CounterStanceBonusPerHit;
+
                 if (bossAction.isInstantKill)
+                {
                     playerStats.InstantKill();
+                }
                 else
-                    playerStats.TakeDamage(combatResolver.ResolveBossDamage(bossAction));
+                {
+                    int rawDamage = combatResolver.ResolveBossDamage(bossAction);
+                    int finalDamage = Mathf.Max(0, rawDamage + modifiers.IncomingDamageModifier);
+                    playerStats.TakeDamage(finalDamage);
+                }
             }
         }
     }

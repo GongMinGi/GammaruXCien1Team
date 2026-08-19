@@ -701,6 +701,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossAI
+  bossStats: {fileID: 900000016}
+  patternDefinition: {fileID: 11400000, guid: 00f3339e8d57351408e8e887b04db3a6, type: 2}
 --- !u!114 &900000015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -728,8 +730,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f35cae247a1c534428b2f5ee2f99fbc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossStats
-  maxHp: 500
-  weakness: 0
+  maxHp: 300
+  weakness: 2
+  burnDamagePerStack: 2
 --- !u!1 &900000020
 GameObject:
   m_ObjectHideFlags: 0
@@ -1051,7 +1054,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
   maxHp: 100
-  spellPower: 10
+  spellPower: 50
 --- !u!1 &1305633215
 GameObject:
   m_ObjectHideFlags: 0

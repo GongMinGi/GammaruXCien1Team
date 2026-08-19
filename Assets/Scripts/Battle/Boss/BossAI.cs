@@ -1,48 +1,123 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BossAI : MonoBehaviour
 {
-    public BossAction[] GeneratePattern()
+    [SerializeField] private BossStats bossStats;
+    [SerializeField] private BossPatternDefinition patternDefinition;
+
+    private int currentPhase;
+    private int phaseTurnIndex;
+    private int currentPatternIndex = -1;
+
+    private void Awake()
     {
-        return new BossAction[]
+        if (bossStats == null)
+            bossStats = GetComponent<BossStats>();
+    }
+
+    public bool ValidateReferences()
+    {
+        if (bossStats == null)
+            bossStats = GetComponent<BossStats>();
+
+        if (bossStats == null)
         {
-            new BossAction
+            Debug.LogError("BossAI requires BossStats.", this);
+            return false;
+        }
+
+        if (patternDefinition == null)
+        {
+            Debug.LogError("BossAI pattern definition is not assigned.", this);
+            return false;
+        }
+
+        return patternDefinition.ValidateDefinition();
+    }
+
+    public BossPatternPlan GeneratePattern(Vector2Int playerPosition)
+    {
+        if (!ValidateReferences())
+            return null;
+
+        int resolvedPhase =
+            patternDefinition.ResolvePhase(bossStats, currentPhase);
+        if (resolvedPhase != currentPhase)
+        {
+            currentPhase = resolvedPhase;
+            phaseTurnIndex = 0;
+        }
+
+        currentPatternIndex =
+            patternDefinition.SelectPatternIndex(currentPhase, phaseTurnIndex);
+        phaseTurnIndex++;
+
+        return BuildCurrentPattern(
+            CreateConstantPositions(playerPosition));
+    }
+
+    public BossPatternPlan RebuildCurrentPattern(
+        IReadOnlyList<Vector2Int> playerPositionsBySlot)
+    {
+        if (!ValidateReferences() || currentPatternIndex < 0)
+            return null;
+
+        return BuildCurrentPattern(playerPositionsBySlot);
+    }
+
+    private BossPatternPlan BuildCurrentPattern(
+        IReadOnlyList<Vector2Int> playerPositionsBySlot)
+    {
+        BossPatternPlan plan = patternDefinition.BuildPattern(
+            currentPhase,
+            currentPatternIndex,
+            playerPositionsBySlot);
+
+        return ValidatePlan(plan) ? plan : null;
+    }
+
+    private static Vector2Int[] CreateConstantPositions(Vector2Int position)
+    {
+        Vector2Int[] positions = new Vector2Int[ActionBar.SlotCount];
+        for (int i = 0; i < positions.Length; i++)
+            positions[i] = position;
+        return positions;
+    }
+
+    private bool ValidatePlan(BossPatternPlan plan)
+    {
+        if (plan == null || plan.Intents == null || plan.Actions == null ||
+            plan.Intents.Length == 0 || plan.Actions.Length == 0)
+        {
+            Debug.LogError("BossAI generated an empty pattern.", this);
+            return false;
+        }
+
+        foreach (BossIntent intent in plan.Intents)
+        {
+            if (intent.timingSlot < 0 ||
+                intent.timingSlot >= ActionBar.SlotCount ||
+                intent.arcanaIds == null || intent.arcanaIds.Length == 0)
             {
-                timingSlot = 2,
-                arcanaIds = new[] { 2 },
-                targetCells = new[] { new Vector2Int(1, 0) },
-                baseDamage = 100,
-                isInstantKill = false,
-                element = DamageElement.Neutral
-            },
-            new BossAction
-            {
-                timingSlot = 5,
-                arcanaIds = new[] { 3 },
-                targetCells = new[]
-                {
-                    new Vector2Int(0, -1),
-                    new Vector2Int(0, 0),
-                    new Vector2Int(0, 1)
-                },
-                baseDamage = 150,
-                isInstantKill = false,
-                element = DamageElement.Sun
-            },
-            new BossAction
-            {
-                timingSlot = 8,
-                arcanaIds = new[] { 2, 4 },
-                targetCells = new[]
-                {
-                    new Vector2Int(-1, 1),
-                    new Vector2Int(0, 1),
-                    new Vector2Int(1, 1)
-                },
-                baseDamage = 0,
-                isInstantKill = true,
-                element = DamageElement.Neutral
+                Debug.LogError("BossAI generated an invalid intent.", this);
+                return false;
             }
-        };
+        }
+
+        foreach (BossAction action in plan.Actions)
+        {
+            if (action.timingSlot < 0 ||
+                action.timingSlot >= ActionBar.SlotCount ||
+                action.targetCells == null || action.targetCells.Length == 0 ||
+                action.baseDamage < 0)
+            {
+                Debug.LogError("BossAI generated an invalid action.", this);
+                return false;
+            }
+        }
+
+        return true;
     }
 }
+

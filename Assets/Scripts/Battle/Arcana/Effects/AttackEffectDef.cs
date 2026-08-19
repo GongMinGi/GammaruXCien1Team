@@ -11,7 +11,7 @@ public class AttackEffectDef : ArcanaEffectDefinition
     [SerializeField, Min(0f)] private float spellPowerCoefficient = 1.0f;
     [SerializeField] private int additionalEffectValue;
 
-    public override ScheduledEffect[] Expand(ArcanaData card)
+    public override ScheduledEffect[][] Expand(ArcanaData card)
     {
         if (card == null)
             throw new ArgumentNullException(nameof(card));
@@ -22,19 +22,19 @@ public class AttackEffectDef : ArcanaEffectDefinition
                 $"AttackEffectDef({name}): card {card.Id}({card.ArcanaName})의 " +
                 $"BaseCost가 {cost}. 1 이상이어야 함.");
 
-        ScheduledEffect[] effects = new ScheduledEffect[cost];
+        ScheduledEffect[][] effects = new ScheduledEffect[cost][];
 
         for (int i = 0; i < cost - 1; i++)
         {
-            effects[i] = new ScheduledEffect
+            effects[i] = new[] { new ScheduledEffect
             {
                 Type = EffectType.Cast,
                 SourceCard = card,
                 Element = card.DefaultElement
-            };
+            }};
         }
 
-        effects[cost - 1] = new ScheduledEffect
+        effects[cost - 1] = new[] { new ScheduledEffect
         {
             Type = EffectType.DealDamage,
             SourceCard = card,
@@ -42,7 +42,7 @@ public class AttackEffectDef : ArcanaEffectDefinition
             BaseValue = baseValue,
             SpellPowerCoefficient = spellPowerCoefficient,
             AdditionalEffectValue = additionalEffectValue
-        };
+        }};
 
         return effects;
     }

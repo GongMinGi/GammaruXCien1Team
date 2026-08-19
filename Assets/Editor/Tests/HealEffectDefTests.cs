@@ -2,18 +2,16 @@ using System;
 using NUnit.Framework;
 using UnityEngine;
 
-public class AttackEffectDefTests
+public class HealEffectDefTests
 {
     [Test]
     public void Expand_ProducesCorrectEffectSequence()
     {
-        AttackEffectDef def = ScriptableObject.CreateInstance<AttackEffectDef>();
-        SetField(def, "baseValue", 5);
-        SetField(def, "spellPowerCoefficient", 1.5f);
-        SetField(def, "additionalEffectValue", 2);
+        HealEffectDef def = ScriptableObject.CreateInstance<HealEffectDef>();
+        SetField(def, "baseHealValue", 20);
 
         ArcanaData card = ScriptableObject.CreateInstance<ArcanaData>();
-        SetField(card, "id", 8);
+        SetField(card, "id", 3);
         SetField(card, "baseCost", 2);
         SetField(card, "defaultElement", DamageElement.Neutral);
 
@@ -24,15 +22,11 @@ public class AttackEffectDefTests
         Assert.AreEqual(1, effects[0].Length);
         Assert.AreEqual(EffectType.Cast, effects[0][0].Type);
         Assert.AreEqual(card, effects[0][0].SourceCard);
-        Assert.AreEqual(DamageElement.Neutral, effects[0][0].Element);
 
         Assert.AreEqual(1, effects[1].Length);
-        Assert.AreEqual(EffectType.DealDamage, effects[1][0].Type);
+        Assert.AreEqual(EffectType.Heal, effects[1][0].Type);
         Assert.AreEqual(card, effects[1][0].SourceCard);
-        Assert.AreEqual(DamageElement.Neutral, effects[1][0].Element);
-        Assert.AreEqual(5, effects[1][0].BaseValue);
-        Assert.AreEqual(1.5f, effects[1][0].SpellPowerCoefficient);
-        Assert.AreEqual(2, effects[1][0].AdditionalEffectValue);
+        Assert.AreEqual(20, effects[1][0].BaseValue);
 
         UnityEngine.Object.DestroyImmediate(def);
         UnityEngine.Object.DestroyImmediate(card);
@@ -41,17 +35,15 @@ public class AttackEffectDefTests
     [Test]
     public void Expand_NullCard_ThrowsArgumentNullException()
     {
-        AttackEffectDef def = ScriptableObject.CreateInstance<AttackEffectDef>();
-
+        HealEffectDef def = ScriptableObject.CreateInstance<HealEffectDef>();
         Assert.Throws<ArgumentNullException>(() => def.Expand(null));
-
         UnityEngine.Object.DestroyImmediate(def);
     }
 
     [Test]
     public void Expand_ZeroCost_ThrowsInvalidOperationException()
     {
-        AttackEffectDef def = ScriptableObject.CreateInstance<AttackEffectDef>();
+        HealEffectDef def = ScriptableObject.CreateInstance<HealEffectDef>();
         ArcanaData card = ScriptableObject.CreateInstance<ArcanaData>();
         SetField(card, "baseCost", 0);
 

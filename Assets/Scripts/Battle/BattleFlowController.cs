@@ -35,8 +35,17 @@ public class BattleFlowController : MonoBehaviour
         playerHand.Initialize(bag);
         combatResolver = new CombatResolver();
         battleExecutor.Initialize(combatResolver);
+        planningController.PlanningStateChanged += bossController.UpdatePlanningPreview;
+
         StartTurn();
     }
+
+    private void OnDestroy()
+    {
+        if (planningController != null && bossController != null)
+            planningController.PlanningStateChanged -= bossController.UpdatePlanningPreview;
+    }
+
 
     private void StartTurn()
     {
@@ -45,10 +54,17 @@ public class BattleFlowController : MonoBehaviour
 
         turnNumber++;
         currentPhase = BattlePhase.TurnStart;
-        Debug.Log($"턴 {turnNumber} 시작");
+        Debug.Log($"Turn {turnNumber} started.");
 
+        bossStats.ClearBurn();
         playerHand.DrawToCapacity();
-        bossController.GenerateAndShow();
+
+        if (!bossController.GenerateAndShow(playerDisplay.GridPosition))
+        {
+            Debug.LogError("Boss pattern generation failed. Battle stopped.", this);
+            EndBattleDueToError();
+            return;
+        }
 
         EnterObservation();
     }
@@ -212,23 +228,31 @@ public class BattleFlowController : MonoBehaviour
                         return null;
                     }
 
-                    ScheduledEffect[] effects = ExpandCard(action.CardData);
-                    if (effects == null || effects.Length != action.Cost)
+                    ScheduledEffect[][] slotEffects = ExpandCard(action.CardData);
+                    if (slotEffects == null || slotEffects.Length != action.Cost)
                     {
                         Debug.LogError(
                             $"ExpandCard 결과 불일치: expected {action.Cost}, " +
-                            $"got {effects?.Length}", this);
+                            $"got {slotEffects?.Length}", this);
                         return null;
                     }
 
                     for (int i = 0; i < action.Cost; i++)
                     {
+                        if (slotEffects[i] == null || slotEffects[i].Length == 0)
+                        {
+                            Debug.LogError(
+                                $"ExpandCard 결과 슬롯 {i}이 null 또는 빈 배열.", this);
+                            return null;
+                        }
+
                         if (i == 0)
                         {
                             timeline[slotCursor + i].HasMainAction = true;
                             timeline[slotCursor + i].MainAction = action;
                         }
-                        timeline[slotCursor + i].Effects.Add(effects[i]);
+                        foreach (ScheduledEffect effect in slotEffects[i])
+                            timeline[slotCursor + i].Effects.Add(effect);
                     }
                     slotCursor += action.Cost;
                     break;
@@ -251,7 +275,7 @@ public class BattleFlowController : MonoBehaviour
         return timeline;
     }
 
-    private ScheduledEffect[] ExpandCard(ArcanaData card)
+    private ScheduledEffect[][] ExpandCard(ArcanaData card)
     {
         ArcanaEffectDefinition definition = card.EffectDefinition;
 
@@ -263,7 +287,7 @@ public class BattleFlowController : MonoBehaviour
             return CreateCastFallback(card);
         }
 
-        ScheduledEffect[] effects = definition.Expand(card);
+        ScheduledEffect[][] effects = definition.Expand(card);
 
         if (effects == null || effects.Length != card.BaseCost)
         {
@@ -277,17 +301,17 @@ public class BattleFlowController : MonoBehaviour
         return effects;
     }
 
-    private ScheduledEffect[] CreateCastFallback(ArcanaData card)
+    private ScheduledEffect[][] CreateCastFallback(ArcanaData card)
     {
-        ScheduledEffect[] effects = new ScheduledEffect[card.BaseCost];
+        ScheduledEffect[][] effects = new ScheduledEffect[card.BaseCost][];
         for (int i = 0; i < effects.Length; i++)
         {
-            effects[i] = new ScheduledEffect
+            effects[i] = new[] { new ScheduledEffect
             {
                 Type = EffectType.Cast,
                 SourceCard = card,
                 Element = card.DefaultElement
-            };
+            }};
         }
         return effects;
     }
