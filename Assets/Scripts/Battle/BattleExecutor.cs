@@ -12,6 +12,8 @@ public class BattleExecutor : MonoBehaviour
     [SerializeField] private Color attackHighlightColor = new Color(1f, 0.2f, 0.2f, 0.8f);
 
     private CombatResolver combatResolver;
+    private Coroutine executionCoroutine;
+    private Action completionCallback;
     private bool isExecuting;
 
     public bool ValidateReferences()
@@ -31,37 +33,80 @@ public class BattleExecutor : MonoBehaviour
         combatResolver = resolver;
     }
 
-    public void Execute(
+    public bool Execute(
         TimelineSlot[] timeline,
         BossAction[] bossPattern,
         Vector2Int startPos,
         Action onComplete)
     {
-        if (isExecuting)
-            return;
+        if (executionCoroutine != null)
+        {
+            Debug.LogWarning("BattleExecutor: 이미 실행 중. 중복 호출 무시.", this);
+            return false;
+        }
+
+        if (timeline == null || timeline.Length != ActionBar.SlotCount)
+        {
+            Debug.LogError("BattleExecutor: 유효하지 않은 timeline.", this);
+            return false;
+        }
+
+        if (bossPattern == null)
+        {
+            Debug.LogError("BattleExecutor: boss pattern이 null.", this);
+            return false;
+        }
+
+        if (combatResolver == null)
+        {
+            Debug.LogError("BattleExecutor: Initialize() 미호출.", this);
+            return false;
+        }
 
         isExecuting = true;
-        StartCoroutine(RunTimeline(timeline, bossPattern, startPos, onComplete));
+        completionCallback = onComplete;
+        executionCoroutine = StartCoroutine(
+            RunTimeline(timeline, bossPattern, startPos));
+        return true;
     }
 
     public void ForceStop()
     {
-        StopAllCoroutines();
+        Coroutine coroutine = executionCoroutine;
+        CleanupExecution();
+
+        if (coroutine != null)
+            StopCoroutine(coroutine);
+    }
+
+    private void CleanupExecution()
+    {
+        executionCoroutine = null;
+        completionCallback = null;
         isExecuting = false;
+        if (gridManager != null)
+            gridManager.ClearAllHighlights();
+    }
+
+    private void CompleteExecution()
+    {
+        Action callback = completionCallback;
+        CleanupExecution();
+        callback?.Invoke();
     }
 
     private IEnumerator RunTimeline(
         TimelineSlot[] timeline,
         BossAction[] bossPattern,
-        Vector2Int startPos,
-        Action onComplete)
+        Vector2Int startPos)
     {
-        Vector2Int currentPos = startPos;
-        playerDisplay.UpdateGridPosition(startPos.x, startPos.y);
-        yield return new WaitForSeconds(0.3f);
-
+        bool completedNormally = false;
         try
         {
+            Vector2Int currentPos = startPos;
+            playerDisplay.UpdateGridPosition(startPos.x, startPos.y);
+            yield return new WaitForSeconds(0.3f);
+
             for (int slot = 0; slot < timeline.Length; slot++)
             {
                 bool isDodgingThisSlot = false;
@@ -79,13 +124,16 @@ public class BattleExecutor : MonoBehaviour
                 yield return new WaitForSeconds(slotDuration);
                 gridManager.ClearAllHighlights();
             }
+
+            completedNormally = true;
         }
         finally
         {
-            isExecuting = false;
-            gridManager.ClearAllHighlights();
-            onComplete?.Invoke();
+            if (!completedNormally)
+                CleanupExecution();
         }
+
+        CompleteExecution();
     }
 
     private void ProcessPlayerEffects(
@@ -122,8 +170,6 @@ public class BattleExecutor : MonoBehaviour
                 case EffectType.Cast:
                     break;
 
-                case EffectType.ApplyModifier:
-                    break;
             }
         }
     }

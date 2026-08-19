@@ -81,6 +81,8 @@ public class PlanningController : MonoBehaviour
                 int target = handDisplay.GetHoveredCardIndex();
                 if (target >= 0 && target != dragStartIndex)
                     TryMerge(dragStartIndex, target);
+                else if (target < 0)
+                    QueueCardUse(dragStartIndex);
 
                 CancelCardDrag();
             }
