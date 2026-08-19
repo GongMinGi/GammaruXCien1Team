@@ -283,20 +283,40 @@ public class BattleFlowController : MonoBehaviour
                         return null;
                     }
 
-                    ScheduledEffect[][] slotEffects;
+                    ScheduledEffect[][] slotEffects = ExpandCard(action.CardData);
+                    if (slotEffects == null)
+                    {
+                        Debug.LogError(
+                            $"ExpandCard 실패: {action.CardData.Id}", this);
+                        return null;
+                    }
+
+                    if (action.ConsumedHandCards != null)
+                    {
+                        int bonusPerCost = action.CardData.EffectDefinition.BonusDamagePerConsumedCost;
+                        if (bonusPerCost > 0)
+                        {
+                            int totalCost = 0;
+                            foreach (ArcanaData c in action.ConsumedHandCards)
+                                totalCost += c.BaseCost;
+                            int bonus = totalCost * bonusPerCost;
+                            if (!InjectDealDamageBonus(slotEffects, bonus))
+                            {
+                                Debug.LogError(
+                                    $"Arcana {action.CardData.Id}: ConsumesHand이나 DealDamage 없음.", this);
+                                return null;
+                            }
+                        }
+                    }
+
                     if (pendingCostModifier != InstantModifierType.None ||
                         pendingElementBuff)
                     {
-                        slotEffects = ExpandCardWithModifiers(
-                            action.CardData, action.Cost,
-                            pendingCostModifier, pendingElementBuff,
-                            pendingElement);
+                        slotEffects = ApplyInstantModifiers(
+                            slotEffects, pendingCostModifier,
+                            pendingElementBuff, pendingElement);
                         pendingCostModifier = InstantModifierType.None;
                         pendingElementBuff = false;
-                    }
-                    else
-                    {
-                        slotEffects = ExpandCard(action.CardData);
                     }
 
                     if (slotEffects == null || slotEffects.Length != action.Cost)
@@ -448,6 +468,24 @@ public class BattleFlowController : MonoBehaviour
         }
 
         return effects;
+    }
+
+    private static bool InjectDealDamageBonus(ScheduledEffect[][] effects, int bonus)
+    {
+        for (int s = effects.Length - 1; s >= 0; s--)
+        {
+            for (int e = 0; e < effects[s].Length; e++)
+            {
+                if (effects[s][e].Type == EffectType.DealDamage)
+                {
+                    ScheduledEffect effect = effects[s][e];
+                    effect.BaseValue += bonus;
+                    effects[s][e] = effect;
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void InjectDamageReduction(

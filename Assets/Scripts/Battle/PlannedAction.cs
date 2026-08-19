@@ -20,6 +20,10 @@ public struct PlannedAction
     public Vector2Int TowerPlacedPosition; // 타워 배치 위치 (undo용)
     public bool PlacedTower;               // 타워 배치 여부
 
+    // 핸드 소거 undo용 (ConsumesHand 카드)
+    public ArcanaData[] ConsumedHandCards;
+    public int[] ConsumedHandIndices;
+
     // 합치기 전용
     public ArcanaData MergeSource1;
     public int MergeSourceIndex1;

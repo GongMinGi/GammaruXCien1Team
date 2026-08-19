@@ -233,13 +233,13 @@ public class PlanningController : MonoBehaviour
         {
             bool allowsDiag = directionSelectionAllowedDirs >= 8;
             if (kb.wKey.wasPressedThisFrame)
-                ConfirmDirectionSelection(Vector2Int.up);
-            else if (kb.sKey.wasPressedThisFrame)
-                ConfirmDirectionSelection(Vector2Int.down);
-            else if (kb.aKey.wasPressedThisFrame)
-                ConfirmDirectionSelection(Vector2Int.left);
-            else if (kb.dKey.wasPressedThisFrame)
                 ConfirmDirectionSelection(Vector2Int.right);
+            else if (kb.sKey.wasPressedThisFrame)
+                ConfirmDirectionSelection(Vector2Int.left);
+            else if (kb.aKey.wasPressedThisFrame)
+                ConfirmDirectionSelection(Vector2Int.up);
+            else if (kb.dKey.wasPressedThisFrame)
+                ConfirmDirectionSelection(Vector2Int.down);
             else if (allowsDiag && kb.qKey.wasPressedThisFrame)
                 ConfirmDirectionSelection(new Vector2Int(-1, 1));
             else if (allowsDiag && kb.eKey.wasPressedThisFrame)
@@ -287,13 +287,13 @@ public class PlanningController : MonoBehaviour
         else if (kb.digit7Key.wasPressedThisFrame)
             QueueCardUse(6);
         else if (kb.wKey.wasPressedThisFrame)
-            QueueMove(Vector2Int.up);
-        else if (kb.sKey.wasPressedThisFrame)
-            QueueMove(Vector2Int.down);
-        else if (kb.aKey.wasPressedThisFrame)
-            QueueMove(Vector2Int.left);
-        else if (kb.dKey.wasPressedThisFrame)
             QueueMove(Vector2Int.right);
+        else if (kb.sKey.wasPressedThisFrame)
+            QueueMove(Vector2Int.left);
+        else if (kb.aKey.wasPressedThisFrame)
+            QueueMove(Vector2Int.up);
+        else if (kb.dKey.wasPressedThisFrame)
+            QueueMove(Vector2Int.down);
     }
 
     private void QueueMove(Vector2Int direction)
@@ -400,6 +400,22 @@ public class PlanningController : MonoBehaviour
     {
         playerHand.TryTakeCard(handIndex, out _);
 
+        ArcanaData[] consumedCards = null;
+        int[] consumedIndices = null;
+        if (card.EffectDefinition != null && card.EffectDefinition.ConsumesHand
+            && playerHand.Cards.Count > 0)
+        {
+            int count = playerHand.Cards.Count;
+            consumedCards = new ArcanaData[count];
+            consumedIndices = new int[count];
+            for (int i = 0; i < count; i++)
+            {
+                consumedCards[i] = playerHand.Cards[i];
+                consumedIndices[i] = i;
+            }
+            playerHand.RemoveAllCards();
+        }
+
         InstantModifierType consumedCost = activeCostModifier;
         bool consumedElement = activeElementBuff;
         DamageElement consumedElementValue = activeElement;
@@ -437,7 +453,9 @@ public class PlanningController : MonoBehaviour
             ConsumedElement = consumedElementValue,
             PreCardPosition = prePos,
             PlacedTower = placedTower,
-            TowerPlacedPosition = towerPos
+            TowerPlacedPosition = towerPos,
+            ConsumedHandCards = consumedCards,
+            ConsumedHandIndices = consumedIndices
         });
 
         actionBar.FillRange(usedSlots, effectiveCost, card.TimelineColor);
@@ -467,6 +485,8 @@ public class PlanningController : MonoBehaviour
                 break;
             case ActionType.UseCard:
                 actionBar.ClearRange(usedSlots, action.Cost);
+                if (action.ConsumedHandCards != null)
+                    playerHand.RestoreCards(action.ConsumedHandCards, action.ConsumedHandIndices);
                 playerHand.ReturnCard(action.OriginalHandIndex, action.CardData);
                 if (action.PreCardPosition != playerGridPos)
                 {
