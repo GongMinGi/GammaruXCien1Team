@@ -1,0 +1,611 @@
+fileFormatVersion: 2
+guid: 644c7f84ef891ff4795a6798aeafa1f8
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1062172882191812993
+    second: lovers_illust_0
+  - first:
+      213: -4624285344426782153
+    second: lovers_illust_1
+  - first:
+      213: 653875911713449180
+    second: lovers_illust_2
+  - first:
+      213: 8664819337155210248
+    second: lovers_illust_3
+  - first:
+      213: 8920933500212637346
+    second: lovers_illust_4
+  - first:
+      213: -858078107109153509
+    second: lovers_illust_5
+  - first:
+      213: 6127792303023724623
+    second: lovers_illust_6
+  - first:
+      213: -2156507894999941943
+    second: lovers_illust_7
+  - first:
+      213: -7423698344184697589
+    second: lovers_illust_8
+  - first:
+      213: 7185412986443335402
+    second: lovers_illust_9
+  - first:
+      213: 3040327388168640005
+    second: lovers_illust_10
+  - first:
+      213: -2187570034610225557
+    second: lovers_illust_11
+  - first:
+      213: -2532026413988302528
+    second: lovers_illust_12
+  - first:
+      213: 7520597050419870687
+    second: lovers_illust_13
+  - first:
+      213: -8591518601581951430
+    second: lovers_illust_14
+  - first:
+      213: 8718603842350193285
+    second: lovers_illust_15
+  - first:
+      213: 2662440745419520480
+    second: lovers_illust_16
+  - first:
+      213: 2609191805847621778
+    second: lovers_illust_17
+  - first:
+      213: 1874395198340809779
+    second: lovers_illust_18
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: lovers_illust_0
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 156
+        width: 24
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1898815db989dbe00800000000000000
+      internalID: 1062172882191812993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lovers_illust_1
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 184
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7329561dafc33dfb0800000000000000
+      internalID: -4624285344426782153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lovers_illust_2
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 165
+        width: 37
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd46dd46da8031900800000000000000
+      internalID: 653875911713449180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lovers_illust_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 169
+        width: 25
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80c621a674f9f3870800000000000000
+      internalID: 8664819337155210248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lovers_illust_4
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 164
+        width: 19
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ae6e09d0c58dcb70800000000000000
+      internalID: 8920933500212637346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lovers_illust_5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 135
+        width: 22
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b152834028e7714f0800000000000000
+      internalID: -858078107109153509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lovers_illust_6
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 26
+        width: 134
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f481a1712aa4a0550800000000000000
+      internalID: 6127792303023724623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lovers_illust_7
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 135
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ccf333ce7b8212e0800000000000000
+      internalID: -2156507894999941943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lovers_illust_8
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 91
+        width: 18
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0d273b30b9b9f890800000000000000
+      internalID: -7423698344184697589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lovers_illust_9
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 95
+        width: 15
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae60f6d8a07b7b360800000000000000
+      internalID: 7185412986443335402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lovers_illust_10
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 61
+        width: 18
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 506dea4b6a9613a20800000000000000
+      internalID: 3040327388168640005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lovers_illust_11
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 64
+        width: 18
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6eb4cdc4a034a1e0800000000000000
+      internalID: -2187570034610225557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lovers_illust_12
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 49
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0413258446f6cdcd0800000000000000
+      internalID: -2532026413988302528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lovers_illust_13
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 49
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdb7029eb278e5860800000000000000
+      internalID: 7520597050419870687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lovers_illust_14
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 18
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a360c870a5bc4c880800000000000000
+      internalID: -8591518601581951430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lovers_illust_15
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 0
+        width: 115
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58a93a06004bef870800000000000000
+      internalID: 8718603842350193285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lovers_illust_16
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 9
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e9b14270c3e2f420800000000000000
+      internalID: 2662440745419520480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lovers_illust_17
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 18
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29058629f16b53420800000000000000
+      internalID: 2609191805847621778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lovers_illust_18
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 9
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3344dcd7080330a10800000000000000
+      internalID: 1874395198340809779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      lovers_illust_0: 1062172882191812993
+      lovers_illust_1: -4624285344426782153
+      lovers_illust_10: 3040327388168640005
+      lovers_illust_11: -2187570034610225557
+      lovers_illust_12: -2532026413988302528
+      lovers_illust_13: 7520597050419870687
+      lovers_illust_14: -8591518601581951430
+      lovers_illust_15: 8718603842350193285
+      lovers_illust_16: 2662440745419520480
+      lovers_illust_17: 2609191805847621778
+      lovers_illust_18: 1874395198340809779
+      lovers_illust_2: 653875911713449180
+      lovers_illust_3: 8664819337155210248
+      lovers_illust_4: 8920933500212637346
+      lovers_illust_5: -858078107109153509
+      lovers_illust_6: 6127792303023724623
+      lovers_illust_7: -2156507894999941943
+      lovers_illust_8: -7423698344184697589
+      lovers_illust_9: 7185412986443335402
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
