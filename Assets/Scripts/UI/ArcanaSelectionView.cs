@@ -3,10 +3,20 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
+/// 하단 아르카나 카드 더미의 행 배치 방식을 나타낸다.
+/// </summary>
+public enum ArcanaDeckRowLayout
+{
+    OneRow = 1,
+    TwoRows = 2
+}
+
+/// <summary>
 /// 아르카나 카드 더미와 인벤토리, 카드 상세 정보를 화면에 표시한다.
 /// </summary>
 public class ArcanaSelectionView : MonoBehaviour
 {
+    private const int TwoRowReferenceCardCount = 5;
     private const int SelectedCardsPerRow = 5;
 
     [SerializeField] private GameObject selectionOverlay;
@@ -20,16 +30,33 @@ public class ArcanaSelectionView : MonoBehaviour
     [SerializeField] private float fanWidth = 1080f;
     [SerializeField] private float fanVerticalDrop = 70f;
     [SerializeField] private float maximumFanAngle = 24f;
+    [SerializeField] private float twoRowFanWidth = 600f;
+    [SerializeField] private float twoRowFanVerticalDrop = 28f;
+    [SerializeField] private float twoRowMaximumFanAngle = 16f;
+    [SerializeField] private float deckRowVerticalSpacing = 144f;
 
     /// <summary>
-    /// 전달받은 아르카나 카드들을 하단에 부채꼴로 생성한다.
+    /// 전달받은 아르카나 카드들을 설정한 행 수에 맞춰 부채꼴로 생성한다.
     /// </summary>
     public void CreateDeckCards(
         ArcanaData[] arcanaCards,
+        ArcanaDeckRowLayout deckRowLayout,
         Action<ArcanaCardView> leftClickHandler,
         Action<ArcanaCardView> rightClickHandler)
     {
         int cardCount = arcanaCards.Length;
+        int cardsPerRow = cardCount;
+        float currentFanWidth = fanWidth;
+        float currentFanVerticalDrop = fanVerticalDrop;
+        float currentMaximumFanAngle = maximumFanAngle;
+
+        if (deckRowLayout == ArcanaDeckRowLayout.TwoRows)
+        {
+            cardsPerRow = (cardCount + 1) / 2;
+            currentFanWidth = twoRowFanWidth;
+            currentFanVerticalDrop = twoRowFanVerticalDrop;
+            currentMaximumFanAngle = twoRowMaximumFanAngle;
+        }
 
         for (int cardIndex = 0; cardIndex < cardCount; cardIndex++)
         {
@@ -37,18 +64,39 @@ public class ArcanaSelectionView : MonoBehaviour
                 arcanaCardPrefab,
                 deckRoot,
                 false);
+            int rowIndex = cardIndex / cardsPerRow;
+            int indexInCurrentRow = cardIndex % cardsPerRow;
+            int cardsBeforeCurrentRow = rowIndex * cardsPerRow;
+            int cardsInCurrentRow = Mathf.Min(
+                cardsPerRow,
+                cardCount - cardsBeforeCurrentRow);
+            float currentRowFanWidth = currentFanWidth;
             float normalizedPosition = 0f;
 
-            if (cardCount > 1)
+            if (deckRowLayout == ArcanaDeckRowLayout.TwoRows)
             {
-                normalizedPosition = (float)cardIndex / (cardCount - 1) * 2f - 1f;
+                currentRowFanWidth = Mathf.Min(
+                    fanWidth,
+                    twoRowFanWidth
+                    * (cardsInCurrentRow - 1)
+                    / (TwoRowReferenceCardCount - 1));
             }
 
-            float positionX = normalizedPosition * fanWidth * 0.5f;
-            float positionY = -normalizedPosition
+            if (cardsInCurrentRow > 1)
+            {
+                normalizedPosition = (float)indexInCurrentRow
+                    / (cardsInCurrentRow - 1)
+                    * 2f
+                    - 1f;
+            }
+
+            float positionX = normalizedPosition * currentRowFanWidth * 0.5f;
+            float positionY = -rowIndex
+                * deckRowVerticalSpacing
+                - normalizedPosition
                 * normalizedPosition
-                * fanVerticalDrop;
-            float rotationZ = -normalizedPosition * maximumFanAngle;
+                * currentFanVerticalDrop;
+            float rotationZ = -normalizedPosition * currentMaximumFanAngle;
 
             cardView.Initialize(
                 arcanaCards[cardIndex],
