@@ -18,4 +18,7 @@ MonoBehaviour:
   - 0.04824245
   - 0.8387568
   - -0.397987
-  horizontalSpacing: 320
+  - -0.8548012
+  - 0.25704262
+  - -0.50554967
+  horizontalSpacing: 500
