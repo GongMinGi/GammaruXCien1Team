@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 454cc7a7ca1990546ac514c573d012a9
+guid: c00b95b45d236214b852783e8197be1b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 501241878917194457
-    second: (only name)justicecard_0
+      213: 2095325943381396593
+    second: BattleBackGround_0_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: (only name)justicecard_0
+      name: BattleBackGround_0_0
       rect:
         serializedVersion: 2
-        x: 82
-        y: 122
-        width: 227
-        height: 402
+        x: 0
+        y: 0
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9d2a86b45d4c4f600800000000000000
-      internalID: 501241878917194457
+      spriteID: 17c88ef08d7141d10800000000000000
+      internalID: 2095325943381396593
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      (only name)justicecard_0: 501241878917194457
+      BattleBackGround_0_0: 2095325943381396593
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -15,6 +15,7 @@ public class ClownBossMechanic : MonoBehaviour
     [SerializeField] private WheelDisplay wheelDisplay;
 
     private System.Random rng;
+    private int shownWheelPosition = -1;
 
     private void Awake()
     {
@@ -105,9 +106,24 @@ public class ClownBossMechanic : MonoBehaviour
         // 1, 2, 8, 9 — 효과 없음
     }
 
+    /// <summary>
+    /// 수레바퀴 위치는 여기 말고도 패턴 SO 안에서 바뀐다(X — 2페이즈 개막 리셋).
+    /// 바뀔 때마다 알림을 받는 대신 표시가 모델을 따라가게 둔다.
+    /// </summary>
+    private void Update()
+    {
+        RefreshDisplay();
+    }
+
     private void RefreshDisplay()
     {
-        if (wheelDisplay != null && pattern != null)
-            wheelDisplay.SetPosition(pattern.WheelPosition);
+        if (wheelDisplay == null || pattern == null)
+            return;
+
+        if (pattern.WheelPosition == shownWheelPosition)
+            return;
+
+        shownWheelPosition = pattern.WheelPosition;
+        wheelDisplay.SetPosition(shownWheelPosition);
     }
 }

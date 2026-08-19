@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 
 public class GridCell : MonoBehaviour
@@ -9,6 +10,7 @@ public class GridCell : MonoBehaviour
     private SpriteRenderer visualRenderer;
     private Color originalColor;
     private Coroutine blinkCoroutine;
+    private Tween pulseTween;
 
     public int X => x;
     public int Y => y;
@@ -48,6 +50,28 @@ public class GridCell : MonoBehaviour
             blinkCoroutine = null;
         }
         ClearHighlight();
+    }
+
+    public void StartPulse()
+    {
+        StopPulse();
+        if (visualRenderer == null) return;
+        visualRenderer.color = originalColor;
+        pulseTween = visualRenderer
+            .DOFade(0.6f, 0.5f)
+            .SetLoops(-1, LoopType.Yoyo)
+            .SetEase(Ease.InOutSine);
+    }
+
+    public void StopPulse()
+    {
+        if (pulseTween != null)
+        {
+            pulseTween.Kill();
+            pulseTween = null;
+        }
+        if (visualRenderer != null)
+            visualRenderer.color = originalColor;
     }
 
     private IEnumerator BlinkLoop(Color colorA, Color colorB, float interval)

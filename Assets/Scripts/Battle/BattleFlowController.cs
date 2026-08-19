@@ -9,6 +9,7 @@ public class BattleFlowController : MonoBehaviour
 {
     [SerializeField] private PlanningController planningController;
     [SerializeField] private BattleExecutor battleExecutor;
+    [SerializeField] private ActionBar actionBar;
     [SerializeField] private BossController bossController;
     [SerializeField] private PlayerHand playerHand;
     [SerializeField] private PlayerStats playerStats;
@@ -44,6 +45,7 @@ public class BattleFlowController : MonoBehaviour
         battleExecutor.Initialize(combatResolver);
         battleExecutor.ClearTowers();
         planningController.PlanningStateChanged += bossController.UpdatePlanningPreview;
+        battleExecutor.SlotStarted += OnSlotStarted;
 
         StartTurn();
     }
@@ -52,6 +54,8 @@ public class BattleFlowController : MonoBehaviour
     {
         if (planningController != null && bossController != null)
             planningController.PlanningStateChanged -= bossController.UpdatePlanningPreview;
+        if (battleExecutor != null)
+            battleExecutor.SlotStarted -= OnSlotStarted;
     }
 
 
@@ -126,6 +130,7 @@ public class BattleFlowController : MonoBehaviour
 
     private void OnExecutionComplete()
     {
+        actionBar.ClearExecutingSlot();
         currentPhase = BattlePhase.TurnEnd;
 
         // 턴 종료 훅 — 수레바퀴 회전 후 효과(피해·실타래) 발동.
@@ -156,6 +161,11 @@ public class BattleFlowController : MonoBehaviour
         StartTurn();
     }
 
+    private void OnSlotStarted(int slotIndex, BossAction[] _)
+    {
+        actionBar.MarkExecutingSlot(slotIndex);
+    }
+
     private bool TryHeldPassiveRevive()
     {
         if (heldPassiveReviveUsed) return false;
@@ -181,6 +191,7 @@ public class BattleFlowController : MonoBehaviour
     private void EndBattle(bool victory)
     {
         battleEnded = true;
+        actionBar.ClearExecutingSlot();
         battleExecutor.ForceStop();
 
         if (victory)
@@ -198,6 +209,7 @@ public class BattleFlowController : MonoBehaviour
     {
         battleEnded = true;
         planningController.enabled = false;
+        actionBar.ClearExecutingSlot();
         battleExecutor.ForceStop();
         Debug.LogError("전투가 오류로 인해 중단되었습니다.", this);
     }
@@ -619,7 +631,7 @@ public class BattleFlowController : MonoBehaviour
 
     private bool ValidateReferences()
     {
-        if (planningController == null || battleExecutor == null ||
+        if (planningController == null || battleExecutor == null || actionBar == null ||
             bossController == null || playerHand == null ||
             playerStats == null || bossStats == null ||
             playerDisplay == null || arcanaCatalog == null)

@@ -233,9 +233,9 @@ public class ThreadBoundClownPatternTests
 
         int[][] expected =
         {
-            new[] { 5, 0 },  // t=1  V + 0
-            new[] { 0 },     // t=2  0
-            new[] { 4 },     // t=3  IV
+            new[] { 4 },     // t=1  IV   → 실타래 확정 생성
+            new[] { 0 },     // t=2  0    (이 턴 슬롯 8이 I, I)
+            new[] { 5, 0 },  // t=3  V + 0
             new[] { 0 }      // t=4  0
         };
 

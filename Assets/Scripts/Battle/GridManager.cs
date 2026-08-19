@@ -77,6 +77,7 @@ public class GridManager : MonoBehaviour
 
                 SpriteRenderer renderer = visual.AddComponent<SpriteRenderer>();
                 renderer.sprite = cellSprite;
+                renderer.color = new Color(1f, 1f, 1f, 0.3f);
 
                 cell.Initialize(x, y, renderer);
                 cells[x + halfColumns, y + halfRows] = cell;

@@ -14,6 +14,7 @@ public class PlanningController : MonoBehaviour
     [SerializeField] private ArcanaCatalog arcanaCatalog;
     [SerializeField] private HandDisplay handDisplay;
     [SerializeField] private TangleField tangleField;  // 광대 보스일 때만 연결
+    [SerializeField] private ArcanaCodexPanel arcanaCodexPanel;  // 없어도 동작한다
 
     private readonly List<PlannedAction> plannedActions = new();
     private int usedSlots;
@@ -120,6 +121,10 @@ public class PlanningController : MonoBehaviour
 
     private void Update()
     {
+        // 도감이 열려 있는 동안에는 전투 입력을 받지 않는다.
+        if (arcanaCodexPanel != null && arcanaCodexPanel.IsOpen)
+            return;
+
         if (!planningActive)
             return;
 
@@ -286,9 +291,17 @@ public class PlanningController : MonoBehaviour
             return;
         }
 
+#if UNITY_EDITOR
+        // Tab 언두는 개발용 — 빌드에는 이 블록이 컴파일되지 않는다.
+        // QA 빌드에서도 쓰려면 조건을 UNITY_EDITOR || DEVELOPMENT_BUILD로 넓힌다.
         if (kb.tabKey.wasPressedThisFrame)
+        {
             UndoLastAction();
-        else if (kb.enterKey.wasPressedThisFrame || kb.numpadEnterKey.wasPressedThisFrame)
+            return;
+        }
+#endif
+
+        if (kb.enterKey.wasPressedThisFrame || kb.numpadEnterKey.wasPressedThisFrame)
             ConfirmPlan();
         else if (kb.leftCtrlKey.wasPressedThisFrame || kb.rightCtrlKey.wasPressedThisFrame)
             QueueStay();
