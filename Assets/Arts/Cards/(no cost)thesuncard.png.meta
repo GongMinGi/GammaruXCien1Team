@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 3f303692e704a104d9d220025e814d69
+guid: 2789f6ae62a66ea408e90ec2fe1009cb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3179187749208042534
-    second: thechariotcard_0
+      213: -6525429228326472684
+    second: (no cost)thesuncard_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: thechariotcard_0
+      name: (no cost)thesuncard_0
       rect:
         serializedVersion: 2
         x: 82
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 62ca1d1f96ebe1c20800000000000000
-      internalID: 3179187749208042534
+      spriteID: 41436a6a0b40175a0800000000000000
+      internalID: -6525429228326472684
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      thechariotcard_0: 3179187749208042534
+      (no cost)thesuncard_0: -6525429228326472684
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

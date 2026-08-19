@@ -17,7 +17,7 @@ public class DodgeEffectDef : ArcanaEffectDefinition
         int cost = card.BaseCost;
         ScheduledEffect[][] effects = new ScheduledEffect[cost][];
 
-        for (int i = 0; i < cost; i++)
+        for (int i = 0; i < cost - 1; i++)
         {
             effects[i] = new[] { new ScheduledEffect
             {
@@ -25,6 +25,12 @@ public class DodgeEffectDef : ArcanaEffectDefinition
                 SourceCard = card
             }};
         }
+
+        effects[cost - 1] = new[] { new ScheduledEffect
+        {
+            Type = EffectType.Cast,
+            SourceCard = card
+        }};
 
         return effects;
     }
