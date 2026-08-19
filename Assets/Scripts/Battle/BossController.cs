@@ -7,6 +7,7 @@ public class BossController : MonoBehaviour
     [SerializeField] private BossCardDisplay bossCardDisplay;
     [SerializeField] private GridManager gridManager;
     [SerializeField] private ArcanaCatalog arcanaCatalog;
+    [SerializeField] private TangleField tangleField;  // 광대 보스일 때만 연결
 
     private BossAction[] currentPattern;
 
@@ -105,7 +106,7 @@ public class BossController : MonoBehaviour
     }
 
 
-    private static Vector2Int[] BuildPlayerPositionsBySlot(
+    private Vector2Int[] BuildPlayerPositionsBySlot(
         IReadOnlyList<PlannedAction> plannedActions,
         Vector2Int startPosition)
     {
@@ -131,9 +132,13 @@ public class BossController : MonoBehaviour
                 slotCursor + action.Cost > ActionBar.SlotCount)
                 return null;
 
+            bool onTangle =
+                tangleField != null && tangleField.Contains(currentPosition);
+
             if (action.Type == ActionType.Move)
             {
-                currentPosition += action.Direction;
+                if (!onTangle)
+                    currentPosition += action.Direction;
             }
             else if (action.Type == ActionType.UseCard &&
                      action.Direction != Vector2Int.zero &&
@@ -159,7 +164,7 @@ public class BossController : MonoBehaviour
         return positions;
     }
 
-    private static Vector2Int SimulateCardMovement(
+    private Vector2Int SimulateCardMovement(
         Vector2Int currentPos, Vector2Int direction, ArcanaData card)
     {
         ScheduledEffect[][] effects = card.EffectDefinition.Expand(card);
@@ -172,6 +177,10 @@ public class BossController : MonoBehaviour
             foreach (ScheduledEffect effect in slotEffects)
             {
                 if (effect.Type != EffectType.Move)
+                    continue;
+
+                // 실타래 위에서는 이동이 막힌다 — 예고 위치가 실행과 어긋나지 않게 한다
+                if (tangleField != null && tangleField.Contains(currentPos))
                     continue;
 
                 int dist = effect.BaseValue > 0 ? effect.BaseValue : 1;

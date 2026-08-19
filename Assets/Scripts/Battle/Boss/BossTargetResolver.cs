@@ -60,7 +60,7 @@ public static class BossTargetResolver
         return FilterToGrid(cells);
     }
 
-    private static Vector2Int[] FilterToGrid(IEnumerable<Vector2Int> candidates)
+    public static Vector2Int[] FilterToGrid(IEnumerable<Vector2Int> candidates)
     {
         HashSet<Vector2Int> unique = new();
         foreach (Vector2Int cell in candidates)

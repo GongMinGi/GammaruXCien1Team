@@ -256,6 +256,56 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &538817118
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 538817120}
+  - component: {fileID: 538817119}
+  m_Layer: 0
+  m_Name: ClownBossMechanic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &538817119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538817118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65d97095ba8c5dd4fb741196430e91eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClownBossMechanic
+  pattern: {fileID: 11400000, guid: 7c1f4a2b9e6d40a1b3c58d2f0a47e6b1, type: 2}
+  battleExecutor: {fileID: 2147215982}
+  playerStats: {fileID: 900000063}
+  playerDisplay: {fileID: 900000061}
+  tangleField: {fileID: 732133655}
+  wheelDisplay: {fileID: 1650548727}
+--- !u!4 &538817120
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538817118}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &569059163
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,6 +483,53 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.91445, y: -0.3276, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &732133654
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 732133656}
+  - component: {fileID: 732133655}
+  m_Layer: 0
+  m_Name: TangleField
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &732133655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732133654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b21647ae76f829b42832867dcb611226, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TangleField
+  gridManager: {fileID: 900000002}
+  tangleColor: {r: 0.85, g: 0.75, b: 0.95, a: 0.7}
+  visualSize: 0.5
+--- !u!4 &732133656
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732133654}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -650,7 +747,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 900000012}
-  - component: {fileID: 900000013}
   - component: {fileID: 900000014}
   - component: {fileID: 900000016}
   - component: {fileID: 900000015}
@@ -677,18 +773,6 @@ Transform:
   - {fileID: 900000052}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &900000013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 900000010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &900000014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1100,6 +1184,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1650548726
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1650548728}
+  - component: {fileID: 1650548727}
+  m_Layer: 0
+  m_Name: WheelDisplay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1650548727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650548726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b0dd792533cd55489161c9a93eff110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WheelDisplay
+  cellSize: 0.25
+  spacing: 0.05
+  idleColor: {r: 0.35, g: 0.3, b: 0.42, a: 1}
+  activeColor: {r: 1, g: 0.85, b: 0.3, a: 1}
+  borderColor: {r: 0.15, g: 0.12, b: 0.2, a: 1}
+--- !u!4 &1650548728
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650548726}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.6, y: 3.6, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1859532200
 GameObject:
   m_ObjectHideFlags: 0
@@ -1185,6 +1318,7 @@ MonoBehaviour:
   bossCardDisplay: {fileID: 900000031}
   gridManager: {fileID: 900000002}
   arcanaCatalog: {fileID: 11400000, guid: b0b0b0b0b0b0b0b0b0b0b0b0b0b0b000, type: 2}
+  tangleField: {fileID: 732133655}
 --- !u!114 &2147215982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1201,6 +1335,7 @@ MonoBehaviour:
   playerDisplay: {fileID: 900000061}
   playerStats: {fileID: 900000063}
   bossStats: {fileID: 900000016}
+  tangleField: {fileID: 732133655}
   slotDuration: 0.5
   attackHighlightColor: {r: 1, g: 0.2, b: 0.2, a: 0.8}
 --- !u!114 &2147215983
@@ -1221,6 +1356,7 @@ MonoBehaviour:
   playerHand: {fileID: 569059164}
   arcanaCatalog: {fileID: 11400000, guid: b0b0b0b0b0b0b0b0b0b0b0b0b0b0b000, type: 2}
   handDisplay: {fileID: 900000041}
+  tangleField: {fileID: 732133655}
 --- !u!114 &2147215984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1246,6 +1382,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a002, type: 2}
   - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a003, type: 2}
   - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a008, type: 2}
+  clownBossMechanic: {fileID: 538817119}
 --- !u!4 &2147215985
 Transform:
   m_ObjectHideFlags: 0
@@ -1292,3 +1429,6 @@ SceneRoots:
   - {fileID: 622129120}
   - {fileID: 2147215985}
   - {fileID: 1305633217}
+  - {fileID: 732133656}
+  - {fileID: 1650548728}
+  - {fileID: 538817120}
