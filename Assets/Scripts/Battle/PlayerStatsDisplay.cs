@@ -27,13 +27,17 @@ public class PlayerStatsDisplay : MonoBehaviour
         barWidth = actionBar.VisualWidth;
         GenerateVisuals();
         playerStats.StatsChanged += Refresh;
+        playerStats.DamageTaken += ShowDamage;
         Refresh();
     }
 
     private void OnDestroy()
     {
         if (playerStats != null)
+        {
             playerStats.StatsChanged -= Refresh;
+            playerStats.DamageTaken -= ShowDamage;
+        }
     }
 
     private void GenerateVisuals()
@@ -105,6 +109,11 @@ public class PlayerStatsDisplay : MonoBehaviour
         hpFillRenderer.color = Color.Lerp(Color.red, Color.green, ratio);
         hpText.text = $"{playerStats.CurrentHp}/{playerStats.MaxHp}";
         spellPowerText.text = $"SP {playerStats.SpellPower}";
+    }
+
+    private void ShowDamage(int amount)
+    {
+        DamagePopup.Spawn(transform, amount, new Vector3(0f, 0.55f, -0.02f));
     }
 
     private Sprite CreateBarSprite()

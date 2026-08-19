@@ -116,8 +116,14 @@ public class BossController : MonoBehaviour
 
         foreach (PlannedAction action in plannedActions)
         {
-            if (action.Type == ActionType.MergeCards)
+            if (action.Type == ActionType.MergeCards ||
+                action.Type == ActionType.UseObservationCard)
                 continue;
+
+            if (action.Type == ActionType.UseInstantCard)
+            {
+                continue;
+            }
 
             if (action.Cost <= 0 ||
                 slotCursor + action.Cost > ActionBar.SlotCount)

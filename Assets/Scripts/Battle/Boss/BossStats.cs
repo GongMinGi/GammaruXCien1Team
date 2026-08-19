@@ -4,6 +4,7 @@ using UnityEngine;
 public class BossStats : MonoBehaviour
 {
     public event Action StatsChanged;
+    public event Action<int> DamageTaken;
 
     [SerializeField, Min(1)] private int maxHp = 500;
     [SerializeField] private DamageElement weakness = DamageElement.Neutral;
@@ -26,8 +27,12 @@ public class BossStats : MonoBehaviour
     public void TakeDamage(int amount)
     {
         if (amount <= 0) return;
+        int previousHp = currentHp;
         currentHp = Mathf.Max(0, currentHp - amount);
+        int appliedDamage = previousHp - currentHp;
+        if (appliedDamage <= 0) return;
         StatsChanged?.Invoke();
+        DamageTaken?.Invoke(appliedDamage);
     }
 
     public void AddBurnStacks(int stacks)

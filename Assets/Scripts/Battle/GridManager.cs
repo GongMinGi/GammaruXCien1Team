@@ -86,6 +86,16 @@ public class GridManager : MonoBehaviour
         isGenerated = true;
     }
 
+    public bool TryWorldToGrid(Vector3 worldPos, out int gx, out int gy)
+    {
+        Vector3 local = transform.InverseTransformPoint(worldPos);
+        float fx = local.x / (tileWidth * 0.5f);
+        float fy = local.y / (tileHeight * 0.5f);
+        gx = Mathf.RoundToInt((fx + fy) * 0.5f);
+        gy = Mathf.RoundToInt((fy - fx) * 0.5f);
+        return IsValidCoordinate(gx, gy);
+    }
+
     public GridCell GetCell(int x, int y)
     {
         if (!IsValidCoordinate(x, y))

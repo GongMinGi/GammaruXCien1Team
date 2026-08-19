@@ -24,13 +24,17 @@ public class BossStatsDisplay : MonoBehaviour
 
         GenerateVisuals();
         bossStats.StatsChanged += Refresh;
+        bossStats.DamageTaken += ShowDamage;
         Refresh();
     }
 
     private void OnDestroy()
     {
         if (bossStats != null)
+        {
             bossStats.StatsChanged -= Refresh;
+            bossStats.DamageTaken -= ShowDamage;
+        }
     }
 
     private void GenerateVisuals()
@@ -83,6 +87,11 @@ public class BossStatsDisplay : MonoBehaviour
         hpFillTransform.localScale = new Vector3(ratio * barWidth, barHeight, 1f);
         hpFillRenderer.color = Color.Lerp(Color.red, new Color(0.8f, 0.2f, 0.2f), ratio);
         hpText.text = $"{bossStats.CurrentHp}/{bossStats.MaxHp}";
+    }
+
+    private void ShowDamage(int amount)
+    {
+        DamagePopup.Spawn(transform, amount, new Vector3(0f, 0.55f, -0.02f));
     }
 
     private Sprite CreateBarSprite()

@@ -6,7 +6,10 @@
       "mcp__aseprite__draw_pixels",
       "mcp__aseprite__draw_line",
       "mcp__UnityMCP__refresh_unity",
-      "mcp__UnityMCP__manage_scriptable_object"
+      "mcp__UnityMCP__manage_scriptable_object",
+      "mcp__UnityMCP__execute_code",
+      "Bash(find:*)",
+      "mcp__UnityMCP__manage_components"
     ]
   }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BattleExecutor : MonoBehaviour
@@ -16,12 +17,27 @@ public class BattleExecutor : MonoBehaviour
     private Action completionCallback;
     private bool isExecuting;
 
+    private struct TowerState
+    {
+        public Vector2Int Position;
+        public int BonusDamage;
+        public bool IsDebris;
+        public int DebrisRemainingSlots;
+    }
+
+    private readonly List<TowerState> towers = new();
+
     private struct SlotModifiers
     {
         public int IncomingDamageModifier;
         public bool CounterStanceActive;
         public int CounterStanceBonusPerHit;
         public int AccumulatedBonusDamage;
+
+        // DamageSpread — cross-slot state, NOT reset per slot
+        public bool DamageSpreadActive;
+        public int DamageSpreadRemainingSlots;
+        public int DeferredDamage;
 
         public void ResetPerSlot()
         {
@@ -46,6 +62,11 @@ public class BattleExecutor : MonoBehaviour
     public void Initialize(CombatResolver resolver)
     {
         combatResolver = resolver;
+    }
+
+    public void ClearTowers()
+    {
+        towers.Clear();
     }
 
     public bool Execute(
@@ -140,9 +161,30 @@ public class BattleExecutor : MonoBehaviour
                     break;
 
                 ProcessBossActions(slot, bossPattern, currentPos, isDodgingThisSlot, ref modifiers);
+                DestroyTowersHitByBoss(slot, bossPattern);
+                TickTowerDebris();
 
                 if (playerStats.IsDead)
                     break;
+
+                if (modifiers.DamageSpreadActive)
+                {
+                    int perSlot = modifiers.DeferredDamage /
+                                  modifiers.DamageSpreadRemainingSlots;
+                    playerStats.TakeDamage(perSlot);
+                    modifiers.DeferredDamage -= perSlot;
+                    modifiers.DamageSpreadRemainingSlots--;
+                    if (modifiers.DamageSpreadRemainingSlots <= 0)
+                    {
+                        modifiers.DamageSpreadActive = false;
+                        if (modifiers.DeferredDamage > 0)
+                            playerStats.TakeDamage(modifiers.DeferredDamage);
+                        modifiers.DeferredDamage = 0;
+                    }
+
+                    if (playerStats.IsDead)
+                        break;
+                }
 
                 yield return new WaitForSeconds(slotDuration);
                 gridManager.ClearAllHighlights();
@@ -170,8 +212,22 @@ public class BattleExecutor : MonoBehaviour
             switch (effect.Type)
             {
                 case EffectType.Move:
-                    currentPos += effect.Direction;
-                    playerDisplay.UpdateGridPosition(currentPos.x, currentPos.y);
+                    int moveDist = effect.BaseValue > 0 ? effect.BaseValue : 1;
+                    Vector2Int moveTarget = currentPos;
+                    for (int step = 1; step <= moveDist; step++)
+                    {
+                        Vector2Int check = currentPos + effect.Direction * step;
+                        if (!gridManager.IsValidCoordinate(check.x, check.y))
+                            break;
+                        if (HasTowerOrDebris(check))
+                            break;
+                        moveTarget = check;
+                    }
+                    if (moveTarget != currentPos)
+                    {
+                        currentPos = moveTarget;
+                        playerDisplay.UpdateGridPosition(currentPos.x, currentPos.y);
+                    }
                     break;
 
                 case EffectType.Stay:
@@ -186,6 +242,7 @@ public class BattleExecutor : MonoBehaviour
                         effect, playerStats.SpellPower, bossStats.Weakness);
                     damage += modifiers.AccumulatedBonusDamage;
                     modifiers.AccumulatedBonusDamage = 0;
+                    damage += CalculateTowerBonus(effect.Element);
                     bossStats.TakeDamage(damage);
                     break;
 
@@ -207,6 +264,25 @@ public class BattleExecutor : MonoBehaviour
 
                 case EffectType.ApplyBurn:
                     bossStats.AddBurnStacks(effect.BaseValue);
+                    break;
+
+                case EffectType.DamageSpread:
+                    modifiers.DamageSpreadActive = true;
+                    modifiers.DamageSpreadRemainingSlots = effect.BaseValue;
+                    modifiers.DeferredDamage = 0;
+                    break;
+
+                case EffectType.PlaceTower:
+                    Vector2Int towerPos = currentPos + effect.Direction;
+                    if (gridManager.IsValidCoordinate(towerPos.x, towerPos.y)
+                        && !HasTowerAt(towerPos))
+                    {
+                        towers.Add(new TowerState
+                        {
+                            Position = towerPos,
+                            BonusDamage = effect.BaseValue
+                        });
+                    }
                     break;
             }
         }
@@ -246,9 +322,83 @@ public class BattleExecutor : MonoBehaviour
                 {
                     int rawDamage = combatResolver.ResolveBossDamage(bossAction);
                     int finalDamage = Mathf.Max(0, rawDamage + modifiers.IncomingDamageModifier);
-                    playerStats.TakeDamage(finalDamage);
+                    if (modifiers.DamageSpreadActive)
+                        modifiers.DeferredDamage += finalDamage;
+                    else
+                        playerStats.TakeDamage(finalDamage);
                 }
             }
+        }
+    }
+
+    private bool HasTowerOrDebris(Vector2Int pos)
+    {
+        foreach (TowerState tower in towers)
+            if (tower.Position == pos)
+                return true;
+        return false;
+    }
+
+    private bool HasTowerAt(Vector2Int pos)
+    {
+        foreach (TowerState tower in towers)
+            if (tower.Position == pos && !tower.IsDebris)
+                return true;
+        return false;
+    }
+
+    private int CalculateTowerBonus(DamageElement attackElement)
+    {
+        int bonus = 0;
+        foreach (TowerState tower in towers)
+        {
+            if (tower.IsDebris) continue;
+            int towerDmg = tower.BonusDamage;
+            if (attackElement != DamageElement.Neutral
+                && attackElement == bossStats.Weakness)
+                towerDmg = Mathf.RoundToInt(towerDmg * 1.2f);
+            bonus += towerDmg;
+        }
+        return bonus;
+    }
+
+    private void DestroyTowersHitByBoss(int slotIndex, BossAction[] pattern)
+    {
+        foreach (BossAction action in pattern)
+        {
+            if (action.timingSlot != slotIndex || action.targetCells == null)
+                continue;
+
+            for (int t = 0; t < towers.Count; t++)
+            {
+                if (towers[t].IsDebris) continue;
+
+                foreach (Vector2Int cell in action.targetCells)
+                {
+                    if (cell == towers[t].Position)
+                    {
+                        TowerState tw = towers[t];
+                        tw.IsDebris = true;
+                        tw.DebrisRemainingSlots = 3;
+                        towers[t] = tw;
+                    }
+                }
+            }
+        }
+    }
+
+    private void TickTowerDebris()
+    {
+        for (int t = towers.Count - 1; t >= 0; t--)
+        {
+            if (!towers[t].IsDebris) continue;
+
+            TowerState tw = towers[t];
+            tw.DebrisRemainingSlots--;
+            if (tw.DebrisRemainingSlots <= 0)
+                towers.RemoveAt(t);
+            else
+                towers[t] = tw;
         }
     }
 }

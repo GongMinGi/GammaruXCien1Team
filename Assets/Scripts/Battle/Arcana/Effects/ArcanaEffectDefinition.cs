@@ -7,4 +7,7 @@ public abstract class ArcanaEffectDefinition : ScriptableObject
     /// card가 null이거나 BaseCost가 유효하지 않으면 예외.
     /// </summary>
     public abstract ScheduledEffect[][] Expand(ArcanaData card);
+
+    public virtual bool RequiresDirection => false;
+    public virtual int AllowedDirections => 4;
 }

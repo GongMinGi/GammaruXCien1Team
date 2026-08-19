@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ public class BattleFlowController : MonoBehaviour
     [SerializeField] private BossStats bossStats;
     [SerializeField] private PlayerDisplay playerDisplay;
     [SerializeField] private ArcanaCatalog arcanaCatalog;
+    [SerializeField] private ObservationController observationController;
     [SerializeField] private ArcanaData[] selectedArcanaPool;
 
     private BattlePhase currentPhase;
@@ -18,6 +20,7 @@ public class BattleFlowController : MonoBehaviour
     private CombatResolver combatResolver;
     private int turnNumber;
     private bool battleEnded;
+    private bool heldPassiveReviveUsed;
 
     private void Start()
     {
@@ -35,6 +38,7 @@ public class BattleFlowController : MonoBehaviour
         playerHand.Initialize(bag);
         combatResolver = new CombatResolver();
         battleExecutor.Initialize(combatResolver);
+        battleExecutor.ClearTowers();
         planningController.PlanningStateChanged += bossController.UpdatePlanningPreview;
 
         StartTurn();
@@ -66,20 +70,14 @@ public class BattleFlowController : MonoBehaviour
             return;
         }
 
-        EnterObservation();
-    }
-
-    private void EnterObservation()
-    {
-        currentPhase = BattlePhase.Observation;
-        // MVP: 빈 패스스루 — 관측 전용 카드 처리는 Phase E5에서 추가
         EnterPlanning();
     }
 
     private void EnterPlanning()
     {
         currentPhase = BattlePhase.Planning;
-        planningController.BeginPlanning(playerDisplay.GridPosition, OnPlanConfirmed);
+        planningController.BeginPlanning(
+            playerDisplay.GridPosition, OnPlanConfirmed, bag, selectedArcanaPool);
     }
 
     private void OnPlanConfirmed(List<PlannedAction> actions, Vector2Int startPos)
@@ -113,6 +111,11 @@ public class BattleFlowController : MonoBehaviour
 
         if (playerStats.IsDead)
         {
+            if (TryHeldPassiveRevive())
+            {
+                StartTurn();
+                return;
+            }
             EndBattle(false);
             return;
         }
@@ -124,6 +127,25 @@ public class BattleFlowController : MonoBehaviour
         }
 
         StartTurn();
+    }
+
+    private bool TryHeldPassiveRevive()
+    {
+        if (heldPassiveReviveUsed) return false;
+
+        for (int i = 0; i < playerHand.Cards.Count; i++)
+        {
+            if (playerHand.Cards[i].UsageType == ArcanaUsageType.HeldPassive)
+            {
+                playerHand.TryTakeCard(i, out _);
+                int reviveHp = Mathf.Max(1, playerStats.MaxHp / 10);
+                playerStats.Heal(reviveHp);
+                heldPassiveReviveUsed = true;
+                Debug.Log($"HeldPassive 발동: 체력 {reviveHp}으로 부활.");
+                return true;
+            }
+        }
+        return false;
     }
 
     private void EndBattle(bool victory)
@@ -158,16 +180,50 @@ public class BattleFlowController : MonoBehaviour
             timeline[i] = new TimelineSlot(i);
 
         int slotCursor = 0;
+        InstantModifierType pendingCostModifier = InstantModifierType.None;
+        bool pendingElementBuff = false;
+        DamageElement pendingElement = DamageElement.Neutral;
 
         foreach (PlannedAction action in actions)
         {
-            if (action.Type == ActionType.MergeCards)
+            if (action.Type == ActionType.MergeCards ||
+                action.Type == ActionType.UseObservationCard)
             {
                 if (action.Cost != 0)
                 {
                     Debug.LogError(
-                        $"Merge 행동의 Cost가 0이 아님: {action.Cost}", this);
+                        $"{action.Type} 행동의 Cost가 0이 아님: {action.Cost}", this);
                     return null;
+                }
+                continue;
+            }
+
+            if (action.Type == ActionType.UseInstantCard)
+            {
+                if (action.Cost != 0)
+                {
+                    Debug.LogError(
+                        $"UseInstantCard 행동의 Cost가 0이 아님: {action.Cost}", this);
+                    return null;
+                }
+
+                switch (action.ModifierType)
+                {
+                    case InstantModifierType.DamageReduction:
+                        InjectDamageReduction(timeline, slotCursor,
+                            3, action.CardData);
+                        break;
+                    case InstantModifierType.DamageSpread:
+                        InjectDamageSpread(timeline, slotCursor, 4);
+                        break;
+                    case InstantModifierType.CostReduction:
+                    case InstantModifierType.EffectDuplication:
+                        pendingCostModifier = action.ModifierType;
+                        break;
+                    case InstantModifierType.ElementBuff:
+                        pendingElementBuff = true;
+                        pendingElement = action.SelectedElement;
+                        break;
                 }
                 continue;
             }
@@ -228,7 +284,22 @@ public class BattleFlowController : MonoBehaviour
                         return null;
                     }
 
-                    ScheduledEffect[][] slotEffects = ExpandCard(action.CardData);
+                    ScheduledEffect[][] slotEffects;
+                    if (pendingCostModifier != InstantModifierType.None ||
+                        pendingElementBuff)
+                    {
+                        slotEffects = ExpandCardWithModifiers(
+                            action.CardData, action.Cost,
+                            pendingCostModifier, pendingElementBuff,
+                            pendingElement);
+                        pendingCostModifier = InstantModifierType.None;
+                        pendingElementBuff = false;
+                    }
+                    else
+                    {
+                        slotEffects = ExpandCard(action.CardData);
+                    }
+
                     if (slotEffects == null || slotEffects.Length != action.Cost)
                     {
                         Debug.LogError(
@@ -252,7 +323,14 @@ public class BattleFlowController : MonoBehaviour
                             timeline[slotCursor + i].MainAction = action;
                         }
                         foreach (ScheduledEffect effect in slotEffects[i])
-                            timeline[slotCursor + i].Effects.Add(effect);
+                        {
+                            ScheduledEffect e = effect;
+                            if ((e.Type == EffectType.Move ||
+                                 e.Type == EffectType.PlaceTower) &&
+                                action.Direction != Vector2Int.zero)
+                                e.Direction = action.Direction;
+                            timeline[slotCursor + i].Effects.Add(e);
+                        }
                     }
                     slotCursor += action.Cost;
                     break;
@@ -316,12 +394,99 @@ public class BattleFlowController : MonoBehaviour
         return effects;
     }
 
+    private ScheduledEffect[][] ExpandCardWithModifiers(
+        ArcanaData card, int effectiveCost,
+        InstantModifierType costModifier, bool elementBuff,
+        DamageElement element)
+    {
+        ScheduledEffect[][] effects = ExpandCard(card);
+        if (effects == null)
+            return null;
+
+        return ApplyInstantModifiers(effects, costModifier, elementBuff, element);
+    }
+
+    public static ScheduledEffect[][] ApplyInstantModifiers(
+        ScheduledEffect[][] effects,
+        InstantModifierType costModifier, bool elementBuff,
+        DamageElement element)
+    {
+        switch (costModifier)
+        {
+            case InstantModifierType.CostReduction:
+                if (effects.Length > 1)
+                {
+                    ScheduledEffect[][] trimmed =
+                        new ScheduledEffect[effects.Length - 1][];
+                    Array.Copy(effects, 1, trimmed, 0, trimmed.Length);
+                    effects = trimmed;
+                }
+                break;
+
+            case InstantModifierType.EffectDuplication:
+                ScheduledEffect[][] extended =
+                    new ScheduledEffect[effects.Length + 1][];
+                Array.Copy(effects, extended, effects.Length);
+                extended[effects.Length] =
+                    (ScheduledEffect[])effects[^1].Clone();
+                effects = extended;
+                break;
+        }
+
+        if (elementBuff)
+        {
+            for (int s = 0; s < effects.Length; s++)
+            {
+                for (int e = 0; e < effects[s].Length; e++)
+                {
+                    if (effects[s][e].Type == EffectType.DealDamage)
+                    {
+                        effects[s][e].Element = element;
+                        return effects;
+                    }
+                }
+            }
+        }
+
+        return effects;
+    }
+
+    private void InjectDamageReduction(
+        TimelineSlot[] timeline, int startSlot, int duration,
+        ArcanaData sourceCard)
+    {
+        int reductionValue = sourceCard.InstantValue;
+        for (int i = 0; i < duration && startSlot + i < timeline.Length; i++)
+        {
+            timeline[startSlot + i].Effects.Insert(0, new ScheduledEffect
+            {
+                Type = EffectType.IncomingDamageModifier,
+                BaseValue = reductionValue,
+                SourceCard = sourceCard
+            });
+        }
+    }
+
+    private void InjectDamageSpread(
+        TimelineSlot[] timeline, int startSlot, int duration)
+    {
+        for (int i = 0; i < duration && startSlot + i < timeline.Length; i++)
+        {
+            timeline[startSlot + i].Effects.Insert(0, new ScheduledEffect
+            {
+                Type = EffectType.DamageSpread,
+                BaseValue = 3
+            });
+        }
+    }
+
     private bool ValidateReferences()
     {
         if (planningController == null || battleExecutor == null ||
             bossController == null || playerHand == null ||
             playerStats == null || bossStats == null ||
-            playerDisplay == null || arcanaCatalog == null)
+            playerDisplay == null || arcanaCatalog == null ||
+            observationController == null)
         {
             Debug.LogError("BattleFlowController references are not assigned.", this);
             return false;
@@ -334,6 +499,9 @@ public class BattleFlowController : MonoBehaviour
             return false;
 
         if (!bossController.ValidateReferences())
+            return false;
+
+        if (!observationController.ValidateReferences())
             return false;
 
         return true;

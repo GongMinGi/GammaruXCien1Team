@@ -1164,6 +1164,7 @@ GameObject:
   - component: {fileID: 2147215983}
   - component: {fileID: 2147215982}
   - component: {fileID: 2147215981}
+  - component: {fileID: 2147215986}
   m_Layer: 0
   m_Name: BattleSystem
   m_TagString: Untagged
@@ -1243,6 +1244,7 @@ MonoBehaviour:
   bossStats: {fileID: 900000016}
   playerDisplay: {fileID: 900000061}
   arcanaCatalog: {fileID: 11400000, guid: b0b0b0b0b0b0b0b0b0b0b0b0b0b0b000, type: 2}
+  observationController: {fileID: 2147215986}
   selectedArcanaPool:
   - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a001, type: 2}
   - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a002, type: 2}
@@ -1263,6 +1265,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2147215986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2147215980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dcec89078ef42f43a05c866f4618c40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObservationController
+  playerHand: {fileID: 569059164}
+  handDisplay: {fileID: 900000041}
+  gridManager: {fileID: 900000002}
+  playerDisplay: {fileID: 900000061}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

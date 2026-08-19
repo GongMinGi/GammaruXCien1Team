@@ -14,6 +14,8 @@ public class ArcanaData : ScriptableObject
     [SerializeField] private DamageElement defaultElement = DamageElement.Neutral;
     [SerializeField] private ArcanaEffectDefinition effectDefinition;
     [SerializeField] private bool requiresEffectDefinition;
+    [SerializeField] private int instantValue;
+    [SerializeField] private ObservationActionType observationAction;
     [SerializeField, TextArea(2, 5)] private string effectDescription;
 
     public int Id => id;
@@ -27,6 +29,8 @@ public class ArcanaData : ScriptableObject
     public DamageElement DefaultElement => defaultElement;
     public ArcanaEffectDefinition EffectDefinition => effectDefinition;
     public bool RequiresEffectDefinition => requiresEffectDefinition;
+    public int InstantValue => instantValue;
+    public ObservationActionType ObservationAction => observationAction;
     public string EffectDescription => effectDescription;
 
     public bool CanEnterPool =>

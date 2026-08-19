@@ -18,10 +18,21 @@ public class PlayerHand : MonoBehaviour
 
     public void DrawToCapacity()
     {
-        while (cards.Count < maxHandSize)
+        int heldPassiveCount = CountByUsageType(ArcanaUsageType.HeldPassive);
+        int targetSize = maxHandSize - heldPassiveCount;
+        while (cards.Count < targetSize)
             cards.Add(bag.Draw());
 
         RefreshDisplay();
+    }
+
+    private int CountByUsageType(ArcanaUsageType type)
+    {
+        int count = 0;
+        foreach (ArcanaData card in cards)
+            if (card.UsageType == type)
+                count++;
+        return count;
     }
 
     public bool TryGetCard(int index, out ArcanaData card)
@@ -48,6 +59,21 @@ public class PlayerHand : MonoBehaviour
         cards.RemoveAt(index);
         RefreshDisplay();
         return true;
+    }
+
+    public void DrawOne(ArcanaBag sourceBag = null)
+    {
+        ArcanaBag drawBag = sourceBag ?? bag;
+        if (drawBag == null) return;
+        cards.Add(drawBag.Draw());
+        RefreshDisplay();
+    }
+
+    public void ReplaceCard(int index, ArcanaData newCard)
+    {
+        if (index < 0 || index >= cards.Count || newCard == null) return;
+        cards[index] = newCard;
+        RefreshDisplay();
     }
 
     public void ReturnCard(int index, ArcanaData card)

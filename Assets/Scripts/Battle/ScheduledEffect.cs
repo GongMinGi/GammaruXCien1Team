@@ -10,7 +10,9 @@ public enum EffectType
     Cast,
     IncomingDamageModifier,
     CounterStance,
-    ApplyBurn
+    ApplyBurn,
+    DamageSpread,
+    PlaceTower
 }
 
 [System.Serializable]
