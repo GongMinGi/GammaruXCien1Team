@@ -7,6 +7,7 @@ public class StageMapController : MonoBehaviour
 {
     [SerializeField] private StageMapData stageMapData;
     [SerializeField] private StageMapView stageMapView;
+    [SerializeField] private ArcanaSelectionController arcanaSelectionController;
     [SerializeField] private float sidePadding = 180f;
     [SerializeField] private float verticalJitter = 170f;
     [SerializeField] private float verticalPadding = 70f;
@@ -57,7 +58,10 @@ public class StageMapController : MonoBehaviour
 
         for (int i = 0; i < stageCount; i++)
         {
-            stageMapView.CreateCard(i + 1, positions[i]);
+            stageMapView.CreateCard(
+                i + 1,
+                positions[i],
+                arcanaSelectionController.OpenArcanaSelection);
         }
     }
 }

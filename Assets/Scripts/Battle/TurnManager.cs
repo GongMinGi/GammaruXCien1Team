@@ -28,8 +28,18 @@ public class TurnManager : MonoBehaviour
     private int dragStartIndex = -1;
     private BossAction[] currentBossPattern;
 
+    /// <summary>
+    /// 전달된 선택 카드가 있으면 전투 풀에 적용하고 전투 준비를 시작한다.
+    /// </summary>
     private void Start()
     {
+        ArcanaData[] transferredArcanaCards = BattleLoadoutData.TakeSelectedArcanaCards();
+
+        if (transferredArcanaCards != null)
+        {
+            selectedArcanaPool = transferredArcanaCards;
+        }
+
         if (!ValidateReferences() || !ValidatePool())
         {
             enabled = false;
