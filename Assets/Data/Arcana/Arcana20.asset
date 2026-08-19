@@ -15,8 +15,12 @@ MonoBehaviour:
   id: 20
   displayNumber: XX
   arcanaName: Judgement
-  koreanName: 심판
+  koreanName: "\uC2EC\uD310"
   usageType: 1
   baseCost: 5
   cardColor: {r: 1, g: 1, b: 1, a: 1}
   timelineColor: {r: 0.7, g: 0.3, b: 0.5, a: 1}
+  defaultElement: 0
+  effectDescription: "\uD328\uC758 \uBAA8\uB4E0 \uCE74\uB4DC \uC18C\uAC70 \uD6C4
+    \uB9E4\uC6B0 \uAC15\uD55C \uBB34\uC18D\uC131 \uD53C\uD574. \uC18C\uAC70 \uCE74\uB4DC
+    \uD569\uC5D0 \uBE44\uB840\uD574 \uD53C\uD574 \uC99D\uAC00."

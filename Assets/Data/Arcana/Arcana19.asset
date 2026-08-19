@@ -15,8 +15,11 @@ MonoBehaviour:
   id: 19
   displayNumber: XIX
   arcanaName: The Sun
-  koreanName: 태양
+  koreanName: "\uD0DC\uC591"
   usageType: 1
   baseCost: 4
   cardColor: {r: 1, g: 1, b: 1, a: 1}
   timelineColor: {r: 0.7, g: 0.3, b: 0.5, a: 1}
+  defaultElement: 1
+  effectDescription: "\uD574 \uC18D\uC131 \uAC15\uD55C \uD53C\uD574 3\uD68C. \uD53C\uD574
+    \uC2DC\uB9C8\uB2E4 \uD654\uC0C1 \uC911\uCCA9 \uBD80\uC5EC."

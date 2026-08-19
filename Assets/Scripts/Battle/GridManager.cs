@@ -12,7 +12,7 @@ public class GridManager : MonoBehaviour
     private GridCell[,] cells;
     private bool isGenerated;
 
-    private void Start()
+    private void Awake()
     {
         GenerateGrid();
     }
@@ -62,7 +62,6 @@ public class GridManager : MonoBehaviour
                 cellRoot.transform.localPosition = localPosition;
 
                 GridCell cell = cellRoot.AddComponent<GridCell>();
-                cell.Initialize(x, y);
 
                 GameObject compression = new GameObject("VisualCompression");
                 compression.transform.SetParent(cellRoot.transform);
@@ -79,10 +78,33 @@ public class GridManager : MonoBehaviour
                 SpriteRenderer renderer = visual.AddComponent<SpriteRenderer>();
                 renderer.sprite = cellSprite;
 
+                cell.Initialize(x, y, renderer);
                 cells[x + halfColumns, y + halfRows] = cell;
             }
         }
 
         isGenerated = true;
+    }
+
+    public GridCell GetCell(int x, int y)
+    {
+        if (!IsValidCoordinate(x, y))
+            return null;
+
+        int halfColumns = Columns / 2;
+        int halfRows = Rows / 2;
+        return cells[x + halfColumns, y + halfRows];
+    }
+
+    public void ClearAllHighlights()
+    {
+        if (cells == null)
+            return;
+
+        int halfColumns = Columns / 2;
+        int halfRows = Rows / 2;
+        for (int y = -halfRows; y <= halfRows; y++)
+            for (int x = -halfColumns; x <= halfColumns; x++)
+                cells[x + halfColumns, y + halfRows].ClearHighlight();
     }
 }

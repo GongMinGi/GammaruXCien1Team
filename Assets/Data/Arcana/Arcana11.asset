@@ -15,8 +15,12 @@ MonoBehaviour:
   id: 11
   displayNumber: XI
   arcanaName: Justice
-  koreanName: 정의
+  koreanName: "\uC815\uC758"
   usageType: 1
   baseCost: 3
   cardColor: {r: 1, g: 1, b: 1, a: 1}
   timelineColor: {r: 0.7, g: 0.3, b: 0.5, a: 1}
+  defaultElement: 0
+  effectDescription: "\uC2DC\uC804 \uC911 \uD53C\uD574 \uAC10\uC18C. \uC644\uB8CC
+    \uC2DC \uBB34\uC18D\uC131 \uC911\uAC04 \uD53C\uD574. \uD53C\uACA9 \uC2DC \uD53C\uD574\uB7C9
+    \uC99D\uAC00."

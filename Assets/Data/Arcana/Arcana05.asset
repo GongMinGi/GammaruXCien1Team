@@ -15,8 +15,11 @@ MonoBehaviour:
   id: 5
   displayNumber: V
   arcanaName: The Hierophant
-  koreanName: 교황
+  koreanName: "\uAD50\uD669"
   usageType: 3
   baseCost: 0
   cardColor: {r: 1, g: 1, b: 1, a: 1}
   timelineColor: {r: 0.7, g: 0.3, b: 0.5, a: 1}
+  defaultElement: 0
+  effectDescription: "3\uCE78 \uD0C0\uC774\uBC0D \uB3D9\uC548 \uBC1B\uB294 \uD53C\uD574
+    \uAC10\uC18C. (\uC808\uB313\uAC12)"

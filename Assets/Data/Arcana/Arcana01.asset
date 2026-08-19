@@ -15,8 +15,12 @@ MonoBehaviour:
   id: 1
   displayNumber: I
   arcanaName: The Magician
-  koreanName: 마법사
+  koreanName: "\uB9C8\uBC95\uC0AC"
   usageType: 1
   baseCost: 1
   cardColor: {r: 1, g: 1, b: 1, a: 1}
   timelineColor: {r: 0.7, g: 0.3, b: 0.5, a: 1}
+  defaultElement: 0
+  effectDescription: "\uC57D\uD55C \uBB34\uC18D\uC131 \uD53C\uD574. \uC774\uBC88
+    \uD134 \uC18D\uC131 \uACF5\uACA9 \uC0AC\uC6A9 \uC2DC \uB3D9\uC77C \uC18D\uC131
+    \uBD80\uC5EC, \uD53C\uD574\uB7C9 \uC99D\uAC00."

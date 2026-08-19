@@ -34,6 +34,11 @@ public class HandDisplay : MonoBehaviour
     private int activeCount;
     private bool isGenerated;
     private int dragSourceIndex = -1;
+    private IReadOnlyList<ArcanaData> currentCards;
+    private int lastHoveredIndex = -1;
+
+    [Header("Info Panel")]
+    [SerializeField] private ArcanaInfoPanel infoPanel;
 
     [Header("Drag")]
     [SerializeField] private Color dragHighlightColor = new Color(1f, 1f, 0.5f);
@@ -50,12 +55,26 @@ public class HandDisplay : MonoBehaviour
 
         int hovered = DetectHover();
         AnimateCards(hovered);
+
+        if (infoPanel != null && hovered != lastHoveredIndex)
+        {
+            lastHoveredIndex = hovered;
+            if (hovered >= 0 && hovered < activeCount && currentCards[hovered] != null)
+                infoPanel.Show(currentCards[hovered]);
+            else
+                infoPanel.Hide();
+        }
     }
 
     public void UpdateHand(IReadOnlyList<ArcanaData> cards)
     {
         if (!isGenerated)
             return;
+
+        currentCards = cards;
+        lastHoveredIndex = -1;
+        if (infoPanel != null)
+            infoPanel.Hide();
 
         activeCount = Mathf.Min(cards.Count, MaxCardCount);
         RecalculateLayout(activeCount);

@@ -15,8 +15,11 @@ MonoBehaviour:
   id: 18
   displayNumber: XVIII
   arcanaName: The Moon
-  koreanName: 달
+  koreanName: "\uB2EC"
   usageType: 1
   baseCost: 4
   cardColor: {r: 1, g: 1, b: 1, a: 1}
   timelineColor: {r: 0.7, g: 0.3, b: 0.5, a: 1}
+  defaultElement: 2
+  effectDescription: "\uB2EC \uC18D\uC131 \uAC15\uD55C \uD53C\uD574 3\uD68C. \uC2DC\uC804
+    \uC21C\uAC04 \uACF5\uACA9 \uD68C\uD53C."

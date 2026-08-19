@@ -14,6 +14,9 @@ public class ActionBar : MonoBehaviour
 
     public const int SlotCount = 10;
 
+    public float VisualWidth =>
+        (SlotCount - 1) * (slotSize + spacing) + slotSize;
+
     private SpriteRenderer[] slotRenderers;
     private bool isGenerated;
 

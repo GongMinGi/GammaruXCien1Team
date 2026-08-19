@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class TurnManager : MonoBehaviour
+public class PlanningController : MonoBehaviour
 {
     [SerializeField] private GridManager gridManager;
     [SerializeField] private PlayerDisplay playerDisplay;
@@ -10,111 +11,39 @@ public class TurnManager : MonoBehaviour
     [SerializeField] private PlayerHand playerHand;
     [SerializeField] private ArcanaCatalog arcanaCatalog;
     [SerializeField] private HandDisplay handDisplay;
-    [SerializeField] private ArcanaData[] selectedArcanaPool;
 
     private readonly List<PlannedAction> plannedActions = new();
     private int usedSlots;
     private Vector2Int playerGridPos;
+    private Vector2Int battleStartPos;
     private bool planningActive;
-    private ArcanaBag bag;
     private int dragStartIndex = -1;
 
-    /// <summary>
-    /// 전달된 선택 카드가 있으면 전투 풀에 적용하고 전투 준비를 시작한다.
-    /// </summary>
-    private void Start()
-    {
-        ArcanaData[] transferredArcanaCards = BattleLoadoutData.TakeSelectedArcanaCards();
+    private Action<List<PlannedAction>, Vector2Int> onPlanConfirmed;
 
-        if (transferredArcanaCards != null)
-        {
-            selectedArcanaPool = transferredArcanaCards;
-        }
-
-        if (!ValidateReferences() || !ValidatePool())
-        {
-            enabled = false;
-            return;
-        }
-
-        bag = new ArcanaBag(selectedArcanaPool);
-        playerHand.Initialize(bag);
-        BeginPlanningPhase();
-    }
-
-    private bool ValidateReferences()
+    public bool ValidateReferences()
     {
         if (gridManager == null || playerDisplay == null || actionBar == null ||
             playerHand == null || arcanaCatalog == null || handDisplay == null)
         {
-            Debug.LogError("TurnManager references are not assigned.", this);
+            Debug.LogError("PlanningController references are not assigned.", this);
             return false;
         }
 
         return true;
     }
 
-    private bool ValidatePool()
-    {
-        if (selectedArcanaPool == null || selectedArcanaPool.Length == 0)
-        {
-            Debug.LogError("Arcana pool is empty.", this);
-            return false;
-        }
-
-        HashSet<int> ids = new();
-        foreach (ArcanaData a in selectedArcanaPool)
-        {
-            if (a == null)
-            {
-                Debug.LogError("Pool has null entry.", this);
-                return false;
-            }
-
-            if (!a.CanEnterPool)
-            {
-                Debug.LogError($"Arcana {a.DisplayNumber} cannot enter pool.", this);
-                return false;
-            }
-
-            if (!ids.Add(a.Id))
-            {
-                Debug.LogError($"Duplicate ID: {a.Id}", this);
-                return false;
-            }
-
-            if (a.CanPlaceOnTimeline &&
-                (a.BaseCost < 1 || a.BaseCost > ActionBar.SlotCount))
-            {
-                Debug.LogError($"Arcana {a.Id} invalid cost: {a.BaseCost}", this);
-                return false;
-            }
-
-            ArcanaData catalogEntry = arcanaCatalog.GetById(a.Id);
-            if (catalogEntry == null)
-            {
-                Debug.LogError($"Arcana {a.Id} missing from catalog.", this);
-                return false;
-            }
-
-            if (catalogEntry != a)
-            {
-                Debug.LogError($"Pool Arcana {a.Id} doesn't match catalog asset.", this);
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private void BeginPlanningPhase()
+    public void BeginPlanning(
+        Vector2Int startPos,
+        Action<List<PlannedAction>, Vector2Int> onConfirmed)
     {
         plannedActions.Clear();
         usedSlots = 0;
-        playerGridPos = playerDisplay.GridPosition;
+        battleStartPos = startPos;
+        playerGridPos = startPos;
         actionBar.ClearAll();
-        playerHand.DrawToCapacity();
         planningActive = true;
+        onPlanConfirmed = onConfirmed;
         CancelCardDrag();
     }
 
@@ -358,7 +287,12 @@ public class TurnManager : MonoBehaviour
         if (usedSlots != ActionBar.SlotCount)
             return;
 
+        if (!planningActive)
+            return;
+
         planningActive = false;
-        Debug.Log("전투 페이즈 시작");
+        var confirmed = new List<PlannedAction>(plannedActions);
+        plannedActions.Clear();
+        onPlanConfirmed?.Invoke(confirmed, battleStartPos);
     }
 }
