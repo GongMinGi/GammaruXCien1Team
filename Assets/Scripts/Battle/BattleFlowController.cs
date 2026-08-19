@@ -21,6 +21,10 @@ public class BattleFlowController : MonoBehaviour
 
     private void Start()
     {
+        ArcanaData[] transferredArcanaCards = BattleLoadoutData.TakeSelectedArcanaCards();
+        if (transferredArcanaCards != null)
+            selectedArcanaPool = transferredArcanaCards;
+
         if (!ValidateReferences() || !ValidatePool())
         {
             enabled = false;
