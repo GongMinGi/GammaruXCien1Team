@@ -60,18 +60,53 @@ public class ThreadBoundClownPatternDefinition : BossPatternDefinition
         wheelPosition = ClownWheel.Rotate(wheelPosition);
     }
 
+    private enum TurnEndOp { Rotate, OppositeThenRotate, ForceFour }
+
+    /// 이번 턴 종료에 무엇이 시전되는지 — 실제 이동과 표시가 같은 곳을 보게 한다
+    private TurnEndOp CurrentTurnEndOp
+    {
+        get
+        {
+            if (phaseTwoTurn % 2 == 0)      // 1페이즈 전체 및 t 짝수: 0
+                return TurnEndOp.Rotate;
+            if (phaseTwoTurn % 4 == 1)      // t = 1, 5, 9…: V + 0
+                return TurnEndOp.OppositeThenRotate;
+            return TurnEndOp.ForceFour;     // t = 3, 7, 11…: IV
+        }
+    }
+
+    /// 턴 종료 시전 아르카나 — 타임라인에 올라가지 않아 카드로만 예고된다
+    public override int[] TurnEndArcanaIds
+    {
+        get
+        {
+            switch (CurrentTurnEndOp)
+            {
+                case TurnEndOp.OppositeThenRotate: return new[] { 5, 0 };
+                case TurnEndOp.ForceFour: return new[] { 4 };
+                default: return new[] { 0 };
+            }
+        }
+    }
+
     /// <summary>
     /// 턴 종료: IV / V / 0을 적용하고 최종 칸을 돌려준다.
     /// 효과(피해·실타래) 발동은 호출자(ClownBossMechanic)가 한다.
     /// </summary>
     public int ApplyTurnEndWheel()
     {
-        if (phaseTwoTurn % 2 == 0)          // 1페이즈 전체 및 t 짝수: 0
-            wheelPosition = ClownWheel.Rotate(wheelPosition);
-        else if (phaseTwoTurn % 4 == 1)     // t = 1, 5, 9…: V + 0
-            wheelPosition = ClownWheel.Rotate(ClownWheel.Opposite(wheelPosition));
-        else                                // t = 3, 7, 11…: IV
-            wheelPosition = 4;
+        switch (CurrentTurnEndOp)
+        {
+            case TurnEndOp.OppositeThenRotate:
+                wheelPosition = ClownWheel.Rotate(ClownWheel.Opposite(wheelPosition));
+                break;
+            case TurnEndOp.ForceFour:
+                wheelPosition = 4;
+                break;
+            default:
+                wheelPosition = ClownWheel.Rotate(wheelPosition);
+                break;
+        }
 
         return wheelPosition;
     }
