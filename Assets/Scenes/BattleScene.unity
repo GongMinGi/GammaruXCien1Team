@@ -272,7 +272,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &538817119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -863,7 +863,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f35cae247a1c534428b2f5ee2f99fbc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossStats
-  bossData: {fileID: 11400000, guid: 4e8b3d17a05c42f9840b76c1de92f3a5, type: 2}
+  bossData: {fileID: 11400000, guid: 29a5176c23cd47f8be4be2f8ec118df4, type: 2}
 --- !u!1 &900000020
 GameObject:
   m_ObjectHideFlags: 0
@@ -1277,6 +1277,7 @@ MonoBehaviour:
   listWidth: 420
   itemHeight: 44
   padding: 20
+  scrollSensitivity: 30
   toggleButtonSize: {x: 160, y: 50}
   toggleButtonOffset: {x: -20, y: -20}
   itemFontSize: 20
@@ -1315,7 +1316,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1650548727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1496,11 +1497,8 @@ MonoBehaviour:
   selectedArcanaPool:
   - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a001, type: 2}
   - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a002, type: 2}
-  - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a004, type: 2}
+  - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a003, type: 2}
   - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a008, type: 2}
-  - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a006, type: 2}
-  - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a009, type: 2}
-  - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a010, type: 2}
   clownBossMechanic: {fileID: 538817119}
 --- !u!4 &2147215985
 Transform:
@@ -1549,6 +1547,6 @@ SceneRoots:
   - {fileID: 2147215985}
   - {fileID: 1305633217}
   - {fileID: 732133656}
+  - {fileID: 1405602255}
   - {fileID: 1650548728}
   - {fileID: 538817120}
-  - {fileID: 1405602255}
