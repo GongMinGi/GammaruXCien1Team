@@ -20,6 +20,7 @@ public class BattleFlowController : MonoBehaviour
     private int turnNumber;
     private bool battleEnded;
     private bool heldPassiveReviveUsed;
+    private readonly Dictionary<int, int> cardCooldownUntilTurn = new();
 
     private void Start()
     {
@@ -59,7 +60,7 @@ public class BattleFlowController : MonoBehaviour
         currentPhase = BattlePhase.TurnStart;
         Debug.Log($"Turn {turnNumber} started.");
 
-        bossStats.ClearBurn();
+        bossStats.TickBurnTimer();
         playerHand.DrawToCapacity();
 
         if (!bossController.GenerateAndShow(playerDisplay.GridPosition))
@@ -75,12 +76,27 @@ public class BattleFlowController : MonoBehaviour
     private void EnterPlanning()
     {
         currentPhase = BattlePhase.Planning;
+        var cooldownIds = new HashSet<int>();
+        foreach (var kv in cardCooldownUntilTurn)
+            if (IsCardOnCooldown(cardCooldownUntilTurn, kv.Key, turnNumber))
+                cooldownIds.Add(kv.Key);
         planningController.BeginPlanning(
-            playerDisplay.GridPosition, OnPlanConfirmed, bag, selectedArcanaPool);
+            playerDisplay.GridPosition, OnPlanConfirmed, bag, selectedArcanaPool,
+            cooldownIds, battleExecutor.GetTowerPositions());
     }
 
     private void OnPlanConfirmed(List<PlannedAction> actions, Vector2Int startPos)
     {
+        foreach (PlannedAction action in actions)
+        {
+            if (action.Type == ActionType.UseCard &&
+                action.CardData != null &&
+                action.CardData.CooldownTurns > 0)
+            {
+                cardCooldownUntilTurn[action.CardData.Id] = turnNumber + action.CardData.CooldownTurns + 1;
+            }
+        }
+
         TimelineSlot[] timeline = ConvertToTimeline(actions);
         if (timeline == null)
         {
@@ -108,6 +124,14 @@ public class BattleFlowController : MonoBehaviour
     {
         currentPhase = BattlePhase.TurnEnd;
 
+        bossStats.ProcessBurn();
+
+        if (bossStats.IsDead)
+        {
+            EndBattle(true);
+            return;
+        }
+
         if (playerStats.IsDead)
         {
             if (TryHeldPassiveRevive())
@@ -116,12 +140,6 @@ public class BattleFlowController : MonoBehaviour
                 return;
             }
             EndBattle(false);
-            return;
-        }
-
-        if (bossStats.IsDead)
-        {
-            EndBattle(true);
             return;
         }
 
@@ -214,7 +232,7 @@ public class BattleFlowController : MonoBehaviour
                             3, action.CardData);
                         break;
                     case InstantModifierType.DamageSpread:
-                        InjectDamageSpread(timeline, slotCursor, 4);
+                        InjectDamageSpread(timeline, slotCursor, 4, 3);
                         break;
                     case InstantModifierType.CostReduction:
                     case InstantModifierType.EffectDuplication:
@@ -457,6 +475,9 @@ public class BattleFlowController : MonoBehaviour
         return ApplyInstantModifiers(effects, costModifier, elementBuff, element);
     }
 
+    public static bool IsCardOnCooldown(Dictionary<int, int> cooldownMap, int cardId, int currentTurn)
+        => cooldownMap.TryGetValue(cardId, out int until) && currentTurn < until;
+
     public static ScheduledEffect[][] ApplyInstantModifiers(
         ScheduledEffect[][] effects,
         InstantModifierType costModifier, bool elementBuff,
@@ -548,16 +569,17 @@ public class BattleFlowController : MonoBehaviour
     }
 
     private void InjectDamageSpread(
-        TimelineSlot[] timeline, int startSlot, int duration)
+        TimelineSlot[] timeline, int startSlot, int window, int parts)
     {
         if (startSlot >= timeline.Length)
             return;
 
-        int spreadSlots = Mathf.Min(duration, timeline.Length - startSlot);
+        int clampedWindow = Mathf.Min(window, timeline.Length - startSlot);
         timeline[startSlot].Effects.Insert(0, new ScheduledEffect
         {
             Type = EffectType.DamageSpread,
-            BaseValue = spreadSlots
+            BaseValue = clampedWindow,
+            AdditionalEffectValue = parts
         });
     }
 
