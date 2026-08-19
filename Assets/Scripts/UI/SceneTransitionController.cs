@@ -3,31 +3,31 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// DOTween 페이드로 타이틀 씬에서 스테이지 선택 씬으로 전환한다.
+/// DOTween 페이드로 설정된 씬으로 전환한다.
 /// </summary>
 public class SceneTransitionController : MonoBehaviour
 {
     [SerializeField] private CanvasGroup fadeCanvasGroup;
-    [SerializeField] private string stageSceneName = "StageSelectScene";
+    [SerializeField] private string targetSceneName = "StageSelectScene";
     [SerializeField] private float fadeDuration = 0.6f;
 
     /// <summary>
-    /// 화면을 가린 뒤 스테이지 선택 씬을 불러오는 전환을 시작한다.
+    /// 화면을 가린 뒤 설정된 씬을 불러오는 전환을 시작한다.
     /// </summary>
-    public void LoadStageScene()
+    public void StartSceneTransition()
     {
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += FadeIn;
         fadeCanvasGroup.blocksRaycasts = true;
-        fadeCanvasGroup.DOFade(1f, fadeDuration).OnComplete(LoadScene);
+        fadeCanvasGroup.DOFade(1f, fadeDuration).OnComplete(LoadTargetScene);
     }
 
     /// <summary>
-    /// 설정된 스테이지 선택 씬을 불러온다.
+    /// 설정된 목적 씬을 불러온다.
     /// </summary>
-    private void LoadScene()
+    private void LoadTargetScene()
     {
-        SceneManager.LoadScene(stageSceneName);
+        SceneManager.LoadScene(targetSceneName);
     }
 
     /// <summary>

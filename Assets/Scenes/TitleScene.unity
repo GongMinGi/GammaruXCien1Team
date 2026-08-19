@@ -462,7 +462,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1112187087}
         m_TargetAssemblyTypeName: SceneTransitionController, Assembly-CSharp
-        m_MethodName: LoadStageScene
+        m_MethodName: StartSceneTransition
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -715,7 +715,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneTransitionController
   fadeCanvasGroup: {fileID: 1112187088}
-  stageSceneName: StageSelectScene
+  targetSceneName: StageSelectScene
   fadeDuration: 0.6
 --- !u!225 &1112187088
 CanvasGroup:

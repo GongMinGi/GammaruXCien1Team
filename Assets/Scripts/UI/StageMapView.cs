@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 /// <summary>
@@ -52,14 +53,19 @@ public class StageMapView : MonoBehaviour
     }
 
     /// <summary>
-    /// 지정한 번호와 위치로 스테이지 카드를 생성한다.
+    /// 지정한 번호와 위치, 클릭 처리 메서드로 스테이지 카드를 생성한다.
     /// </summary>
-    public void CreateCard(int stageNumber, Vector2 position)
+    public void CreateCard(
+        int stageNumber,
+        Vector2 position,
+        UnityAction cardClickHandler)
     {
         RectTransform card = Instantiate(cardPrefab, cardsRoot, false);
         Text numberText = card.GetComponentInChildren<Text>(true);
+        Button cardButton = card.GetComponent<Button>();
 
         card.anchoredPosition = position;
         numberText.text = stageNumber.ToString();
+        cardButton.onClick.AddListener(cardClickHandler);
     }
 }
