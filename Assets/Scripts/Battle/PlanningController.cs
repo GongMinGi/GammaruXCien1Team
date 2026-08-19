@@ -286,9 +286,17 @@ public class PlanningController : MonoBehaviour
             return;
         }
 
+#if UNITY_EDITOR
+        // Tab 언두는 개발용 — 빌드에는 이 블록이 컴파일되지 않는다.
+        // QA 빌드에서도 쓰려면 조건을 UNITY_EDITOR || DEVELOPMENT_BUILD로 넓힌다.
         if (kb.tabKey.wasPressedThisFrame)
+        {
             UndoLastAction();
-        else if (kb.enterKey.wasPressedThisFrame || kb.numpadEnterKey.wasPressedThisFrame)
+            return;
+        }
+#endif
+
+        if (kb.enterKey.wasPressedThisFrame || kb.numpadEnterKey.wasPressedThisFrame)
             ConfirmPlan();
         else if (kb.leftCtrlKey.wasPressedThisFrame || kb.rightCtrlKey.wasPressedThisFrame)
             QueueStay();
