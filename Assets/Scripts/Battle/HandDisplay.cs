@@ -11,7 +11,7 @@ public class HandDisplay : MonoBehaviour
     [SerializeField] private Color borderColor = new Color(0.45f, 0.5f, 0.65f);
 
     [Header("Fan Layout")]
-    [SerializeField] private float totalWidth = 4f;
+    [SerializeField, Min(0f)] private float cardSpacing = 0.67f;
     [SerializeField] private float maxFanAngle = 15f;
     [SerializeField] private float arcHeight = 0.4f;
 
@@ -165,14 +165,12 @@ public class HandDisplay : MonoBehaviour
         if (count == 0)
             return;
 
-        float spacing = count > 1 ? totalWidth / (count - 1) : 0f;
-
         for (int i = 0; i < count; i++)
         {
             float centerOffset = i - (count - 1) * 0.5f;
             float t = count > 1 ? centerOffset / ((count - 1) * 0.5f) : 0f;
 
-            float x = centerOffset * spacing;
+            float x = centerOffset * cardSpacing;
             float y = -arcHeight * t * t;
             float angle = -maxFanAngle * t;
 

@@ -37,6 +37,7 @@ public class PlanningController : MonoBehaviour
     private ArcanaData[] arcanaPool;
     private bool transformTargetSelectionActive;
     private int observationSourceHandIndex;
+    private bool zeroCostUsedThisTurn;
 
     private static readonly Color TowerPreviewColor = new Color(0.55f, 0.35f, 0.15f, 0.8f);
     private readonly List<GameObject> towerPreviewObjects = new();
@@ -93,6 +94,7 @@ public class PlanningController : MonoBehaviour
         onPlanConfirmed = onConfirmed;
         activeCostModifier = InstantModifierType.None;
         activeElementBuff = false;
+        zeroCostUsedThisTurn = false;
         elementSelectionActive = false;
         directionSelectionActive = false;
         transformTargetSelectionActive = false;
@@ -313,6 +315,9 @@ public class PlanningController : MonoBehaviour
         if (!gridManager.IsValidCoordinate(newPos.x, newPos.y))
             return;
 
+        if (IsTowerPositionOccupied(newPos))
+            return;
+
         plannedActions.Add(new PlannedAction
         {
             Type = ActionType.Move,
@@ -373,11 +378,16 @@ public class PlanningController : MonoBehaviour
             return;
         }
 
+        bool consumesHand = card.EffectDefinition != null && card.EffectDefinition.ConsumesHand;
+
         int effectiveCost = card.BaseCost;
-        if (activeCostModifier == InstantModifierType.CostReduction)
-            effectiveCost = Mathf.Max(1, effectiveCost - 1);
-        else if (activeCostModifier == InstantModifierType.EffectDuplication)
-            effectiveCost += 1;
+        if (!consumesHand)
+        {
+            if (activeCostModifier == InstantModifierType.CostReduction)
+                effectiveCost = Mathf.Max(1, effectiveCost - 1);
+            else if (activeCostModifier == InstantModifierType.EffectDuplication)
+                effectiveCost += 1;
+        }
 
         if (usedSlots + effectiveCost > ActionBar.SlotCount)
             return;
@@ -601,6 +611,8 @@ public class PlanningController : MonoBehaviour
                         activeElementBuff = false;
                         break;
                 }
+                if (ConsumesZeroCostLimit(action.CardData))
+                    zeroCostUsedThisTurn = false;
                 break;
             case ActionType.UseObservationCard:
                 if (action.ObservationAction == ObservationActionType.DrawCard)
@@ -630,6 +642,8 @@ public class PlanningController : MonoBehaviour
                         playerHand.ReplaceCard(action.TransformTargetIndex, action.TransformOriginal);
                     playerHand.ReturnCard(action.OriginalHandIndex, action.CardData);
                 }
+                if (ConsumesZeroCostLimit(action.CardData))
+                    zeroCostUsedThisTurn = false;
                 break;
             case ActionType.MergeCards:
                 playerHand.UndoMerge(
@@ -665,6 +679,9 @@ public class PlanningController : MonoBehaviour
         if (!playerHand.TryGetCard(handIndex, out ArcanaData card))
             return;
 
+        if (ConsumesZeroCostLimit(card) && zeroCostUsedThisTurn)
+            return;
+
         switch (card.ObservationAction)
         {
             case ObservationActionType.DrawCard:
@@ -690,6 +707,8 @@ public class PlanningController : MonoBehaviour
                     DrawnCard = drawn,
                     DrawnCardIndex = drawnIndex
                 });
+                if (ConsumesZeroCostLimit(card))
+                    zeroCostUsedThisTurn = true;
                 Debug.Log($"{card.DisplayNumber} {card.KoreanName}: 카드 1장 드로우.");
                 break;
 
@@ -754,6 +773,9 @@ public class PlanningController : MonoBehaviour
         last.TransformReplacement = replacement;
         plannedActions[^1] = last;
 
+        if (ConsumesZeroCostLimit(last.CardData))
+            zeroCostUsedThisTurn = true;
+
         Debug.Log($"{targetCard.DisplayNumber} → {replacement.DisplayNumber} {replacement.KoreanName}");
     }
 
@@ -798,6 +820,9 @@ public class PlanningController : MonoBehaviour
     private void QueueInstantUse(int handIndex)
     {
         if (!playerHand.TryGetCard(handIndex, out ArcanaData card))
+            return;
+
+        if (ConsumesZeroCostLimit(card) && zeroCostUsedThisTurn)
             return;
 
         InstantModifierType modifier = GetModifierType(card);
@@ -849,6 +874,9 @@ public class PlanningController : MonoBehaviour
                 activeElementBuff = true;
                 break;
         }
+
+        if (ConsumesZeroCostLimit(card))
+            zeroCostUsedThisTurn = true;
 
         NotifyPlanningSlotChanged();
     }
@@ -1067,6 +1095,8 @@ public class PlanningController : MonoBehaviour
                     Vector2Int check = currentPos + direction * step;
                     if (!gridManager.IsValidCoordinate(check.x, check.y))
                         break;
+                    if (IsTowerPositionOccupied(check))
+                        break;
                     target = check;
                 }
                 currentPos = target;
@@ -1075,6 +1105,9 @@ public class PlanningController : MonoBehaviour
 
         return currentPos;
     }
+
+    private static bool ConsumesZeroCostLimit(ArcanaData card)
+        => card.BaseCost == 0 && !card.ZeroCostUnlimited;
 
     private static bool HasDirectionalEffectInLastSlot(ArcanaData card)
     {

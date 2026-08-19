@@ -182,6 +182,7 @@ public class BattleFlowController : MonoBehaviour
         InstantModifierType pendingCostModifier = InstantModifierType.None;
         bool pendingElementBuff = false;
         DamageElement pendingElement = DamageElement.Neutral;
+        DamageElement lastUsedElement = DamageElement.Neutral;
 
         foreach (PlannedAction action in actions)
         {
@@ -291,6 +292,18 @@ public class BattleFlowController : MonoBehaviour
                         return null;
                     }
 
+                    // 속성 계승: 이전 속성 공격의 원소 적용
+                    if (action.CardData.EffectDefinition != null &&
+                        action.CardData.EffectDefinition.InheritsElement &&
+                        lastUsedElement != DamageElement.Neutral)
+                    {
+                        ReplaceElement(slotEffects, lastUsedElement);
+                    }
+
+                    // 속성 추적: 비-Neutral 카드 사용 시 갱신
+                    if (action.CardData.DefaultElement != DamageElement.Neutral)
+                        lastUsedElement = action.CardData.DefaultElement;
+
                     if (action.ConsumedHandCards != null)
                     {
                         int bonusPerCost = action.CardData.EffectDefinition.BonusDamagePerConsumedCost;
@@ -312,9 +325,14 @@ public class BattleFlowController : MonoBehaviour
                     if (pendingCostModifier != InstantModifierType.None ||
                         pendingElementBuff)
                     {
-                        slotEffects = ApplyInstantModifiers(
-                            slotEffects, pendingCostModifier,
-                            pendingElementBuff, pendingElement);
+                        bool cardConsumesHand = action.CardData.EffectDefinition != null
+                            && action.CardData.EffectDefinition.ConsumesHand;
+                        if (!cardConsumesHand)
+                        {
+                            slotEffects = ApplyInstantModifiers(
+                                slotEffects, pendingCostModifier,
+                                pendingElementBuff, pendingElement);
+                        }
                         pendingCostModifier = InstantModifierType.None;
                         pendingElementBuff = false;
                     }
@@ -482,6 +500,17 @@ public class BattleFlowController : MonoBehaviour
         }
 
         return effects;
+    }
+
+    private static void ReplaceElement(ScheduledEffect[][] effects, DamageElement element)
+    {
+        for (int s = 0; s < effects.Length; s++)
+            for (int e = 0; e < effects[s].Length; e++)
+            {
+                ScheduledEffect eff = effects[s][e];
+                eff.Element = element;
+                effects[s][e] = eff;
+            }
     }
 
     private static bool InjectDealDamageBonus(ScheduledEffect[][] effects, int bonus)
