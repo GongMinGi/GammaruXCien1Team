@@ -2,27 +2,32 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 아르카나 선택 목록과 11장 제한을 관리하고 View 및 전투 진입을 조정한다.
+/// 아르카나 표시 범위와 5~10장 선택 제한을 관리하고 View 및 전투 진입을 조정한다.
 /// </summary>
 public class ArcanaSelectionController : MonoBehaviour
 {
-    private const int MaximumSelectedCardCount = 11;
+    private const int FirstDisplayedArcanaId = 1;
+    private const int MinimumSelectedCardCount = 5;
+    private const int MaximumSelectedCardCount = 10;
 
     [SerializeField] private ArcanaCatalog arcanaCatalog;
     [SerializeField] private ArcanaSelectionView arcanaSelectionView;
     [SerializeField] private SceneTransitionController sceneTransitionController;
+    [SerializeField] private int maximumDisplayedArcanaId = 10;
+    [SerializeField] private ArcanaDeckRowLayout deckRowLayout
+        = ArcanaDeckRowLayout.TwoRows;
 
     private readonly List<ArcanaData> selectedArcanaCards = new List<ArcanaData>();
 
     /// <summary>
-    /// 전투 풀에 들어갈 수 있는 아르카나 카드들을 생성한다.
+    /// 설정한 번호 범위에서 전투 풀에 들어갈 수 있는 아르카나 카드들을 생성한다.
     /// </summary>
     private void Start()
     {
         List<ArcanaData> selectableArcanaCards = new List<ArcanaData>();
 
-        for (int arcanaId = ArcanaCatalog.MinArcanaId;
-             arcanaId <= ArcanaCatalog.MaxArcanaId;
+        for (int arcanaId = FirstDisplayedArcanaId;
+             arcanaId <= maximumDisplayedArcanaId;
              arcanaId++)
         {
             ArcanaData arcanaData = arcanaCatalog.GetById(arcanaId);
@@ -35,8 +40,10 @@ public class ArcanaSelectionController : MonoBehaviour
 
         arcanaSelectionView.CreateDeckCards(
             selectableArcanaCards.ToArray(),
+            deckRowLayout,
             HandleLeftClick,
             HandleRightClick);
+        UpdateBattleStartButtonState();
     }
 
     /// <summary>
@@ -59,6 +66,7 @@ public class ArcanaSelectionController : MonoBehaviour
         {
             arcanaSelectionView.MoveCardToInventory(selectedArcanaCard);
             selectedArcanaCards.Add(selectedArcanaCard.CardData);
+            UpdateBattleStartButtonState();
         }
     }
 
@@ -73,20 +81,31 @@ public class ArcanaSelectionController : MonoBehaviour
         {
             arcanaSelectionView.ReturnCardToDeck(selectedArcanaCard);
             selectedArcanaCards.Remove(selectedArcanaCard.CardData);
+            UpdateBattleStartButtonState();
         }
     }
 
     /// <summary>
-    /// 카드가 정확히 11장 선택되었을 때 선택 목록을 저장하고 전투 씬 전환을 시작한다.
+    /// 카드가 5장 이상 선택되었을 때 선택 목록을 저장하고 전투 씬 전환을 시작한다.
     /// </summary>
     public void StartBattle()
     {
-        if (selectedArcanaCards.Count != MaximumSelectedCardCount)
+        if (selectedArcanaCards.Count < MinimumSelectedCardCount)
         {
             return;
         }
 
         BattleLoadoutData.SaveSelectedArcanaCards(selectedArcanaCards.ToArray());
         sceneTransitionController.StartSceneTransition();
+    }
+
+    /// <summary>
+    /// 현재 선택 수에 따라 전투 시작 버튼의 활성 상태를 갱신한다.
+    /// </summary>
+    private void UpdateBattleStartButtonState()
+    {
+        bool canStartBattle = selectedArcanaCards.Count
+            >= MinimumSelectedCardCount;
+        arcanaSelectionView.SetBattleStartButtonInteractable(canStartBattle);
     }
 }
