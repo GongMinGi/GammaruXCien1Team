@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 비활성화됨 — BattleExecutor로 대체
+[System.Obsolete("BattleExecutor로 대체")]
 public class BattlePhaseManager : MonoBehaviour
 {
     [SerializeField] private GridManager gridManager;

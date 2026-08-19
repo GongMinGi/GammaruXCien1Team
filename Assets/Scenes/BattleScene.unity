@@ -454,7 +454,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &699076568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1117,7 +1117,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &900000071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1214,6 +1214,117 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2147215980
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2147215985}
+  - component: {fileID: 2147215984}
+  - component: {fileID: 2147215983}
+  - component: {fileID: 2147215982}
+  - component: {fileID: 2147215981}
+  m_Layer: 0
+  m_Name: BattleSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2147215981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2147215980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec56b5e38c318214e917815a43c4f100, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossController
+  bossAI: {fileID: 900000014}
+  bossCardDisplay: {fileID: 900000031}
+  gridManager: {fileID: 900000002}
+  arcanaCatalog: {fileID: 11400000, guid: b0b0b0b0b0b0b0b0b0b0b0b0b0b0b000, type: 2}
+--- !u!114 &2147215982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2147215980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e468d741187452347b5e0d06c5cd2f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BattleExecutor
+  gridManager: {fileID: 900000002}
+  playerDisplay: {fileID: 900000061}
+  playerStats: {fileID: 900000063}
+  bossStats: {fileID: 900000016}
+  slotDuration: 0.5
+  attackHighlightColor: {r: 1, g: 0.2, b: 0.2, a: 0.8}
+--- !u!114 &2147215983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2147215980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91b52b8b348272d4abdeec149d34ea6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlanningController
+  gridManager: {fileID: 900000002}
+  playerDisplay: {fileID: 900000061}
+  actionBar: {fileID: 900000021}
+  playerHand: {fileID: 569059164}
+  arcanaCatalog: {fileID: 11400000, guid: b0b0b0b0b0b0b0b0b0b0b0b0b0b0b000, type: 2}
+  handDisplay: {fileID: 900000041}
+--- !u!114 &2147215984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2147215980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0ad10a5069bda64b8d22e5b9946eee0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BattleFlowController
+  planningController: {fileID: 2147215983}
+  battleExecutor: {fileID: 2147215982}
+  bossController: {fileID: 2147215981}
+  playerHand: {fileID: 569059164}
+  playerStats: {fileID: 900000063}
+  bossStats: {fileID: 900000016}
+  playerDisplay: {fileID: 900000061}
+  arcanaCatalog: {fileID: 11400000, guid: b0b0b0b0b0b0b0b0b0b0b0b0b0b0b000, type: 2}
+  selectedArcanaPool:
+  - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a001, type: 2}
+  - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a002, type: 2}
+  - {fileID: 11400000, guid: a0a0a0a0a0a0a0a0a0a0a0a0a0a0a003, type: 2}
+--- !u!4 &2147215985
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2147215980}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1233,3 +1344,4 @@ SceneRoots:
   - {fileID: 1859532202}
   - {fileID: 699076569}
   - {fileID: 622129120}
+  - {fileID: 2147215985}

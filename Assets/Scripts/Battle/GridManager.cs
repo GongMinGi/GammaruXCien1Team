@@ -12,7 +12,7 @@ public class GridManager : MonoBehaviour
     private GridCell[,] cells;
     private bool isGenerated;
 
-    private void Start()
+    private void Awake()
     {
         GenerateGrid();
     }
