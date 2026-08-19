@@ -20,5 +20,5 @@ MonoBehaviour:
   burnDurationTurns: 3
   pattern: {fileID: 11400000, guid: 7c1f4a2b9e6d40a1b3c58d2f0a47e6b1, type: 2}
   stageId: 2
-  battleBackground: {fileID: 0}
+  battleBackground: {fileID: 21300000, guid: 5c651ca55df35ac4992d547597148a6f, type: 3}
   battleBgm: {fileID: 0}

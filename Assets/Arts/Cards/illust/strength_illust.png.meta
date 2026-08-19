@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: c00b95b45d236214b852783e8197be1b
+guid: 1ca8ca1b36b04874183030b839b1ff79
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2095325943381396593
-    second: BattleBackGround_0_0
+      213: 6371842189990557461
+    second: strength_illust_0
+  - first:
+      213: -5697133304411125361
+    second: strength_illust_1
+  - first:
+      213: 2787595548184493535
+    second: strength_illust_2
+  - first:
+      213: 3733735064548823894
+    second: strength_illust_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +46,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -46,7 +55,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -75,7 +84,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,13 +109,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BattleBackGround_0_0
+      name: strength_illust_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 1920
-        height: 1080
+        y: 16
+        width: 170
+        height: 197
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +124,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 17c88ef08d7141d10800000000000000
-      internalID: 2095325943381396593
+      spriteID: 517fb3b56b45d6850800000000000000
+      internalID: 6371842189990557461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: strength_illust_1
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 0
+        width: 27
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f890780c177bfe0b0800000000000000
+      internalID: -5697133304411125361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: strength_illust_2
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 24
+        width: 63
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdd3ffab1678fa620800000000000000
+      internalID: 2787595548184493535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: strength_illust_3
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 2
+        width: 25
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6535adf4244e0d330800000000000000
+      internalID: 3733735064548823894
       vertices: []
       indices: 
       edges: []
@@ -125,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      BattleBackGround_0_0: 2095325943381396593
+      strength_illust_0: 6371842189990557461
+      strength_illust_1: -5697133304411125361
+      strength_illust_2: 2787595548184493535
+      strength_illust_3: 3733735064548823894
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
