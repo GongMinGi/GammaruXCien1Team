@@ -12,11 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4efdd8423c69a0f40aa63448829f0f45, type: 3}
   m_Name: StageMapData
   m_EditorClassIdentifier: Assembly-CSharp::StageMapData
-  verticalRates:
-  - -0.8651149
-  - -0.26349914
-  - 0.49392888
-  - -0.6179302
-  - 0.6089549
+  stages:
+  - verticalRate: -0.8651149
+    cardImage: {fileID: -5531398936627394812, guid: d782201493e51284c8657433c5f790f1, type: 3}
+  - verticalRate: -0.26349914
+    cardImage: {fileID: 0}
+  - verticalRate: 0.49392888
+    cardImage: {fileID: 0}
+  - verticalRate: -0.6179302
+    cardImage: {fileID: 0}
+  - verticalRate: 0.6089549
+    cardImage: {fileID: 0}
   horizontalSpacing: 1000
   starNodeCountPerLink: 6

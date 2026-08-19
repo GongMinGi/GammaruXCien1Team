@@ -2,12 +2,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 스테이지 카드 순서, 세로 배치 비율, X 간격, 별 노드 수를 보관한다.
+/// 스테이지 한 개의 세로 배치 비율과 카드 앞면 이미지.
+/// </summary>
+[System.Serializable]
+public class StageEntry
+{
+    public float verticalRate;
+    public Sprite cardImage;
+}
+
+/// <summary>
+/// 스테이지 목록과 X 간격, 별 노드 수를 보관한다.
 /// </summary>
 [CreateAssetMenu(fileName = "StageMapData", menuName = "Stage/Stage Map Data")]
 public class StageMapData : ScriptableObject
 {
-    [SerializeField] private List<float> verticalRates = new List<float>();
+    [SerializeField] private List<StageEntry> stages = new List<StageEntry>();
     [SerializeField] private float horizontalSpacing = 320f;
     [SerializeField] private int starNodeCountPerLink = 4;
 
@@ -16,7 +26,7 @@ public class StageMapData : ScriptableObject
     /// </summary>
     public int StageCount
     {
-        get { return verticalRates.Count; }
+        get { return stages.Count; }
     }
 
     /// <summary>
@@ -41,6 +51,14 @@ public class StageMapData : ScriptableObject
     /// </summary>
     public float GetVerticalRate(int index)
     {
-        return verticalRates[index];
+        return stages[index].verticalRate;
+    }
+
+    /// <summary>
+    /// 지정한 스테이지의 카드 앞면 이미지를 반환한다.
+    /// </summary>
+    public Sprite GetCardImage(int index)
+    {
+        return stages[index].cardImage;
     }
 }

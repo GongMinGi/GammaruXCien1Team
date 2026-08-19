@@ -1,6 +1,6 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 /// <summary>
 /// 계산된 위치에 스테이지 카드를 표시한다.
@@ -11,6 +11,22 @@ public class StageMapView : MonoBehaviour
     [SerializeField] private RectTransform content;
     [SerializeField] private RectTransform cardsRoot;
     [SerializeField] private RectTransform cardPrefab;
+    [SerializeField] private float focusDuration = 0.35f;
+
+    /// <summary>
+    /// 지정한 콘텐츠 좌표가 화면 가운데 오도록 스크롤을 옮긴다.
+    /// </summary>
+    public void FocusOn(Vector2 contentPosition)
+    {
+        float viewportWidth = viewport.rect.width;
+        float targetX = Mathf.Clamp(
+            viewportWidth * 0.5f - contentPosition.x,
+            viewportWidth - content.rect.width,
+            0f);
+
+        content.DOKill();
+        content.DOAnchorPosX(targetX, focusDuration).SetEase(Ease.OutSine);
+    }
 
     /// <summary>
     /// 스테이지 카드가 표시되는 영역의 높이를 반환한다.
@@ -39,20 +55,17 @@ public class StageMapView : MonoBehaviour
     /// <summary>
     /// 지정한 번호와 위치, 클릭 처리 메서드로 스테이지 카드를 생성한다.
     /// </summary>
-    public void CreateCard(
+    public StageCardView CreateCard(
         int stageNumber,
         Vector2 position,
-        UnityAction<int> cardClickHandler)
+        Sprite cardImage,
+        UnityAction<int> stageOpenHandler)
     {
         RectTransform card = Instantiate(cardPrefab, cardsRoot, false);
-        Text numberText = card.GetComponentInChildren<Text>(true);
-        Button cardButton = card.GetComponent<Button>();
+        StageCardView cardView = card.GetComponent<StageCardView>();
 
         card.anchoredPosition = position;
-        numberText.text = stageNumber.ToString();
-        cardButton.onClick.AddListener(delegate
-        {
-            cardClickHandler(stageNumber);
-        });
+        cardView.Initialize(stageNumber, cardImage, stageOpenHandler);
+        return cardView;
     }
 }
