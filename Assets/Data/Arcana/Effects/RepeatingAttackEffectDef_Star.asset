@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RepeatingAttackEffectDef_Star
   m_EditorClassIdentifier: Assembly-CSharp::RepeatingAttackEffectDef
   firstSlotEffect: 5
-  baseValue: 3
+  baseValue: 2
   spellPowerCoefficient: 0.5
   additionalEffectValue: 1
   healPerHit: 1

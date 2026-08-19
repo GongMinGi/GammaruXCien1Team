@@ -182,6 +182,7 @@ public class BattleFlowController : MonoBehaviour
         InstantModifierType pendingCostModifier = InstantModifierType.None;
         bool pendingElementBuff = false;
         DamageElement pendingElement = DamageElement.Neutral;
+        DamageElement lastUsedElement = DamageElement.Neutral;
 
         foreach (PlannedAction action in actions)
         {
@@ -283,20 +284,57 @@ public class BattleFlowController : MonoBehaviour
                         return null;
                     }
 
-                    ScheduledEffect[][] slotEffects;
+                    ScheduledEffect[][] slotEffects = ExpandCard(action.CardData);
+                    if (slotEffects == null)
+                    {
+                        Debug.LogError(
+                            $"ExpandCard 실패: {action.CardData.Id}", this);
+                        return null;
+                    }
+
+                    // 속성 계승: 이전 속성 공격의 원소 적용
+                    if (action.CardData.EffectDefinition != null &&
+                        action.CardData.EffectDefinition.InheritsElement &&
+                        lastUsedElement != DamageElement.Neutral)
+                    {
+                        ReplaceElement(slotEffects, lastUsedElement);
+                    }
+
+                    // 속성 추적: 비-Neutral 카드 사용 시 갱신
+                    if (action.CardData.DefaultElement != DamageElement.Neutral)
+                        lastUsedElement = action.CardData.DefaultElement;
+
+                    if (action.ConsumedHandCards != null)
+                    {
+                        int bonusPerCost = action.CardData.EffectDefinition.BonusDamagePerConsumedCost;
+                        if (bonusPerCost > 0)
+                        {
+                            int totalCost = 0;
+                            foreach (ArcanaData c in action.ConsumedHandCards)
+                                totalCost += c.BaseCost;
+                            int bonus = totalCost * bonusPerCost;
+                            if (!InjectDealDamageBonus(slotEffects, bonus))
+                            {
+                                Debug.LogError(
+                                    $"Arcana {action.CardData.Id}: ConsumesHand이나 DealDamage 없음.", this);
+                                return null;
+                            }
+                        }
+                    }
+
                     if (pendingCostModifier != InstantModifierType.None ||
                         pendingElementBuff)
                     {
-                        slotEffects = ExpandCardWithModifiers(
-                            action.CardData, action.Cost,
-                            pendingCostModifier, pendingElementBuff,
-                            pendingElement);
+                        bool cardConsumesHand = action.CardData.EffectDefinition != null
+                            && action.CardData.EffectDefinition.ConsumesHand;
+                        if (!cardConsumesHand)
+                        {
+                            slotEffects = ApplyInstantModifiers(
+                                slotEffects, pendingCostModifier,
+                                pendingElementBuff, pendingElement);
+                        }
                         pendingCostModifier = InstantModifierType.None;
                         pendingElementBuff = false;
-                    }
-                    else
-                    {
-                        slotEffects = ExpandCard(action.CardData);
                     }
 
                     if (slotEffects == null || slotEffects.Length != action.Cost)
@@ -307,6 +345,7 @@ public class BattleFlowController : MonoBehaviour
                         return null;
                     }
 
+                    int placeTowerIndex = 0;
                     for (int i = 0; i < action.Cost; i++)
                     {
                         if (slotEffects[i] == null || slotEffects[i].Length == 0)
@@ -321,13 +360,26 @@ public class BattleFlowController : MonoBehaviour
                             timeline[slotCursor + i].HasMainAction = true;
                             timeline[slotCursor + i].MainAction = action;
                         }
+                        bool isDuplicatedSlot =
+                            action.ConsumedCostModifier == InstantModifierType.EffectDuplication
+                            && i == action.Cost - 1;
                         foreach (ScheduledEffect effect in slotEffects[i])
                         {
                             ScheduledEffect e = effect;
-                            if ((e.Type == EffectType.Move ||
-                                 e.Type == EffectType.PlaceTower) &&
+                            if (e.Type == EffectType.Move &&
                                 action.Direction != Vector2Int.zero)
-                                e.Direction = action.Direction;
+                            {
+                                e.Direction = isDuplicatedSlot && action.DuplicatedDirection != Vector2Int.zero
+                                    ? action.DuplicatedDirection
+                                    : action.Direction;
+                            }
+                            else if (e.Type == EffectType.PlaceTower)
+                            {
+                                e.Direction = placeTowerIndex == 0
+                                    ? action.Direction
+                                    : action.DuplicatedDirection;
+                                placeTowerIndex++;
+                            }
                             timeline[slotCursor + i].Effects.Add(e);
                         }
                     }
@@ -448,6 +500,35 @@ public class BattleFlowController : MonoBehaviour
         }
 
         return effects;
+    }
+
+    private static void ReplaceElement(ScheduledEffect[][] effects, DamageElement element)
+    {
+        for (int s = 0; s < effects.Length; s++)
+            for (int e = 0; e < effects[s].Length; e++)
+            {
+                ScheduledEffect eff = effects[s][e];
+                eff.Element = element;
+                effects[s][e] = eff;
+            }
+    }
+
+    private static bool InjectDealDamageBonus(ScheduledEffect[][] effects, int bonus)
+    {
+        for (int s = effects.Length - 1; s >= 0; s--)
+        {
+            for (int e = 0; e < effects[s].Length; e++)
+            {
+                if (effects[s][e].Type == EffectType.DealDamage)
+                {
+                    ScheduledEffect effect = effects[s][e];
+                    effect.BaseValue += bonus;
+                    effects[s][e] = effect;
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void InjectDamageReduction(

@@ -4,7 +4,14 @@
       "mcp__aseprite__get_sprite_info",
       "Bash(cat)",
       "Bash(python3 /tmp/extract_letters.py)",
-      "Bash(python3 \"C:/Users/oyoin/AppData/Local/Temp/lovers_notext.py\")"
+      "Bash(python3 \"C:/Users/oyoin/AppData/Local/Temp/lovers_notext.py\")",
+      "Bash(python3 \"C:/Users/oyoin/AppData/Local/Temp/draw_heart2.py\")",
+      "Bash(python3 \"C:/Users/oyoin/AppData/Local/Temp/draw_chariot.py\")",
+      "Bash(python3 \"C:/Users/oyoin/AppData/Local/Temp/draw_hermit.py\")",
+      "Bash(python3 \"C:/Users/oyoin/AppData/Local/Temp/draw_hermit2.py\")",
+      "Bash(python3 \"C:/Users/oyoin/AppData/Local/Temp/draw_strength2.py\")",
+      "Bash(python3:*)",
+      "Bash(python \"C:/Users/oyoin/AppData/Local/Temp/draw_temperance3.py\")"
     ]
   }
 }

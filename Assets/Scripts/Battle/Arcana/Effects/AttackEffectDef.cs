@@ -11,6 +11,11 @@ public class AttackEffectDef : ArcanaEffectDefinition
     [SerializeField, Min(0f)] private float spellPowerCoefficient = 1.0f;
     [SerializeField] private int additionalEffectValue;
 
+    [Header("속성 계승")]
+    [SerializeField] private bool inheritsElement;
+
+    public override bool InheritsElement => inheritsElement;
+
     public override ScheduledEffect[][] Expand(ArcanaData card)
     {
         if (card == null)

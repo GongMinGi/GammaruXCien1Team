@@ -11,7 +11,7 @@ public class HandDisplay : MonoBehaviour
     [SerializeField] private Color borderColor = new Color(0.45f, 0.5f, 0.65f);
 
     [Header("Fan Layout")]
-    [SerializeField] private float totalWidth = 4f;
+    [SerializeField, Min(0f)] private float cardSpacing = 0.67f;
     [SerializeField] private float maxFanAngle = 15f;
     [SerializeField] private float arcHeight = 0.4f;
 
@@ -23,6 +23,7 @@ public class HandDisplay : MonoBehaviour
     private const int MaxCardCount = 7;
 
     private Transform[] cardTransforms;
+    private Transform[] cardVisualTransforms;
     private SpriteRenderer[] cardRenderers;
     private TextMesh[] numberTexts;
     private MeshRenderer[] numberRenderers;
@@ -103,6 +104,7 @@ public class HandDisplay : MonoBehaviour
         Sprite sprite = CreateCardSprite();
 
         cardTransforms = new Transform[MaxCardCount];
+        cardVisualTransforms = new Transform[MaxCardCount];
         cardRenderers = new SpriteRenderer[MaxCardCount];
         numberTexts = new TextMesh[MaxCardCount];
         numberRenderers = new MeshRenderer[MaxCardCount];
@@ -119,14 +121,19 @@ public class HandDisplay : MonoBehaviour
             cardObj.transform.localPosition = Vector3.zero;
             cardObj.transform.localScale = new Vector3(cardWidth, cardHeight, 1f);
 
-            SpriteRenderer renderer = cardObj.AddComponent<SpriteRenderer>();
+            BoxCollider2D hitbox = cardObj.AddComponent<BoxCollider2D>();
+            hitbox.size = sprite.bounds.size;
+            hitbox.offset = sprite.bounds.center;
+
+            GameObject visualObj = new GameObject("Visual");
+            visualObj.transform.SetParent(cardObj.transform, false);
+
+            SpriteRenderer renderer = visualObj.AddComponent<SpriteRenderer>();
             renderer.sprite = sprite;
             renderer.sortingOrder = 10 + i;
 
-            cardObj.AddComponent<BoxCollider2D>();
-
             GameObject textObj = new GameObject("Number");
-            textObj.transform.SetParent(cardObj.transform);
+            textObj.transform.SetParent(visualObj.transform);
             textObj.transform.localPosition = new Vector3(0f, 0.5f, -0.01f);
             textObj.transform.localScale = new Vector3(
                 1f / cardWidth, 1f / cardHeight, 1f);
@@ -142,6 +149,7 @@ public class HandDisplay : MonoBehaviour
             meshRenderer.sortingOrder = 11 + i;
 
             cardTransforms[i] = cardObj.transform;
+            cardVisualTransforms[i] = visualObj.transform;
             cardRenderers[i] = renderer;
             numberTexts[i] = textMesh;
             numberRenderers[i] = meshRenderer;
@@ -157,14 +165,12 @@ public class HandDisplay : MonoBehaviour
         if (count == 0)
             return;
 
-        float spacing = count > 1 ? totalWidth / (count - 1) : 0f;
-
         for (int i = 0; i < count; i++)
         {
             float centerOffset = i - (count - 1) * 0.5f;
             float t = count > 1 ? centerOffset / ((count - 1) * 0.5f) : 0f;
 
-            float x = centerOffset * spacing;
+            float x = centerOffset * cardSpacing;
             float y = -arcHeight * t * t;
             float angle = -maxFanAngle * t;
 
@@ -220,17 +226,24 @@ public class HandDisplay : MonoBehaviour
 
             if (i == hoveredIndex)
             {
-                targetPos = new Vector3(restPositions[i].x, hoverRise, 0f);
-                targetRot = Quaternion.identity;
-                targetScale = new Vector3(cardWidth * hoverScale, cardHeight * hoverScale, 1f);
+                Vector3 hoverOffset = new Vector3(
+                    0f, hoverRise - restPositions[i].y, 0f);
+                Vector3 localOffset =
+                    Quaternion.Inverse(restRotations[i]) * hoverOffset;
+                targetPos = new Vector3(
+                    localOffset.x / restScales[i].x,
+                    localOffset.y / restScales[i].y,
+                    0f);
+                targetRot = Quaternion.Inverse(restRotations[i]);
+                targetScale = new Vector3(hoverScale, hoverScale, 1f);
                 cardRenderers[i].sortingOrder = 100;
                 numberRenderers[i].sortingOrder = 101;
             }
             else
             {
-                targetPos = restPositions[i];
-                targetRot = restRotations[i];
-                targetScale = restScales[i];
+                targetPos = Vector3.zero;
+                targetRot = Quaternion.identity;
+                targetScale = Vector3.one;
                 cardRenderers[i].sortingOrder = restSortingOrders[i];
                 numberRenderers[i].sortingOrder = restSortingOrders[i] + 1;
             }
@@ -239,12 +252,12 @@ public class HandDisplay : MonoBehaviour
                 ? dragHighlightColor
                 : cardBaseColors[i];
 
-            cardTransforms[i].localPosition = Vector3.Lerp(
-                cardTransforms[i].localPosition, targetPos, dt);
-            cardTransforms[i].localRotation = Quaternion.Lerp(
-                cardTransforms[i].localRotation, targetRot, dt);
-            cardTransforms[i].localScale = Vector3.Lerp(
-                cardTransforms[i].localScale, targetScale, dt);
+            cardVisualTransforms[i].localPosition = Vector3.Lerp(
+                cardVisualTransforms[i].localPosition, targetPos, dt);
+            cardVisualTransforms[i].localRotation = Quaternion.Lerp(
+                cardVisualTransforms[i].localRotation, targetRot, dt);
+            cardVisualTransforms[i].localScale = Vector3.Lerp(
+                cardVisualTransforms[i].localScale, targetScale, dt);
         }
     }
 

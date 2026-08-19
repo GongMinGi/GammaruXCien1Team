@@ -134,6 +134,29 @@ public class ApplyInstantModifiersTests
     }
 
     [Test]
+    public void EffectDuplication_PlaceTower_ProducesTwoSlots()
+    {
+        ScheduledEffect[][] input = new[]
+        {
+            new[] { new ScheduledEffect { Type = EffectType.Cast } },
+            new[] { new ScheduledEffect { Type = EffectType.Cast } },
+            new[] { new ScheduledEffect
+            {
+                Type = EffectType.PlaceTower,
+                BaseValue = 5
+            }}
+        };
+
+        ScheduledEffect[][] result = BattleFlowController.ApplyInstantModifiers(
+            input, InstantModifierType.EffectDuplication, false, DamageElement.Neutral);
+
+        Assert.AreEqual(4, result.Length);
+        Assert.AreEqual(EffectType.PlaceTower, result[2][0].Type);
+        Assert.AreEqual(EffectType.PlaceTower, result[3][0].Type);
+        Assert.AreEqual(5, result[3][0].BaseValue);
+    }
+
+    [Test]
     public void NoModifiers_ReturnsSameArray()
     {
         ScheduledEffect[][] input = MakeAttackEffects();

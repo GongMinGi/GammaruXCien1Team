@@ -10,4 +10,7 @@ public abstract class ArcanaEffectDefinition : ScriptableObject
 
     public virtual bool RequiresDirection => false;
     public virtual int AllowedDirections => 4;
+    public virtual bool InheritsElement => false;
+    public virtual bool ConsumesHand => false;
+    public virtual int BonusDamagePerConsumedCost => 0;
 }

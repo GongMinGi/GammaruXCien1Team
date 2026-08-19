@@ -25,5 +25,6 @@ MonoBehaviour:
   requiresEffectDefinition: 0
   instantValue: 0
   observationAction: 1
-  effectDescription: "\uC18C\uBAA8\uD558\uC5EC \uCE74\uB4DC 1\uC7A5 \uB4DC\uB85C\uC6B0.
-    (\uAD00\uCE21 \uD398\uC774\uC988)"
+  zeroCostUnlimited: 1
+  effectDescription: "\uC0AC\uC6A9 \uC2DC \uC18C\uBAA8\uB418\uBA70, \uC0C8\uB85C
+    \uCE74\uB4DC\uB97C 1\uC7A5 \uBF51\uC2B5\uB2C8\uB2E4."

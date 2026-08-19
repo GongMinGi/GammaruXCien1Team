@@ -17,6 +17,7 @@ public class ArcanaData : ScriptableObject
     [SerializeField] private int instantValue;
     [SerializeField] private ObservationActionType observationAction;
     [SerializeField, TextArea(2, 5)] private string effectDescription;
+    [SerializeField] private bool zeroCostUnlimited;
 
     public int Id => id;
     public string DisplayNumber => displayNumber;
@@ -32,6 +33,7 @@ public class ArcanaData : ScriptableObject
     public int InstantValue => instantValue;
     public ObservationActionType ObservationAction => observationAction;
     public string EffectDescription => effectDescription;
+    public bool ZeroCostUnlimited => zeroCostUnlimited;
 
     public bool CanEnterPool =>
         usageType != ArcanaUsageType.AlwaysAvailable &&

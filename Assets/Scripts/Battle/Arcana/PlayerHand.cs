@@ -76,6 +76,22 @@ public class PlayerHand : MonoBehaviour
         RefreshDisplay();
     }
 
+    public void RemoveAllCards()
+    {
+        cards.Clear();
+        RefreshDisplay();
+    }
+
+    public void RestoreCards(ArcanaData[] restoredCards, int[] indices)
+    {
+        for (int i = 0; i < restoredCards.Length; i++)
+        {
+            int idx = Mathf.Clamp(indices[i], 0, cards.Count);
+            cards.Insert(idx, restoredCards[i]);
+        }
+        RefreshDisplay();
+    }
+
     public void ReturnCard(int index, ArcanaData card)
     {
         int clampedIndex = Mathf.Clamp(index, 0, cards.Count);

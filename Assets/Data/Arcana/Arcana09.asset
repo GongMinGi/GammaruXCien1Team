@@ -23,5 +23,10 @@ MonoBehaviour:
   defaultElement: 0
   effectDefinition: {fileID: 11400000, guid: ecb98a1feff26e04c8bf991dd95c6139, type: 2}
   requiresEffectDefinition: 1
-  effectDescription: "\uD574\uB2F9 \uD0C0\uC774\uBC0D \uACF5\uACA9 \uD68C\uD53C.
-    \uC989\uC0AC\uAE30 \uBD88\uAC00. 3\uD134 \uC7AC\uC0AC\uC6A9 \uB300\uAE30."
+  instantValue: 0
+  observationAction: 0
+  effectDescription: "\uC0AC\uC6A9\uD55C \uD0C0\uC774\uBC0D\uC758 \uACF5\uACA9\uC744
+    \uD68C\uD53C\uD569\uB2C8\uB2E4. \uC989\uC0AC\uAE30\uB294 \uD68C\uD53C\uD558\uC9C0
+    \uBABB\uD558\uBA70, 3\uD134\uC758 \uC7AC\uC0AC\uC6A9 \uB300\uAE30\uC2DC\uAC04\uC774
+    \uC788\uC2B5\uB2C8\uB2E4. 0\uCF54\uC2A4\uD2B8 \uCE74\uB4DC\uC758 \uD6A8\uACFC\uB97C
+    \uBC1B\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."

@@ -142,6 +142,9 @@ public class BossController : MonoBehaviour
             {
                 currentPosition = SimulateCardMovement(
                     currentPosition, action.Direction, action.CardData);
+                if (action.DuplicatedDirection != Vector2Int.zero)
+                    currentPosition = SimulateCardMovement(
+                        currentPosition, action.DuplicatedDirection, action.CardData);
             }
 
             for (int i = 0; i < action.Cost; i++)
