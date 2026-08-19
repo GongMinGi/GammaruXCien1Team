@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +17,7 @@ public enum ArcanaDeckRowLayout
 /// </summary>
 public class ArcanaSelectionView : MonoBehaviour
 {
+    private const string BookFlipAnimationStateName = "BookFlipAnim";
     private const int TwoRowReferenceCardCount = 5;
     private const int SelectedCardsPerRow = 5;
 
@@ -27,6 +29,8 @@ public class ArcanaSelectionView : MonoBehaviour
     [SerializeField] private GameObject cardDetailPanel;
     [SerializeField] private Text detailTitleText;
     [SerializeField] private Text detailEffectText;
+    [SerializeField] private Animator bookFlipAnimator;
+    [SerializeField] private AnimationClip bookFlipAnimationClip;
     [SerializeField] private Button battleStartButton;
     [SerializeField] private Sprite crystalBallOnSprite;
     [SerializeField] private Sprite crystalBallOffSprite;
@@ -121,14 +125,29 @@ public class ArcanaSelectionView : MonoBehaviour
     }
 
     /// <summary>
-    /// 클릭한 카드의 아르카나 번호와 이름을 우측 상세 영역에 표시한다.
+    /// 클릭한 카드 정보를 준비하고 책장 애니메이션을 재생한다.
     /// </summary>
     public void ShowCardDetails(ArcanaData arcanaData)
     {
+        StopAllCoroutines();
         detailTitleText.text = arcanaData.DisplayNumber
             + "\n"
             + arcanaData.ArcanaName;
         detailEffectText.text = arcanaData.EffectDescription;
+        cardDetailPanel.SetActive(false);
+        bookFlipAnimator.gameObject.SetActive(true);
+        bookFlipAnimator.Play(BookFlipAnimationStateName, 0, 0f);
+        StartCoroutine(ShowCardDetailsAfterBookFlip());
+    }
+
+    /// <summary>
+    /// 책장 애니메이션이 끝나면 책을 숨기고 카드 상세 정보를 표시한다.
+    /// </summary>
+    private IEnumerator ShowCardDetailsAfterBookFlip()
+    {
+        yield return new WaitForSeconds(bookFlipAnimationClip.length);
+
+        bookFlipAnimator.gameObject.SetActive(false);
         cardDetailPanel.SetActive(true);
     }
 
