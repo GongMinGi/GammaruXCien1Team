@@ -33,7 +33,7 @@ public class AbandonedMagicGolemPatternDefinition : BossPatternDefinition
         if (phaseTurnIndex < 5)
             return phaseTurnIndex;
 
-        return phase == 0 ? Random.Range(2, 5) : Random.Range(0, 5);
+        return phase == 0 ? Random.Range(2, 5) : Random.Range(1, 5);
     }
 
     public override BossPatternPlan BuildPattern(

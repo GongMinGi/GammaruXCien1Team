@@ -36,9 +36,14 @@ public class PlanningController : MonoBehaviour
 
     private ArcanaBag bag;
     private ArcanaData[] arcanaPool;
+    private HashSet<int> cooldownCardIds;
     private bool transformTargetSelectionActive;
     private int observationSourceHandIndex;
-    private bool zeroCostUsedThisTurn;
+    private bool zeroCostUsedThisCount;
+
+    private HashSet<Vector2Int> existingTowerPositions;
+    private Sprite cachedPreviewSprite;
+    private Texture2D cachedPreviewTexture;
 
     private static readonly Color TowerPreviewColor = new Color(0.55f, 0.35f, 0.15f, 0.8f);
     private readonly List<GameObject> towerPreviewObjects = new();
@@ -66,6 +71,7 @@ public class PlanningController : MonoBehaviour
         public Vector2Int FirstTowerPos;
         public GameObject FirstTowerPreview;
         public Vector2Int PreFirstMovePos;   // 첫 이동 시뮬 전 위치 (Move 카드용)
+        public bool HasSimulatedFirstMove;
     }
 
     public bool ValidateReferences()
@@ -84,7 +90,9 @@ public class PlanningController : MonoBehaviour
         Vector2Int startPos,
         Action<List<PlannedAction>, Vector2Int> onConfirmed,
         ArcanaBag sourceBag = null,
-        ArcanaData[] pool = null)
+        ArcanaData[] pool = null,
+        HashSet<int> cooldownIds = null,
+        HashSet<Vector2Int> existingTowers = null)
     {
         plannedActions.Clear();
         usedSlots = 0;
@@ -95,12 +103,14 @@ public class PlanningController : MonoBehaviour
         onPlanConfirmed = onConfirmed;
         activeCostModifier = InstantModifierType.None;
         activeElementBuff = false;
-        zeroCostUsedThisTurn = false;
+        zeroCostUsedThisCount = false;
         elementSelectionActive = false;
         directionSelectionActive = false;
         transformTargetSelectionActive = false;
         bag = sourceBag;
         arcanaPool = pool;
+        cooldownCardIds = cooldownIds;
+        existingTowerPositions = existingTowers;
         HideElementPrompt();
         ClearDirectionTargets();
         ClearTowerPreviews();
@@ -333,6 +343,7 @@ public class PlanningController : MonoBehaviour
         });
 
         usedSlots++;
+        zeroCostUsedThisCount = false;
         playerGridPos = newPos;
         playerDisplay.UpdateGridPosition(newPos.x, newPos.y);
         actionBar.FillSlot(usedSlots - 1, ActionType.Move);
@@ -353,6 +364,7 @@ public class PlanningController : MonoBehaviour
         });
 
         usedSlots++;
+        zeroCostUsedThisCount = false;
         actionBar.FillSlot(usedSlots - 1, ActionType.Stay);
         NotifyPlanningSlotChanged();
 
@@ -400,9 +412,15 @@ public class PlanningController : MonoBehaviour
             return;
         }
 
-        if (activeCostModifier != InstantModifierType.None && card.Id == 9)
+        if (activeCostModifier != InstantModifierType.None && card.BlocksCostModifiers)
         {
-            Debug.Log("절제/악마와 은둔자는 함께 사용할 수 없습니다.");
+            Debug.Log("절제/악마와 함께 사용할 수 없는 카드입니다.");
+            return;
+        }
+
+        if (cooldownCardIds != null && cooldownCardIds.Contains(card.Id))
+        {
+            Debug.Log($"{card.KoreanName}은(는) 재사용 대기 중입니다.");
             return;
         }
 
@@ -506,8 +524,12 @@ public class PlanningController : MonoBehaviour
             ConsumedHandIndices = consumedIndices
         });
 
+        if (card.CooldownTurns > 0)
+            cooldownCardIds?.Add(card.Id);
+
         actionBar.FillRange(usedSlots, effectiveCost, card.TimelineColor);
         usedSlots += effectiveCost;
+        zeroCostUsedThisCount = false;
         NotifyPlanningSlotChanged();
     }
 
@@ -572,8 +594,12 @@ public class PlanningController : MonoBehaviour
             SecondTowerPlacedPosition = secondTowerPos
         });
 
+        if (card.CooldownTurns > 0)
+            cooldownCardIds?.Add(card.Id);
+
         actionBar.FillRange(usedSlots, effectiveCost, card.TimelineColor);
         usedSlots += effectiveCost;
+        zeroCostUsedThisCount = false;
         NotifyPlanningSlotChanged();
     }
 
@@ -586,6 +612,7 @@ public class PlanningController : MonoBehaviour
         plannedActions.RemoveAt(plannedActions.Count - 1);
 
         usedSlots -= action.Cost;
+        zeroCostUsedThisCount = false;
 
         switch (action.Type)
         {
@@ -627,6 +654,8 @@ public class PlanningController : MonoBehaviour
                     activeElementBuff = true;
                     activeElement = action.ConsumedElement;
                 }
+                if (action.CardData != null && action.CardData.CooldownTurns > 0)
+                    cooldownCardIds?.Remove(action.CardData.Id);
                 break;
             case ActionType.UseInstantCard:
                 playerHand.ReturnCard(action.OriginalHandIndex, action.CardData);
@@ -641,7 +670,7 @@ public class PlanningController : MonoBehaviour
                         break;
                 }
                 if (ConsumesZeroCostLimit(action.CardData))
-                    zeroCostUsedThisTurn = false;
+                    zeroCostUsedThisCount = false;
                 break;
             case ActionType.UseObservationCard:
                 if (action.ObservationAction == ObservationActionType.DrawCard)
@@ -672,7 +701,7 @@ public class PlanningController : MonoBehaviour
                     playerHand.ReturnCard(action.OriginalHandIndex, action.CardData);
                 }
                 if (ConsumesZeroCostLimit(action.CardData))
-                    zeroCostUsedThisTurn = false;
+                    zeroCostUsedThisCount = false;
                 break;
             case ActionType.MergeCards:
                 playerHand.UndoMerge(
@@ -695,6 +724,7 @@ public class PlanningController : MonoBehaviour
             return;
 
         planningActive = false;
+        ClearTowerPreviews();
         PlanningStateChanged?.Invoke(plannedActions, battleStartPos, -1);
 
         var confirmed = new List<PlannedAction>(plannedActions);
@@ -708,7 +738,7 @@ public class PlanningController : MonoBehaviour
         if (!playerHand.TryGetCard(handIndex, out ArcanaData card))
             return;
 
-        if (ConsumesZeroCostLimit(card) && zeroCostUsedThisTurn)
+        if (ConsumesZeroCostLimit(card) && zeroCostUsedThisCount)
             return;
 
         switch (card.ObservationAction)
@@ -737,7 +767,7 @@ public class PlanningController : MonoBehaviour
                     DrawnCardIndex = drawnIndex
                 });
                 if (ConsumesZeroCostLimit(card))
-                    zeroCostUsedThisTurn = true;
+                    zeroCostUsedThisCount = true;
                 Debug.Log($"{card.DisplayNumber} {card.KoreanName}: 카드 1장 드로우.");
                 break;
 
@@ -803,7 +833,7 @@ public class PlanningController : MonoBehaviour
         plannedActions[^1] = last;
 
         if (ConsumesZeroCostLimit(last.CardData))
-            zeroCostUsedThisTurn = true;
+            zeroCostUsedThisCount = true;
 
         Debug.Log($"{targetCard.DisplayNumber} → {replacement.DisplayNumber} {replacement.KoreanName}");
     }
@@ -851,7 +881,7 @@ public class PlanningController : MonoBehaviour
         if (!playerHand.TryGetCard(handIndex, out ArcanaData card))
             return;
 
-        if (ConsumesZeroCostLimit(card) && zeroCostUsedThisTurn)
+        if (ConsumesZeroCostLimit(card) && zeroCostUsedThisCount)
             return;
 
         InstantModifierType modifier = GetModifierType(card);
@@ -905,7 +935,7 @@ public class PlanningController : MonoBehaviour
         }
 
         if (ConsumesZeroCostLimit(card))
-            zeroCostUsedThisTurn = true;
+            zeroCostUsedThisCount = true;
 
         NotifyPlanningSlotChanged();
     }
@@ -953,6 +983,7 @@ public class PlanningController : MonoBehaviour
             {
                 // Move 카드: 첫 돌진 시뮬레이션 후 새 위치에서 두 번째 방향 선택
                 pendingCardUse.PreFirstMovePos = playerGridPos;
+                pendingCardUse.HasSimulatedFirstMove = true;
                 playerGridPos = SimulateCardMovement(playerGridPos, direction,
                     pendingCardUse.Card);
                 if (playerGridPos != pendingCardUse.PreFirstMovePos)
@@ -996,6 +1027,8 @@ public class PlanningController : MonoBehaviour
 
     private bool IsTowerPositionOccupied(Vector2Int pos)
     {
+        if (existingTowerPositions != null && existingTowerPositions.Contains(pos))
+            return true;
         foreach (PlannedAction action in plannedActions)
         {
             if (action.PlacedTower && action.TowerPlacedPosition == pos)
@@ -1019,11 +1052,11 @@ public class PlanningController : MonoBehaviour
             }
 
             // Move 카드: 첫 이동 시뮬 되돌리기
-            if (pendingCardUse.PreFirstMovePos != Vector2Int.zero)
+            if (pendingCardUse.HasSimulatedFirstMove)
             {
                 playerGridPos = pendingCardUse.PreFirstMovePos;
                 playerDisplay.UpdateGridPosition(playerGridPos.x, playerGridPos.y);
-                pendingCardUse.PreFirstMovePos = Vector2Int.zero;
+                pendingCardUse.HasSimulatedFirstMove = false;
             }
 
             pendingCardUse.FirstDirection = Vector2Int.zero;
@@ -1040,32 +1073,37 @@ public class PlanningController : MonoBehaviour
 
     private GameObject CreateTowerPreview(Vector2Int gridPos)
     {
+        EnsurePreviewSprite();
+
         GameObject obj = new GameObject("TowerPreview");
         obj.transform.SetParent(transform, false);
         obj.transform.position = gridManager.GridToWorldPosition(gridPos.x, gridPos.y);
-
-        int texSize = 16;
-        Texture2D tex = new Texture2D(texSize, texSize);
-        tex.filterMode = FilterMode.Point;
-        for (int y = 0; y < texSize; y++)
-            for (int x = 0; x < texSize; x++)
-                tex.SetPixel(x, y, Color.white);
-        tex.Apply();
-
-        Sprite sprite = Sprite.Create(
-            tex, new Rect(0, 0, texSize, texSize),
-            new Vector2(0.5f, 0f), texSize);
 
         GameObject visual = new GameObject("Visual");
         visual.transform.SetParent(obj.transform, false);
         visual.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
 
         SpriteRenderer renderer = visual.AddComponent<SpriteRenderer>();
-        renderer.sprite = sprite;
+        renderer.sprite = cachedPreviewSprite;
         renderer.color = TowerPreviewColor;
         renderer.sortingOrder = 2;
 
         return obj;
+    }
+
+    private void EnsurePreviewSprite()
+    {
+        if (cachedPreviewSprite != null) return;
+        int texSize = 16;
+        cachedPreviewTexture = new Texture2D(texSize, texSize);
+        cachedPreviewTexture.filterMode = FilterMode.Point;
+        for (int y = 0; y < texSize; y++)
+            for (int x = 0; x < texSize; x++)
+                cachedPreviewTexture.SetPixel(x, y, Color.white);
+        cachedPreviewTexture.Apply();
+        cachedPreviewSprite = Sprite.Create(
+            cachedPreviewTexture, new Rect(0, 0, texSize, texSize),
+            new Vector2(0.5f, 0f), texSize);
     }
 
     private Vector2Int SimulateTowerPlacement(
@@ -1231,6 +1269,8 @@ public class PlanningController : MonoBehaviour
     private HashSet<Vector2Int> GetOccupiedTowerPositions()
     {
         var occupied = new HashSet<Vector2Int>();
+        if (existingTowerPositions != null)
+            occupied.UnionWith(existingTowerPositions);
         foreach (PlannedAction action in plannedActions)
         {
             if (action.PlacedTower)
@@ -1238,7 +1278,7 @@ public class PlanningController : MonoBehaviour
             if (action.PlacedSecondTower)
                 occupied.Add(action.SecondTowerPlacedPosition);
         }
-        if (pendingCardUse.FirstDirection != Vector2Int.zero)
+        if (pendingCardUse.FirstTowerPreview != null)
             occupied.Add(pendingCardUse.FirstTowerPos);
         return occupied;
     }
@@ -1290,5 +1330,11 @@ public class PlanningController : MonoBehaviour
             Destroy(elementPromptObject);
             elementPromptObject = null;
         }
+    }
+
+    private void OnDestroy()
+    {
+        if (cachedPreviewSprite != null) Destroy(cachedPreviewSprite);
+        if (cachedPreviewTexture != null) Destroy(cachedPreviewTexture);
     }
 }

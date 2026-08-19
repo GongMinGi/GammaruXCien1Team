@@ -18,6 +18,8 @@ public class ArcanaData : ScriptableObject
     [SerializeField] private ObservationActionType observationAction;
     [SerializeField, TextArea(2, 5)] private string effectDescription;
     [SerializeField] private bool zeroCostUnlimited;
+    [SerializeField, Min(0)] private int cooldownTurns;
+    [SerializeField] private bool blocksCostModifiers;
 
     public int Id => id;
     public string DisplayNumber => displayNumber;
@@ -34,6 +36,8 @@ public class ArcanaData : ScriptableObject
     public ObservationActionType ObservationAction => observationAction;
     public string EffectDescription => effectDescription;
     public bool ZeroCostUnlimited => zeroCostUnlimited;
+    public int CooldownTurns => cooldownTurns;
+    public bool BlocksCostModifiers => blocksCostModifiers;
 
     public bool CanEnterPool =>
         usageType != ArcanaUsageType.AlwaysAvailable &&

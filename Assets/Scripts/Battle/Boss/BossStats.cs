@@ -10,6 +10,7 @@ public class BossStats : MonoBehaviour
 
     private int currentHp;
     private int burnStacks;
+    private int burnRemainingTurns;
 
     public BossData Data => bossData;
     public int MaxHp => bossData != null ? bossData.MaxHp : 1;
@@ -18,6 +19,7 @@ public class BossStats : MonoBehaviour
         bossData != null ? bossData.Weakness : DamageElement.Neutral;
     public bool IsDead => currentHp <= 0;
     public int BurnStacks => burnStacks;
+    public int BurnRemainingTurns => burnRemainingTurns;
 
     private void Awake()
     {
@@ -43,7 +45,10 @@ public class BossStats : MonoBehaviour
 
     public void AddBurnStacks(int stacks)
     {
+        if (stacks <= 0) return;
+        if (bossData == null) return;
         burnStacks += stacks;
+        burnRemainingTurns = bossData.BurnDurationTurns;
         StatsChanged?.Invoke();
     }
 
@@ -55,8 +60,12 @@ public class BossStats : MonoBehaviour
         TakeDamage(burnDamage);
     }
 
-    public void ClearBurn()
+    public void TickBurnTimer()
     {
-        burnStacks = 0;
+        if (burnRemainingTurns <= 0) return;
+        burnRemainingTurns--;
+        if (burnRemainingTurns <= 0)
+            burnStacks = 0;
+        StatsChanged?.Invoke();
     }
 }
