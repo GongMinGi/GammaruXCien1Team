@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 305e66fc176d905418d5d03d4cd9ef97
+guid: c00b95b45d236214b852783e8197be1b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3074798391720136426
-    second: BattleBackGround_1_0
+      213: 2095325943381396593
+    second: BattleBackGround_0_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BattleBackGround_1_0
+      name: BattleBackGround_0_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: aeecb66a8d0ebaa20800000000000000
-      internalID: 3074798391720136426
+      spriteID: 17c88ef08d7141d10800000000000000
+      internalID: 2095325943381396593
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      BattleBackGround_1_0: 3074798391720136426
+      BattleBackGround_0_0: 2095325943381396593
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
