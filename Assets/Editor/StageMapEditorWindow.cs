@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class StageMapEditorWindow : EditorWindow
 {
     private const string DataPath = "Assets/Data/StageMapData.asset";
-    private const string VerticalRatesProperty = "verticalRates";
+    private const string StagesProperty = "stages";
     private const string HorizontalSpacingProperty = "horizontalSpacing";
     private const string StarNodeCountProperty = "starNodeCountPerLink";
     private const string GlowLinePrefabProperty = "glowLinePrefab";
@@ -79,19 +79,20 @@ public class StageMapEditorWindow : EditorWindow
     private void DrawStageTab()
     {
         SerializedObject dataObject = new SerializedObject(stageMapData);
-        SerializedProperty verticalRates = dataObject.FindProperty(VerticalRatesProperty);
+        SerializedProperty stages = dataObject.FindProperty(StagesProperty);
         SerializedProperty horizontalSpacing
             = dataObject.FindProperty(HorizontalSpacingProperty);
         dataObject.Update();
-        selectedIndex = Mathf.Min(selectedIndex, verticalRates.arraySize - 1);
+        selectedIndex = Mathf.Min(selectedIndex, stages.arraySize - 1);
 
         horizontalSpacing.floatValue = Mathf.Max(
             1f,
             EditorGUILayout.FloatField("X 간격", horizontalSpacing.floatValue));
-        DrawStageButtons(verticalRates);
+        DrawStageButtons(stages);
+        DrawSelectedStageCardImage(stages);
 
         amount = Mathf.Max(1, EditorGUILayout.IntField("수량", amount));
-        DrawEditButtons(dataObject, verticalRates);
+        DrawEditButtons(dataObject, stages);
         dataObject.ApplyModifiedProperties();
         DrawStageClearTestButton();
     }
@@ -311,7 +312,7 @@ public class StageMapEditorWindow : EditorWindow
     /// <summary>
     /// 현재 스테이지를 선택할 수 있는 번호 카드 목록을 그린다.
     /// </summary>
-    private void DrawStageButtons(SerializedProperty verticalRates)
+    private void DrawStageButtons(SerializedProperty stages)
     {
         scrollPosition = EditorGUILayout.BeginScrollView(
             scrollPosition,
@@ -320,7 +321,7 @@ public class StageMapEditorWindow : EditorWindow
             GUILayout.Height(72f));
         EditorGUILayout.BeginHorizontal();
 
-        for (int i = 0; i < verticalRates.arraySize; i++)
+        for (int i = 0; i < stages.arraySize; i++)
         {
             Color previousColor = GUI.backgroundColor;
 
@@ -346,22 +347,39 @@ public class StageMapEditorWindow : EditorWindow
     }
 
     /// <summary>
+    /// 선택한 스테이지의 카드 앞면 이미지를 편집한다.
+    /// </summary>
+    private void DrawSelectedStageCardImage(SerializedProperty stages)
+    {
+        if (selectedIndex < 0)
+        {
+            return;
+        }
+
+        SerializedProperty stage = stages.GetArrayElementAtIndex(selectedIndex);
+
+        EditorGUILayout.PropertyField(
+            stage.FindPropertyRelative("cardImage"),
+            new GUIContent("카드 이미지"));
+    }
+
+    /// <summary>
     /// 선택한 위치를 기준으로 스테이지를 추가하거나 삭제하는 버튼을 그린다.
     /// </summary>
     private void DrawEditButtons(
         SerializedObject dataObject,
-        SerializedProperty verticalRates)
+        SerializedProperty stages)
     {
         EditorGUILayout.BeginHorizontal();
 
         if (GUILayout.Button("추가"))
         {
-            AddStages(dataObject, verticalRates);
+            AddStages(dataObject, stages);
         }
 
         if (GUILayout.Button("삭제"))
         {
-            RemoveStages(dataObject, verticalRates);
+            RemoveStages(dataObject, stages);
         }
 
         EditorGUILayout.EndHorizontal();
@@ -372,10 +390,10 @@ public class StageMapEditorWindow : EditorWindow
     /// </summary>
     private void AddStages(
         SerializedObject dataObject,
-        SerializedProperty verticalRates)
+        SerializedProperty stages)
     {
         int insertIndex = selectedIndex < 0
-            ? verticalRates.arraySize
+            ? stages.arraySize
             : selectedIndex + 1;
 
         Undo.RecordObject(stageMapData, "Add Stages");
@@ -383,9 +401,10 @@ public class StageMapEditorWindow : EditorWindow
         for (int i = 0; i < amount; i++)
         {
             int index = insertIndex + i;
-            verticalRates.InsertArrayElementAtIndex(index);
-            verticalRates.GetArrayElementAtIndex(index).floatValue
-                = Random.Range(-1f, 1f);
+            stages.InsertArrayElementAtIndex(index);
+            SerializedProperty stage = stages.GetArrayElementAtIndex(index);
+            stage.FindPropertyRelative("verticalRate").floatValue = Random.Range(-1f, 1f);
+            stage.FindPropertyRelative("cardImage").objectReferenceValue = null;
         }
 
         selectedIndex = insertIndex + amount - 1;
@@ -398,25 +417,25 @@ public class StageMapEditorWindow : EditorWindow
     /// </summary>
     private void RemoveStages(
         SerializedObject dataObject,
-        SerializedProperty verticalRates)
+        SerializedProperty stages)
     {
-        if (verticalRates.arraySize == 0)
+        if (stages.arraySize == 0)
         {
             return;
         }
 
         int removeIndex = selectedIndex < 0
-            ? Mathf.Max(0, verticalRates.arraySize - amount)
+            ? Mathf.Max(0, stages.arraySize - amount)
             : selectedIndex;
 
         Undo.RecordObject(stageMapData, "Remove Stages");
 
-        for (int i = 0; i < amount && removeIndex < verticalRates.arraySize; i++)
+        for (int i = 0; i < amount && removeIndex < stages.arraySize; i++)
         {
-            verticalRates.DeleteArrayElementAtIndex(removeIndex);
+            stages.DeleteArrayElementAtIndex(removeIndex);
         }
 
-        selectedIndex = Mathf.Min(removeIndex, verticalRates.arraySize - 1);
+        selectedIndex = Mathf.Min(removeIndex, stages.arraySize - 1);
         dataObject.ApplyModifiedProperties();
         EditorUtility.SetDirty(stageMapData);
     }
