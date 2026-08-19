@@ -2,13 +2,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 스테이지 한 개의 세로 배치 비율과 카드 앞면 이미지.
+/// 스테이지 한 개의 세로 배치 비율과 카드 앞면 이미지, 맞서는 보스.
 /// </summary>
 [System.Serializable]
 public class StageEntry
 {
     public float verticalRate;
     public Sprite cardImage;
+    public BossData bossData;
 }
 
 /// <summary>
@@ -60,5 +61,13 @@ public class StageMapData : ScriptableObject
     public Sprite GetCardImage(int index)
     {
         return stages[index].cardImage;
+    }
+
+    /// <summary>
+    /// 지정한 스테이지에서 맞서는 보스를 반환한다.
+    /// </summary>
+    public BossData GetBossData(int index)
+    {
+        return stages[index].bossData;
     }
 }
