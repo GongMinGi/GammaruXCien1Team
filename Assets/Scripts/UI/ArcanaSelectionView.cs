@@ -26,7 +26,10 @@ public class ArcanaSelectionView : MonoBehaviour
     [SerializeField] private ArcanaCardView arcanaCardPrefab;
     [SerializeField] private GameObject cardDetailPanel;
     [SerializeField] private Text detailTitleText;
+    [SerializeField] private Text detailEffectText;
     [SerializeField] private Button battleStartButton;
+    [SerializeField] private Sprite crystalBallOnSprite;
+    [SerializeField] private Sprite crystalBallOffSprite;
     [SerializeField] private float fanWidth = 1080f;
     [SerializeField] private float fanVerticalDrop = 70f;
     [SerializeField] private float maximumFanAngle = 24f;
@@ -125,6 +128,7 @@ public class ArcanaSelectionView : MonoBehaviour
         detailTitleText.text = arcanaData.DisplayNumber
             + "\n"
             + arcanaData.ArcanaName;
+        detailEffectText.text = arcanaData.EffectDescription;
         cardDetailPanel.SetActive(true);
     }
 
@@ -160,10 +164,19 @@ public class ArcanaSelectionView : MonoBehaviour
     }
 
     /// <summary>
-    /// 전투 시작 버튼의 상호작용 가능 상태를 설정한다.
+    /// 전투 시작 버튼의 상호작용 가능 상태와 수정구 스프라이트를 설정한다.
     /// </summary>
     public void SetBattleStartButtonInteractable(bool isInteractable)
     {
         battleStartButton.interactable = isInteractable;
+
+        if (isInteractable)
+        {
+            battleStartButton.image.sprite = crystalBallOnSprite;
+        }
+        else
+        {
+            battleStartButton.image.sprite = crystalBallOffSprite;
+        }
     }
 }
