@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 전투의 시작, 턴 진행과 승패 처리를 조정한다.
+/// </summary>
 public class BattleFlowController : MonoBehaviour
 {
     [SerializeField] private PlanningController planningController;
@@ -165,15 +168,23 @@ public class BattleFlowController : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// 전투를 종료하고 승리했다면 선택한 스테이지의 클리어를 기록한다.
+    /// </summary>
     private void EndBattle(bool victory)
     {
         battleEnded = true;
         battleExecutor.ForceStop();
 
         if (victory)
+        {
+            StageProgressData.CompleteSelectedStage();
             Debug.Log("전투 승리!");
+        }
         else
+        {
             Debug.Log("전투 패배...");
+        }
     }
 
     private void EndBattleDueToError()
