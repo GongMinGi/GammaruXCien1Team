@@ -13,6 +13,7 @@ public class PlanningController : MonoBehaviour
     [SerializeField] private PlayerHand playerHand;
     [SerializeField] private ArcanaCatalog arcanaCatalog;
     [SerializeField] private HandDisplay handDisplay;
+    [SerializeField] private TangleField tangleField;  // 광대 보스일 때만 연결
 
     private readonly List<PlannedAction> plannedActions = new();
     private int usedSlots;
@@ -291,6 +292,8 @@ public class PlanningController : MonoBehaviour
             ConfirmPlan();
         else if (kb.leftCtrlKey.wasPressedThisFrame || kb.rightCtrlKey.wasPressedThisFrame)
             QueueStay();
+        else if (kb.spaceKey.wasPressedThisFrame)
+            QueueCutTangle();
         else if (kb.digit1Key.wasPressedThisFrame)
             QueueCardUse(0);
         else if (kb.digit2Key.wasPressedThisFrame)
@@ -318,6 +321,10 @@ public class PlanningController : MonoBehaviour
     private void QueueMove(Vector2Int direction)
     {
         if (usedSlots >= ActionBar.SlotCount)
+            return;
+
+        // 실타래 위에서는 이동이 불가능하다
+        if (tangleField != null && tangleField.Contains(playerGridPos))
             return;
 
         Vector2Int newPos = playerGridPos + direction;
@@ -361,6 +368,27 @@ public class PlanningController : MonoBehaviour
         actionBar.FillSlot(usedSlots - 1, ActionType.Stay);
         NotifyPlanningSlotChanged();
 
+    }
+
+    /// 실타래 해제 (1코스트) — 계획상 현재 위치가 실타래 위일 때만 쓸 수 있다.
+    private void QueueCutTangle()
+    {
+        if (usedSlots >= ActionBar.SlotCount)
+            return;
+
+        if (tangleField == null || !tangleField.Contains(playerGridPos))
+            return;
+
+        plannedActions.Add(new PlannedAction
+        {
+            Type = ActionType.CutTangle,
+            Direction = Vector2Int.zero,
+            Cost = 1
+        });
+
+        usedSlots++;
+        actionBar.FillSlot(usedSlots - 1, ActionType.CutTangle);
+        NotifyPlanningSlotChanged();
     }
 
     private void QueueCardUse(int handIndex)
@@ -594,6 +622,7 @@ public class PlanningController : MonoBehaviour
                 actionBar.ClearSlot(usedSlots);
                 break;
             case ActionType.Stay:
+            case ActionType.CutTangle:
                 actionBar.ClearSlot(usedSlots);
                 break;
             case ActionType.UseCard:
@@ -1124,6 +1153,10 @@ public class PlanningController : MonoBehaviour
             foreach (ScheduledEffect effect in slotEffects)
             {
                 if (effect.Type != EffectType.Move)
+                    continue;
+
+                // 실타래 위에서는 카드 이동·전차 돌진도 막힌다
+                if (tangleField != null && tangleField.Contains(currentPos))
                     continue;
 
                 int dist = effect.BaseValue > 0 ? effect.BaseValue : 1;

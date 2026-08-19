@@ -21,9 +21,19 @@ public class CombatResolver
             bossWeakness);
     }
 
-    public bool IsHit(Vector2Int playerPos, Vector2Int[] targetCells, bool isDodging)
+    public bool IsHit(
+        Vector2Int playerPos,
+        Vector2Int[] targetCells,
+        bool isDodging,
+        bool ignoresDodge = false,
+        bool blockedByTangle = false,
+        bool playerOnTangle = false)
     {
-        if (isDodging)
+        if (isDodging && !ignoresDodge)
+            return false;
+
+        // 실타래 안에 있으면 회피 무시 공격도 막힌다
+        if (blockedByTangle && playerOnTangle)
             return false;
 
         if (targetCells == null)

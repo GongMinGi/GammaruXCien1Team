@@ -12,7 +12,8 @@ public enum EffectType
     CounterStance,
     ApplyBurn,
     DamageSpread,
-    PlaceTower
+    PlaceTower,
+    CutTangle
 }
 
 [System.Serializable]

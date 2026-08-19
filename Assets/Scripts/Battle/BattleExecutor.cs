@@ -9,8 +9,14 @@ public class BattleExecutor : MonoBehaviour
     [SerializeField] private PlayerDisplay playerDisplay;
     [SerializeField] private PlayerStats playerStats;
     [SerializeField] private BossStats bossStats;
+    [SerializeField] private TangleField tangleField;
     [SerializeField] private float slotDuration = 0.5f;
     [SerializeField] private Color attackHighlightColor = new Color(1f, 0.2f, 0.2f, 0.8f);
+
+    /// 슬롯 시작. 구독자가 boss pattern의 targetCells를 그 자리에서 갱신할 수 있다.
+    public event Action<int, BossAction[]> SlotStarted;
+    /// 보스 액션이 플레이어에게 명중했을 때
+    public event Action<BossAction> BossActionHit;
 
     private CombatResolver combatResolver;
     private Coroutine executionCoroutine;
@@ -163,6 +169,7 @@ public class BattleExecutor : MonoBehaviour
             for (int slot = 0; slot < timeline.Length; slot++)
             {
                 modifiers.ResetPerSlot();
+                SlotStarted?.Invoke(slot, bossPattern);
 
                 if (bossStats.IsDead)
                     break;
@@ -235,6 +242,10 @@ public class BattleExecutor : MonoBehaviour
             switch (effect.Type)
             {
                 case EffectType.Move:
+                    // 실타래 위에서는 전차 돌진을 포함해 모든 이동이 막힌다
+                    if (tangleField != null && tangleField.Contains(currentPos))
+                        break;
+
                     int moveDist = effect.BaseValue > 0 ? effect.BaseValue : 1;
                     Vector2Int moveTarget = currentPos;
                     for (int step = 1; step <= moveDist; step++)
@@ -254,6 +265,11 @@ public class BattleExecutor : MonoBehaviour
                     break;
 
                 case EffectType.Stay:
+                    break;
+
+                case EffectType.CutTangle:
+                    if (tangleField != null)
+                        tangleField.RemoveContaining(currentPos);
                     break;
 
                 case EffectType.Dodge:
@@ -335,8 +351,24 @@ public class BattleExecutor : MonoBehaviour
                 gridCell?.SetHighlight(attackHighlightColor);
             }
 
-            if (combatResolver.IsHit(playerPos, bossAction.targetCells, isDodging))
+            bool playerOnTangle =
+                tangleField != null && tangleField.Contains(playerPos);
+
+            // 나이프가 실타래 칸에 명중 — 피해는 무효가 되고 실타래만 소멸한다
+            if (bossAction.blockedByTangle && tangleField != null)
             {
+                foreach (Vector2Int cell in bossAction.targetCells)
+                {
+                    if (tangleField.Contains(cell))
+                        tangleField.RemoveContaining(cell);
+                }
+            }
+
+            if (combatResolver.IsHit(playerPos, bossAction.targetCells, isDodging,
+                    bossAction.ignoresDodge, bossAction.blockedByTangle, playerOnTangle))
+            {
+                BossActionHit?.Invoke(bossAction);
+
                 if (modifiers.CounterStanceActive)
                     modifiers.AccumulatedBonusDamage += modifiers.CounterStanceBonusPerHit;
 

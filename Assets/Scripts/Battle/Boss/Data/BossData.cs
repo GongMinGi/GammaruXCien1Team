@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "BossData", menuName = "Battle/Boss Data")]
 public class BossData : ScriptableObject
 {
     [SerializeField] private string bossName;

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e87fda13cb984daf81ce101e4f61cc09, type: 3}
+  m_Name: ThreadBoundClownData
+  m_EditorClassIdentifier: Assembly-CSharp::BossData
+  bossName: Thread Bound Clown
+  portrait: {fileID: 0}
+  maxHp: 600
+  weakness: 1
+  burnDamagePerStack: 2
+  pattern: {fileID: 11400000, guid: 7c1f4a2b9e6d40a1b3c58d2f0a47e6b1, type: 2}

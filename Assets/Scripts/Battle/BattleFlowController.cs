@@ -16,6 +16,7 @@ public class BattleFlowController : MonoBehaviour
     [SerializeField] private PlayerDisplay playerDisplay;
     [SerializeField] private ArcanaCatalog arcanaCatalog;
     [SerializeField] private ArcanaData[] selectedArcanaPool;
+    [SerializeField] private ClownBossMechanic clownBossMechanic;  // 광대 보스일 때만 연결
 
     private BattlePhase currentPhase;
     private ArcanaBag bag;
@@ -126,6 +127,12 @@ public class BattleFlowController : MonoBehaviour
     private void OnExecutionComplete()
     {
         currentPhase = BattlePhase.TurnEnd;
+
+        // 턴 종료 훅 — 수레바퀴 회전 후 효과(피해·실타래) 발동.
+        // 광대가 아닌 보스와 싸울 때는 오브젝트가 꺼져 있어 아무 일도 하지 않는다.
+        if (clownBossMechanic != null && clownBossMechanic.isActiveAndEnabled &&
+            !bossStats.IsDead)
+            clownBossMechanic.ApplyTurnEnd();
 
         bossStats.ProcessBurn();
 
@@ -296,6 +303,22 @@ public class BattleFlowController : MonoBehaviour
                     timeline[slotCursor].Effects.Add(new ScheduledEffect
                     {
                         Type = EffectType.Stay
+                    });
+                    slotCursor++;
+                    break;
+
+                case ActionType.CutTangle:
+                    if (action.Cost != 1)
+                    {
+                        Debug.LogError(
+                            $"CutTangle 행동의 Cost가 1이 아님: {action.Cost}", this);
+                        return null;
+                    }
+                    timeline[slotCursor].HasMainAction = true;
+                    timeline[slotCursor].MainAction = action;
+                    timeline[slotCursor].Effects.Add(new ScheduledEffect
+                    {
+                        Type = EffectType.CutTangle
                     });
                     slotCursor++;
                     break;
