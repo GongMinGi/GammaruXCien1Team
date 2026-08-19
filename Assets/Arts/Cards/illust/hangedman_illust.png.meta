@@ -1,0 +1,559 @@
+fileFormatVersion: 2
+guid: e342b80a03b03a34ea6e260bc3b8f036
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3206613872974609995
+    second: hangedman_illust_0
+  - first:
+      213: 8435618310710528147
+    second: hangedman_illust_1
+  - first:
+      213: 2638751747098726213
+    second: hangedman_illust_2
+  - first:
+      213: 9053489578367961100
+    second: hangedman_illust_3
+  - first:
+      213: -4844104402923522738
+    second: hangedman_illust_4
+  - first:
+      213: -1425435033319050749
+    second: hangedman_illust_5
+  - first:
+      213: -4514384228996097743
+    second: hangedman_illust_6
+  - first:
+      213: -3121694551186104569
+    second: hangedman_illust_7
+  - first:
+      213: 8505043201007255255
+    second: hangedman_illust_8
+  - first:
+      213: 7577040315289814583
+    second: hangedman_illust_9
+  - first:
+      213: -7680580063359653961
+    second: hangedman_illust_10
+  - first:
+      213: 3144600335144052923
+    second: hangedman_illust_11
+  - first:
+      213: -1975684124728066374
+    second: hangedman_illust_12
+  - first:
+      213: -1328435319407461958
+    second: hangedman_illust_13
+  - first:
+      213: -302403546964919713
+    second: hangedman_illust_14
+  - first:
+      213: 5926009170638701320
+    second: hangedman_illust_15
+  - first:
+      213: 4709461020101631442
+    second: hangedman_illust_16
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: hangedman_illust_0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 101
+        width: 162
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4ebd7ef35e208c20800000000000000
+      internalID: 3206613872974609995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hangedman_illust_1
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 117
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3988ea6e826511570800000000000000
+      internalID: 8435618310710528147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hangedman_illust_2
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 106
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54fc248bbbabe9420800000000000000
+      internalID: 2638751747098726213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hangedman_illust_3
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 116
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c08c258ddc474ad70800000000000000
+      internalID: 9053489578367961100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hangedman_illust_4
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 111
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4576d0f5b846ccb0800000000000000
+      internalID: -4844104402923522738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hangedman_illust_5
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 58
+        width: 26
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 302fe94b366d73ce0800000000000000
+      internalID: -1425435033319050749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hangedman_illust_6
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 82
+        width: 13
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 139df03467fa951c0800000000000000
+      internalID: -4514384228996097743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hangedman_illust_7
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 63
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70f974b58538da4d0800000000000000
+      internalID: -3121694551186104569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hangedman_illust_8
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 66
+        width: 22
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7de736bcabbf70670800000000000000
+      internalID: 8505043201007255255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hangedman_illust_9
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 39
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 736c9a9950e072960800000000000000
+      internalID: 7577040315289814583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hangedman_illust_10
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 44
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b720863029196590800000000000000
+      internalID: -7680580063359653961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hangedman_illust_11
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 22
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb8e5d0185dd3ab20800000000000000
+      internalID: 3144600335144052923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hangedman_illust_12
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 27
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abe743591c5f494e0800000000000000
+      internalID: -1975684124728066374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hangedman_illust_13
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 6
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab9b2a78d13709de0800000000000000
+      internalID: -1328435319407461958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hangedman_illust_14
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 16
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5a76548395adcbf0800000000000000
+      internalID: -302403546964919713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hangedman_illust_15
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 18
+        width: 12
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80380af71f96d3250800000000000000
+      internalID: 5926009170638701320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hangedman_illust_16
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 8
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ddd4b298dd5b5140800000000000000
+      internalID: 4709461020101631442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      hangedman_illust_0: 3206613872974609995
+      hangedman_illust_1: 8435618310710528147
+      hangedman_illust_10: -7680580063359653961
+      hangedman_illust_11: 3144600335144052923
+      hangedman_illust_12: -1975684124728066374
+      hangedman_illust_13: -1328435319407461958
+      hangedman_illust_14: -302403546964919713
+      hangedman_illust_15: 5926009170638701320
+      hangedman_illust_16: 4709461020101631442
+      hangedman_illust_2: 2638751747098726213
+      hangedman_illust_3: 9053489578367961100
+      hangedman_illust_4: -4844104402923522738
+      hangedman_illust_5: -1425435033319050749
+      hangedman_illust_6: -4514384228996097743
+      hangedman_illust_7: -3121694551186104569
+      hangedman_illust_8: 8505043201007255255
+      hangedman_illust_9: 7577040315289814583
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
