@@ -19,3 +19,6 @@ MonoBehaviour:
   burnDamagePerStack: 2
   burnDurationTurns: 3
   pattern: {fileID: 11400000, guid: 00f3339e8d57351408e8e887b04db3a6, type: 2}
+  stageId: 1
+  battleBackground: {fileID: 0}
+  battleBgm: {fileID: 0}

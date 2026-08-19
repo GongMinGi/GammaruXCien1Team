@@ -10,6 +10,9 @@ public class BossData : ScriptableObject
     [SerializeField, Min(0)] private int burnDamagePerStack = 2;
     [SerializeField, Min(1)] private int burnDurationTurns = 3;
     [SerializeField] private BossPatternDefinition pattern;
+    [SerializeField, Min(1)] private int stageId = 1;
+    [SerializeField] private Sprite battleBackground;
+    [SerializeField] private AudioClip battleBgm;
 
     public string BossName => bossName;
     public Sprite Portrait => portrait;
@@ -18,4 +21,7 @@ public class BossData : ScriptableObject
     public int BurnDamagePerStack => burnDamagePerStack;
     public int BurnDurationTurns => burnDurationTurns;
     public BossPatternDefinition Pattern => pattern;
+    public int StageId => stageId;
+    public Sprite BattleBackground => battleBackground;
+    public AudioClip BattleBgm => battleBgm;
 }
