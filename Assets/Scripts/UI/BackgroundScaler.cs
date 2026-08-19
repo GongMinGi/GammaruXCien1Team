@@ -3,9 +3,20 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class BackgroundScaler : MonoBehaviour
 {
+    [SerializeField] private BossStats bossStats;
+
     private void Start()
     {
+        ApplyBossBackground();
         FitToCamera();
+    }
+
+    private void ApplyBossBackground()
+    {
+        if (bossStats == null || bossStats.Data == null) return;
+        Sprite bg = bossStats.Data.BattleBackground;
+        if (bg == null) return;
+        GetComponent<SpriteRenderer>().sprite = bg;
     }
 
     private void FitToCamera()
