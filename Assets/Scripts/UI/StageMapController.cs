@@ -167,11 +167,13 @@ public class StageMapController : MonoBehaviour
     }
 
     /// <summary>
-    /// 선택한 스테이지를 저장하고 아르카나 선택창을 연다.
+    /// 선택한 스테이지와 그곳에서 맞설 보스를 저장하고 아르카나 선택창을 연다.
     /// </summary>
     private void OpenStage(int stageNumber)
     {
         StageProgressData.SelectStage(stageNumber, stageMapData.StageCount);
+        BattleLoadoutData.SaveSelectedBossData(
+            stageMapData.GetBossData(stageNumber - 1));
         arcanaSelectionController.OpenArcanaSelection();
     }
 
