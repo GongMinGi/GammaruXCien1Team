@@ -383,7 +383,7 @@ public class PlanningController : MonoBehaviour
         usedSlots++;
         zeroCostUsedThisCount = false;
         playerGridPos = newPos;
-        playerDisplay.UpdateGhostPosition(newPos.x, newPos.y);
+        playerDisplay.UpdateGridPosition(newPos.x, newPos.y);
         actionBar.FillSlot(usedSlots - 1, ActionType.Move);
         NotifyPlanningSlotChanged();
 
@@ -565,7 +565,7 @@ public class PlanningController : MonoBehaviour
         {
             playerGridPos = SimulateCardMovement(playerGridPos, direction, card);
             if (playerGridPos != prePos)
-                playerDisplay.UpdateGhostPosition(playerGridPos.x, playerGridPos.y);
+                playerDisplay.UpdateGridPosition(playerGridPos.x, playerGridPos.y);
 
             towerPos = SimulateTowerPlacement(prePos, direction, card);
             if (towerPos != Vector2Int.zero)
@@ -646,7 +646,7 @@ public class PlanningController : MonoBehaviour
         if (isMove)
         {
             playerGridPos = SimulateCardMovement(playerGridPos, secondDirection, card);
-            playerDisplay.UpdateGhostPosition(playerGridPos.x, playerGridPos.y);
+            playerDisplay.UpdateGridPosition(playerGridPos.x, playerGridPos.y);
         }
         else
         {
@@ -736,7 +736,7 @@ public class PlanningController : MonoBehaviour
         {
             case ActionType.Move:
                 playerGridPos -= action.Direction;
-                playerDisplay.UpdateGhostPosition(playerGridPos.x, playerGridPos.y);
+                playerDisplay.UpdateGridPosition(playerGridPos.x, playerGridPos.y);
                 actionBar.ClearSlot(usedSlots);
                 break;
             case ActionType.Stay:
@@ -751,7 +751,7 @@ public class PlanningController : MonoBehaviour
                 if (action.PreCardPosition != playerGridPos)
                 {
                     playerGridPos = action.PreCardPosition;
-                    playerDisplay.UpdateGhostPosition(playerGridPos.x, playerGridPos.y);
+                    playerDisplay.UpdateGridPosition(playerGridPos.x, playerGridPos.y);
                 }
                 if (action.PlacedSecondTower && towerPreviewObjects.Count > 0)
                 {
@@ -1154,7 +1154,7 @@ public class PlanningController : MonoBehaviour
                 playerGridPos = SimulateCardMovement(playerGridPos, direction,
                     pendingCardUse.Card);
                 if (playerGridPos != pendingCardUse.PreFirstMovePos)
-                    playerDisplay.UpdateGhostPosition(playerGridPos.x, playerGridPos.y);
+                    playerDisplay.UpdateGridPosition(playerGridPos.x, playerGridPos.y);
             }
             else
             {
@@ -1222,7 +1222,7 @@ public class PlanningController : MonoBehaviour
             if (pendingCardUse.HasSimulatedFirstMove)
             {
                 playerGridPos = pendingCardUse.PreFirstMovePos;
-                playerDisplay.UpdateGhostPosition(playerGridPos.x, playerGridPos.y);
+                playerDisplay.UpdateGridPosition(playerGridPos.x, playerGridPos.y);
                 pendingCardUse.HasSimulatedFirstMove = false;
             }
 
