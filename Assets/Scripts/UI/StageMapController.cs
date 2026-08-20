@@ -10,6 +10,8 @@ public class StageMapController : MonoBehaviour
     [SerializeField] private StageMapView stageMapView;
     [SerializeField] private ConstellationView constellationView;
     [SerializeField] private ArcanaSelectionController arcanaSelectionController;
+    [SerializeField] private TutorialController tutorialController;
+    [SerializeField] private DialogueData firstStageDialogueData;
     [SerializeField] private float sidePadding = 180f;
     [SerializeField] private float verticalJitter = 170f;
     [SerializeField] private float verticalPadding = 70f;
@@ -24,6 +26,7 @@ public class StageMapController : MonoBehaviour
 
     private Vector2[] stagePositions;
     private Vector2 stageCardSize;
+    private StageCardView revealedStageCardView;
 
     /// <summary>
     /// UI 크기가 계산된 뒤 스테이지 맵을 생성한다.
@@ -75,7 +78,7 @@ public class StageMapController : MonoBehaviour
                 OpenStage);
         }
 
-        StartCoroutine(RevealStageCardRoutine(0));
+        StartCoroutine(RevealFirstStageRoutine());
     }
 
     /// <summary>
@@ -175,6 +178,7 @@ public class StageMapController : MonoBehaviour
         BattleLoadoutData.SaveSelectedBossData(
             stageMapData.GetBossData(stageNumber - 1));
         arcanaSelectionController.OpenArcanaSelection();
+        TutorialController.NotifyActionCompleted("StageSelected");
     }
 
     /// <summary>
@@ -213,6 +217,34 @@ public class StageMapController : MonoBehaviour
     }
 
     /// <summary>
+    /// 첫 스테이지 카드를 띄우고, 첫 스테이지를 아직 깨지 않았다면 대화를 재생한다.
+    /// </summary>
+    private IEnumerator RevealFirstStageRoutine()
+    {
+        yield return RevealStageCardRoutine(0);
+
+        if (StageProgressData.IsFirstStageCleared)
+        {
+            yield break;
+        }
+
+        DialogueController.Instance.PlayDialogue(
+            firstStageDialogueData,
+            StartFirstStageTutorial);
+    }
+
+    /// <summary>
+    /// 대화가 끝나면 첫 스테이지 카드를 강조하는 튜토리얼을 시작한다.
+    /// </summary>
+    private void StartFirstStageTutorial()
+    {
+        tutorialController.SetStepHighlightTarget(
+            0,
+            revealedStageCardView.GetComponent<RectTransform>());
+        tutorialController.StartTutorial();
+    }
+
+    /// <summary>
     /// 카드 테두리를 그린 뒤 반짝임과 함께 카드 뒷면을 띄운다.
     /// </summary>
     private IEnumerator RevealStageCardRoutine(int stageIndex)
@@ -222,12 +254,12 @@ public class StageMapController : MonoBehaviour
             true,
             stageMapView.FocusOn);
 
-        StageCardView cardView = stageMapView.CreateCard(
+        revealedStageCardView = stageMapView.CreateCard(
             stageIndex + 1,
             stagePositions[stageIndex],
             stageMapData.GetCardImage(stageIndex),
             OpenStage);
-        yield return cardView.PlayRevealRoutine();
+        yield return revealedStageCardView.PlayRevealRoutine();
     }
 
     /// <summary>
