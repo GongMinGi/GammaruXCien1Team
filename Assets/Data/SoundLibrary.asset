@@ -15,8 +15,16 @@ MonoBehaviour:
   sceneBackgroundMusics:
   - sceneName: StageSelectScene
     clip: {fileID: 8300000, guid: 17e003290c24aff43bf89e6ffcb577e7, type: 3}
+    loopStart: 0
+    loopEnd: 0
   - sceneName: TitleScene
     clip: {fileID: 8300000, guid: 17e003290c24aff43bf89e6ffcb577e7, type: 3}
+    loopStart: 0
+    loopEnd: 0
+  - sceneName: BattleScene
+    clip: {fileID: 8300000, guid: 6f59b4e265507094ea4db5167e459f5a, type: 3}
+    loopStart: 57
+    loopEnd: 197
   soundEffects:
   - soundEffectName: ButtonHover
     clip: {fileID: 8300000, guid: e11b3f45d369e8044b1fc64d77d0ddb0, type: 3}

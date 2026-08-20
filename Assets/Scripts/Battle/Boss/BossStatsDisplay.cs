@@ -1,17 +1,20 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BossStatsDisplay : MonoBehaviour
 {
     [SerializeField] private BossStats bossStats;
+    [SerializeField] private Font font;
 
     [Header("HP Bar")]
-    [SerializeField] private float barWidth = 4.45f;
-    [SerializeField] private float barHeight = 0.25f;
+    [SerializeField] private float barWidth = 445f;
+    [SerializeField] private float barHeight = 30f;
     [SerializeField] private Color bgColor = new Color(0.2f, 0.2f, 0.2f);
 
-    private Transform hpFillTransform;
-    private SpriteRenderer hpFillRenderer;
-    private TextMesh hpText;
+    private RectTransform hpFillRect;
+    private Image hpFillImage;
+    private Text hpText;
+    private Canvas canvas;
 
     private void Start()
     {
@@ -39,44 +42,51 @@ public class BossStatsDisplay : MonoBehaviour
 
     private void GenerateVisuals()
     {
-        Sprite barSprite = CreateBarSprite();
+        GameObject canvasObj = new GameObject("BossStatsCanvas");
+        canvasObj.transform.SetParent(transform, false);
+        canvasObj.transform.localPosition = Vector3.zero;
 
-        GameObject bgObj = new GameObject("HpBarBg");
-        bgObj.transform.SetParent(transform, false);
-        bgObj.transform.localPosition = Vector3.zero;
-        bgObj.transform.localScale = new Vector3(barWidth, barHeight, 1f);
+        canvas = canvasObj.AddComponent<Canvas>();
+        canvas.renderMode = RenderMode.WorldSpace;
+        canvas.sortingOrder = 5;
 
-        SpriteRenderer bgRenderer = bgObj.AddComponent<SpriteRenderer>();
-        bgRenderer.sprite = barSprite;
-        bgRenderer.color = bgColor;
-        bgRenderer.sortingOrder = 1;
+        RectTransform canvasRect = canvasObj.GetComponent<RectTransform>();
+        canvasRect.sizeDelta = new Vector2(barWidth + 20f, barHeight + 20f);
+        canvasRect.localScale = Vector3.one * 0.01f;
 
-        Sprite fillSprite = CreateFillSprite();
+        // Background
+        GameObject bgObj = CreateUIObject("HpBarBg", canvasObj.transform);
+        RectTransform bgRect = bgObj.GetComponent<RectTransform>();
+        bgRect.anchoredPosition = Vector2.zero;
+        bgRect.sizeDelta = new Vector2(barWidth, barHeight);
 
-        GameObject fillObj = new GameObject("HpBarFill");
-        fillObj.transform.SetParent(transform, false);
-        fillObj.transform.localPosition = new Vector3(-barWidth * 0.5f, 0f, 0f);
-        fillObj.transform.localScale = new Vector3(barWidth, barHeight, 1f);
+        Image bgImage = bgObj.AddComponent<Image>();
+        bgImage.color = bgColor;
+        bgImage.raycastTarget = false;
 
-        hpFillRenderer = fillObj.AddComponent<SpriteRenderer>();
-        hpFillRenderer.sprite = fillSprite;
-        hpFillRenderer.color = Color.red;
-        hpFillRenderer.sortingOrder = 2;
-        hpFillTransform = fillObj.transform;
+        // Fill
+        GameObject fillObj = CreateUIObject("HpBarFill", canvasObj.transform);
+        hpFillRect = fillObj.GetComponent<RectTransform>();
+        hpFillRect.sizeDelta = new Vector2(barWidth, barHeight);
+        hpFillRect.pivot = new Vector2(0f, 0.5f);
+        hpFillRect.anchoredPosition = new Vector2(-barWidth * 0.5f, 0f);
 
-        GameObject hpTextObj = new GameObject("HpText");
-        hpTextObj.transform.SetParent(transform, false);
-        hpTextObj.transform.localPosition = new Vector3(0f, 0f, -0.01f);
+        hpFillImage = fillObj.AddComponent<Image>();
+        hpFillImage.color = Color.red;
+        hpFillImage.raycastTarget = false;
 
-        hpText = hpTextObj.AddComponent<TextMesh>();
-        hpText.anchor = TextAnchor.MiddleCenter;
-        hpText.alignment = TextAlignment.Center;
-        hpText.fontSize = 32;
-        hpText.characterSize = 0.06f;
+        // HP Text
+        GameObject hpTextObj = CreateUIObject("HpText", canvasObj.transform);
+        RectTransform hpTextRect = hpTextObj.GetComponent<RectTransform>();
+        hpTextRect.anchoredPosition = Vector2.zero;
+        hpTextRect.sizeDelta = new Vector2(barWidth, barHeight);
+
+        hpText = hpTextObj.AddComponent<Text>();
+        hpText.alignment = TextAnchor.MiddleCenter;
+        hpText.fontSize = 20;
         hpText.color = Color.white;
-
-        MeshRenderer hpTextRenderer = hpTextObj.GetComponent<MeshRenderer>();
-        hpTextRenderer.sortingOrder = 3;
+        hpText.raycastTarget = false;
+        if (font != null) hpText.font = font;
     }
 
     private void Refresh()
@@ -84,41 +94,20 @@ public class BossStatsDisplay : MonoBehaviour
         float ratio = Mathf.Clamp01(
             (float)bossStats.CurrentHp / Mathf.Max(1, bossStats.MaxHp));
 
-        hpFillTransform.localScale = new Vector3(ratio * barWidth, barHeight, 1f);
-        hpFillRenderer.color = Color.Lerp(Color.red, new Color(0.8f, 0.2f, 0.2f), ratio);
+        hpFillRect.sizeDelta = new Vector2(ratio * barWidth, barHeight);
+        hpFillImage.color = Color.Lerp(Color.red, new Color(0.8f, 0.2f, 0.2f), ratio);
         hpText.text = $"{bossStats.CurrentHp}/{bossStats.MaxHp}";
     }
 
     private void ShowDamage(int amount)
     {
-        DamagePopup.Spawn(transform, amount, new Vector3(0f, 0.55f, -0.02f));
+        DamagePopup.Spawn(canvas.transform, amount, new Vector3(0f, 55f, 0f), font);
     }
 
-    private Sprite CreateBarSprite()
+    private static GameObject CreateUIObject(string name, Transform parent)
     {
-        int size = 4;
-        Texture2D tex = new Texture2D(size, size);
-        tex.filterMode = FilterMode.Point;
-
-        for (int y = 0; y < size; y++)
-            for (int x = 0; x < size; x++)
-                tex.SetPixel(x, y, Color.white);
-
-        tex.Apply();
-        return Sprite.Create(tex, new Rect(0, 0, size, size), new Vector2(0.5f, 0.5f), size);
-    }
-
-    private Sprite CreateFillSprite()
-    {
-        int size = 4;
-        Texture2D tex = new Texture2D(size, size);
-        tex.filterMode = FilterMode.Point;
-
-        for (int y = 0; y < size; y++)
-            for (int x = 0; x < size; x++)
-                tex.SetPixel(x, y, Color.white);
-
-        tex.Apply();
-        return Sprite.Create(tex, new Rect(0, 0, size, size), new Vector2(0f, 0.5f), size);
+        GameObject obj = new GameObject(name, typeof(RectTransform));
+        obj.transform.SetParent(parent, false);
+        return obj;
     }
 }
