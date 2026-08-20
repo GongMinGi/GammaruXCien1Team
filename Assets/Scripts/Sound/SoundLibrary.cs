@@ -8,6 +8,12 @@ public class SceneBackgroundMusic
 {
     public string sceneName;
     public AudioClip clip;
+
+    [Tooltip("구간 반복 시작 지점(초).")]
+    public float loopStart;
+
+    [Tooltip("구간 반복 끝 지점(초). 0이면 구간 반복 없이 곡 전체를 반복한다.")]
+    public float loopEnd;
 }
 
 /// <summary>
@@ -30,15 +36,15 @@ public class SoundLibrary : ScriptableObject
     [SerializeField] private SoundEffectEntry[] soundEffects;
 
     /// <summary>
-    /// 해당 씬의 배경음악을 반환한다. 등록되지 않았다면 null을 반환한다.
+    /// 해당 씬의 배경음악 설정을 반환한다. 등록되지 않았다면 null을 반환한다.
     /// </summary>
-    public AudioClip FindBackgroundMusic(string sceneName)
+    public SceneBackgroundMusic FindBackgroundMusic(string sceneName)
     {
         for (int index = 0; index < sceneBackgroundMusics.Length; index++)
         {
             if (sceneBackgroundMusics[index].sceneName == sceneName)
             {
-                return sceneBackgroundMusics[index].clip;
+                return sceneBackgroundMusics[index];
             }
         }
 
