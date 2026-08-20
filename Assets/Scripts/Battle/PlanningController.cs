@@ -403,7 +403,7 @@ public class PlanningController : MonoBehaviour
 
         usedSlots++;
         zeroCostUsedThisCount = false;
-        actionBar.FillSlot(usedSlots - 1, ActionType.Stay);
+        actionBar.FillSlot(usedSlots - 1);
         NotifyPlanningSlotChanged();
 
     }
@@ -425,7 +425,7 @@ public class PlanningController : MonoBehaviour
         });
 
         usedSlots++;
-        actionBar.FillSlot(usedSlots - 1, ActionType.CutTangle);
+        actionBar.FillSlot(usedSlots - 1);
         NotifyPlanningSlotChanged();
     }
 
@@ -595,7 +595,7 @@ public class PlanningController : MonoBehaviour
         if (card.CooldownTurns > 0)
             cooldownCardIds?.Add(card.Id);
 
-        actionBar.FillRange(usedSlots, effectiveCost, card.TimelineColor);
+        actionBar.FillRange(usedSlots, effectiveCost);
         usedSlots += effectiveCost;
         zeroCostUsedThisCount = false;
         NotifyPlanningSlotChanged();
@@ -683,7 +683,7 @@ public class PlanningController : MonoBehaviour
         if (card.CooldownTurns > 0)
             cooldownCardIds?.Add(card.Id);
 
-        actionBar.FillRange(usedSlots, effectiveCost, card.TimelineColor);
+        actionBar.FillRange(usedSlots, effectiveCost);
         usedSlots += effectiveCost;
         zeroCostUsedThisCount = false;
         NotifyPlanningSlotChanged();
@@ -842,7 +842,7 @@ public class PlanningController : MonoBehaviour
             return;
 
         planningActive = false;
-        actionBar.HideIndicator();
+        actionBar.HideCurrentTurnMark();
         if (cardMergePanel != null) cardMergePanel.SetButtonVisible(false);
         playerDisplay.DestroyGhost();
         ClearTowerPreviews();
@@ -1388,7 +1388,7 @@ public class PlanningController : MonoBehaviour
     private void NotifyPlanningSlotChanged()
     {
         int slotIndex = usedSlots < ActionBar.SlotCount ? usedSlots : -1;
-        actionBar.ShowIndicator(slotIndex);
+        actionBar.ShowCurrentTurnMark(slotIndex);
         PlanningStateChanged?.Invoke(plannedActions, battleStartPos, slotIndex);
     }
 
