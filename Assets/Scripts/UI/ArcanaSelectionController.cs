@@ -55,8 +55,8 @@ public class ArcanaSelectionController : MonoBehaviour
     {
         arcanaSelectionView.ShowSelection();
 
-        // 아직 1스테이지만 열려 있는 첫 판에서만 튜토리얼을 띄운다.
-        if (StageProgressData.UnlockedStageCount == 1)
+        // 첫 스테이지를 아직 깨지 않은 첫 판에서만 튜토리얼을 띄운다.
+        if (!StageProgressData.IsFirstStageCleared)
         {
             deckTutorialController.StartTutorial();
         }
@@ -79,7 +79,7 @@ public class ArcanaSelectionController : MonoBehaviour
 
             // 수정구가 막 켜진 순간에 마지막 튜토리얼을 띄운다.
             if (selectedArcanaCards.Count == MinimumSelectedCardCount
-                && StageProgressData.UnlockedStageCount == 1)
+                && !StageProgressData.IsFirstStageCleared)
             {
                 battleReadyTutorialController.StartTutorial();
             }
@@ -92,6 +92,7 @@ public class ArcanaSelectionController : MonoBehaviour
     private void HandleRightClick(ArcanaCardView selectedArcanaCard)
     {
         arcanaSelectionView.ShowCardDetails(selectedArcanaCard.CardData);
+        TutorialController.NotifyActionCompleted("ArcanaCardReturned");
 
         if (!selectedArcanaCard.IsInDeck)
         {

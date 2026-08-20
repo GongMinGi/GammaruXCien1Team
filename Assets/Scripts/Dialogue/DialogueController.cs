@@ -80,7 +80,9 @@ public class DialogueController : MonoBehaviour
         DialogueData.DialogueLine line = playingDialogueData.GetLine(currentLineIndex);
 
         dialogueView.ShowLine(
+            line.backgroundIllustration,
             line.speaker.GetIllustration(line.expressionName),
+            line.hidesSpeakerIllustration,
             line.speaker.SpeakerName,
             line.text);
     }

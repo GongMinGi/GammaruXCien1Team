@@ -216,7 +216,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7989945469143988095, guid: a320c1f3c0322bc4e96a713915aa05e6, type: 3}
       propertyPath: tutorialSteps.Array.data[2].waitingActionName
-      value: ArcanaCardSelected
+      value: ArcanaCardReturned
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1870,6 +1870,7 @@ MonoBehaviour:
   constellationView: {fileID: 495750996}
   arcanaSelectionController: {fileID: 1897531473}
   tutorialController: {fileID: 1189529361}
+  firstStageDialogueData: {fileID: 11400000, guid: ce2b01e742bc9414e94fbf80d17a95ef, type: 2}
   sidePadding: 180
   verticalJitter: 170
   verticalPadding: 70

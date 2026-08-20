@@ -11,6 +11,7 @@ public class StageMapController : MonoBehaviour
     [SerializeField] private ConstellationView constellationView;
     [SerializeField] private ArcanaSelectionController arcanaSelectionController;
     [SerializeField] private TutorialController tutorialController;
+    [SerializeField] private DialogueData firstStageDialogueData;
     [SerializeField] private float sidePadding = 180f;
     [SerializeField] private float verticalJitter = 170f;
     [SerializeField] private float verticalPadding = 70f;
@@ -77,7 +78,7 @@ public class StageMapController : MonoBehaviour
                 OpenStage);
         }
 
-        StartCoroutine(RevealFirstStageRoutine(unlockedStageCount));
+        StartCoroutine(RevealFirstStageRoutine());
     }
 
     /// <summary>
@@ -216,17 +217,27 @@ public class StageMapController : MonoBehaviour
     }
 
     /// <summary>
-    /// 첫 스테이지 카드를 띄우고, 아직 1스테이지만 열려 있다면 튜토리얼을 시작한다.
+    /// 첫 스테이지 카드를 띄우고, 첫 스테이지를 아직 깨지 않았다면 대화를 재생한다.
     /// </summary>
-    private IEnumerator RevealFirstStageRoutine(int unlockedStageCount)
+    private IEnumerator RevealFirstStageRoutine()
     {
         yield return RevealStageCardRoutine(0);
 
-        if (unlockedStageCount > 1)
+        if (StageProgressData.IsFirstStageCleared)
         {
             yield break;
         }
 
+        DialogueController.Instance.PlayDialogue(
+            firstStageDialogueData,
+            StartFirstStageTutorial);
+    }
+
+    /// <summary>
+    /// 대화가 끝나면 첫 스테이지 카드를 강조하는 튜토리얼을 시작한다.
+    /// </summary>
+    private void StartFirstStageTutorial()
+    {
         tutorialController.SetStepHighlightTarget(
             0,
             revealedStageCardView.GetComponent<RectTransform>());

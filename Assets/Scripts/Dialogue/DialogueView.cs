@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class DialogueView : MonoBehaviour
 {
     [SerializeField] private GameObject dialogueRoot;
+    [SerializeField] private Image backgroundIllustration;
     [SerializeField] private Image speakerIllustration;
     [SerializeField] private Text speakerNameText;
     [SerializeField] private Text dialogueBodyText;
@@ -31,10 +32,19 @@ public class DialogueView : MonoBehaviour
 
     /// <summary>
     /// 일러스트와 이름을 바꾸고 대사 본문을 한 자씩 출력한다.
+    /// 배경 삽화와 캐릭터 일러스트는 대사마다 켜고 끌 수 있다.
     /// </summary>
-    public void ShowLine(Sprite illustration, string speakerName, string bodyText)
+    public void ShowLine(
+        Sprite background,
+        Sprite illustration,
+        bool hidesIllustration,
+        string speakerName,
+        string bodyText)
     {
+        backgroundIllustration.sprite = background;
+        backgroundIllustration.gameObject.SetActive(background != null);
         speakerIllustration.sprite = illustration;
+        speakerIllustration.gameObject.SetActive(!hidesIllustration);
         speakerNameText.text = speakerName;
         dialogueBodyText.text = "";
         isTyping = true;

@@ -11,7 +11,11 @@ public class DialogueData : ScriptableObject
     public struct DialogueLine
     {
         public DialogueSpeakerData speaker;
+        // 비워두면 배경 삽화 없이 대사만 표시한다.
+        public Sprite backgroundIllustration;
         public string expressionName;
+        // 체크하면 이 대사에서는 캐릭터 일러스트를 감춘다.
+        public bool hidesSpeakerIllustration;
         [TextArea(2, 5)] public string text;
     }
 

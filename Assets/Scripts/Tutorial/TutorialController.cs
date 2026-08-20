@@ -14,6 +14,7 @@ public class TutorialController : MonoBehaviour
 
     private int currentStepIndex;
     private bool isTutorialRunning;
+    private bool hasTutorialPlayed;
     private int stepShownFrameCount;
 
     private void Awake()
@@ -22,10 +23,16 @@ public class TutorialController : MonoBehaviour
     }
 
     /// <summary>
-    /// 튜토리얼을 첫 단계부터 시작한다.
+    /// 튜토리얼을 첫 단계부터 시작한다. 이미 한 번 재생했다면 다시 띄우지 않는다.
     /// </summary>
     public void StartTutorial()
     {
+        if (hasTutorialPlayed)
+        {
+            return;
+        }
+
+        hasTutorialPlayed = true;
         runningTutorialController = this;
         isTutorialRunning = true;
         currentStepIndex = 0;
