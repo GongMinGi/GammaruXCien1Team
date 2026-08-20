@@ -204,6 +204,7 @@ public class StageMapController : MonoBehaviour
     private IEnumerator OpenNextStageRoutine(int nextStageIndex)
     {
         UpdateContentWidth(nextStageIndex + 1);
+        SoundManager.Instance.PlaySoundEffect("StageLine");
         yield return constellationView.PlayLinkRoutine(
             BuildConstellationPoints(nextStageIndex - 1),
             false,

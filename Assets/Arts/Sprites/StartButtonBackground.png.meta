@@ -1,0 +1,2340 @@
+fileFormatVersion: 2
+guid: 810352d27cfe1bd4483fcfeed262d0df
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3194954939219947195
+    second: StartButtonBackground_0
+  - first:
+      213: 5910663410149208486
+    second: StartButtonBackground_1
+  - first:
+      213: -4081304928630011986
+    second: StartButtonBackground_2
+  - first:
+      213: 7951086050094432939
+    second: StartButtonBackground_3
+  - first:
+      213: 3617325599231369135
+    second: StartButtonBackground_4
+  - first:
+      213: 6166769136698686778
+    second: StartButtonBackground_5
+  - first:
+      213: -652958378914353935
+    second: StartButtonBackground_6
+  - first:
+      213: 276534976171568415
+    second: StartButtonBackground_7
+  - first:
+      213: -1794360268252501140
+    second: StartButtonBackground_8
+  - first:
+      213: -7518705916844842739
+    second: StartButtonBackground_9
+  - first:
+      213: 4903042651906979020
+    second: StartButtonBackground_10
+  - first:
+      213: -10864369579247667
+    second: StartButtonBackground_11
+  - first:
+      213: 4709092134837724158
+    second: StartButtonBackground_12
+  - first:
+      213: -6655763675121314655
+    second: StartButtonBackground_13
+  - first:
+      213: 3908310036795209669
+    second: StartButtonBackground_14
+  - first:
+      213: -6290448761394361701
+    second: StartButtonBackground_15
+  - first:
+      213: -4459812985500374039
+    second: StartButtonBackground_16
+  - first:
+      213: 1829271095526958028
+    second: StartButtonBackground_17
+  - first:
+      213: -1936685726049690428
+    second: StartButtonBackground_18
+  - first:
+      213: 1947978057464357260
+    second: StartButtonBackground_19
+  - first:
+      213: -3656684456530721625
+    second: StartButtonBackground_20
+  - first:
+      213: -5040334739017719374
+    second: StartButtonBackground_21
+  - first:
+      213: -5442244888623621992
+    second: StartButtonBackground_22
+  - first:
+      213: 7384182441600782246
+    second: StartButtonBackground_23
+  - first:
+      213: -5064734182542096382
+    second: StartButtonBackground_24
+  - first:
+      213: -3948519158162239433
+    second: StartButtonBackground_25
+  - first:
+      213: 4285235687787605130
+    second: StartButtonBackground_26
+  - first:
+      213: 6333858393369796635
+    second: StartButtonBackground_27
+  - first:
+      213: 341518874433791918
+    second: StartButtonBackground_28
+  - first:
+      213: 847936334180607367
+    second: StartButtonBackground_29
+  - first:
+      213: 6151075678540882934
+    second: StartButtonBackground_30
+  - first:
+      213: 7207263824894337806
+    second: StartButtonBackground_31
+  - first:
+      213: -9023477561724801130
+    second: StartButtonBackground_32
+  - first:
+      213: 9108795561326985289
+    second: StartButtonBackground_33
+  - first:
+      213: -4619367484551601739
+    second: StartButtonBackground_34
+  - first:
+      213: -4345339147709423831
+    second: StartButtonBackground_35
+  - first:
+      213: 2701457524327047408
+    second: StartButtonBackground_36
+  - first:
+      213: -8875784551638213278
+    second: StartButtonBackground_37
+  - first:
+      213: 6981869623054850908
+    second: StartButtonBackground_38
+  - first:
+      213: -7750725425763237406
+    second: StartButtonBackground_39
+  - first:
+      213: -5681275650793188573
+    second: StartButtonBackground_40
+  - first:
+      213: -8386837294184269730
+    second: StartButtonBackground_41
+  - first:
+      213: -5834025785622829010
+    second: StartButtonBackground_42
+  - first:
+      213: -632544888723920857
+    second: StartButtonBackground_43
+  - first:
+      213: -274418419268214568
+    second: StartButtonBackground_44
+  - first:
+      213: 8332781254061608788
+    second: StartButtonBackground_45
+  - first:
+      213: -47862487913363375
+    second: StartButtonBackground_46
+  - first:
+      213: 6285103419780629049
+    second: StartButtonBackground_47
+  - first:
+      213: 7578243382757150956
+    second: StartButtonBackground_48
+  - first:
+      213: 5811132044950428467
+    second: StartButtonBackground_49
+  - first:
+      213: -8751451291308136918
+    second: StartButtonBackground_50
+  - first:
+      213: -1543622682315431683
+    second: StartButtonBackground_51
+  - first:
+      213: -9162660499560560011
+    second: StartButtonBackground_52
+  - first:
+      213: 9038104105863450870
+    second: StartButtonBackground_53
+  - first:
+      213: 2624770618142819815
+    second: StartButtonBackground_54
+  - first:
+      213: 5424615933217288996
+    second: StartButtonBackground_55
+  - first:
+      213: -2241243399332417633
+    second: StartButtonBackground_56
+  - first:
+      213: -2467682205257423143
+    second: StartButtonBackground_57
+  - first:
+      213: -3212598875802066433
+    second: StartButtonBackground_58
+  - first:
+      213: 6471111198254116574
+    second: StartButtonBackground_59
+  - first:
+      213: 2325749880220723187
+    second: StartButtonBackground_60
+  - first:
+      213: 7985925843599602155
+    second: StartButtonBackground_61
+  - first:
+      213: 4210565548584860720
+    second: StartButtonBackground_62
+  - first:
+      213: -825315517903822802
+    second: StartButtonBackground_63
+  - first:
+      213: 4227642697658548480
+    second: StartButtonBackground_64
+  - first:
+      213: -94881005532286804
+    second: StartButtonBackground_65
+  - first:
+      213: 1422287488734859417
+    second: StartButtonBackground_66
+  - first:
+      213: -2390731467445191036
+    second: StartButtonBackground_67
+  - first:
+      213: 9067464698626961896
+    second: StartButtonBackground_68
+  - first:
+      213: -949824912286195471
+    second: StartButtonBackground_69
+  - first:
+      213: -4568552589556600724
+    second: StartButtonBackground_70
+  - first:
+      213: -6824440414000308893
+    second: StartButtonBackground_71
+  - first:
+      213: 1206161746412253144
+    second: StartButtonBackground_72
+  - first:
+      213: -643345307939179249
+    second: StartButtonBackground_73
+  - first:
+      213: 2503253779681350811
+    second: StartButtonBackground_74
+  - first:
+      213: 9149906178844250016
+    second: StartButtonBackground_75
+  - first:
+      213: -6648120141613894827
+    second: StartButtonBackground_76
+  - first:
+      213: 5699512688274545620
+    second: StartButtonBackground_77
+  - first:
+      213: -6405273057589856620
+    second: StartButtonBackground_78
+  - first:
+      213: -724084080288594277
+    second: StartButtonBackground_79
+  - first:
+      213: 6321345866585241854
+    second: StartButtonBackground_80
+  - first:
+      213: -6013159075097850965
+    second: StartButtonBackground_81
+  - first:
+      213: -503412671138982328
+    second: StartButtonBackground_82
+  - first:
+      213: 4676511473341061025
+    second: StartButtonBackground_83
+  - first:
+      213: -2776033122123663118
+    second: StartButtonBackground_84
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: StartButtonBackground_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 2172
+        height: 714
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbea591f692c65c20800000000000000
+      internalID: 3194954939219947195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_1
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 699
+        width: 57
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a1b7d43e05e60250800000000000000
+      internalID: 5910663410149208486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_2
+      rect:
+        serializedVersion: 2
+        x: 547
+        y: 692
+        width: 11
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea705f48aca4c57c0800000000000000
+      internalID: -4081304928630011986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_3
+      rect:
+        serializedVersion: 2
+        x: 796
+        y: 691
+        width: 28
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba2417ac2aee75e60800000000000000
+      internalID: 7951086050094432939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_4
+      rect:
+        serializedVersion: 2
+        x: 843
+        y: 681
+        width: 39
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fafdc139772533230800000000000000
+      internalID: 3617325599231369135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_5
+      rect:
+        serializedVersion: 2
+        x: 1285
+        y: 666
+        width: 41
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3d74cc5bd3c49550800000000000000
+      internalID: 6166769136698686778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_6
+      rect:
+        serializedVersion: 2
+        x: 1464
+        y: 693
+        width: 45
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fce1bb50d930f6f0800000000000000
+      internalID: -652958378914353935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_7
+      rect:
+        serializedVersion: 2
+        x: 1550
+        y: 707
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1d6dae781376d300800000000000000
+      internalID: 276534976171568415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_8
+      rect:
+        serializedVersion: 2
+        x: 1550
+        y: 698
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6b2cbbc7d62917e0800000000000000
+      internalID: -1794360268252501140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_9
+      rect:
+        serializedVersion: 2
+        x: 1717
+        y: 701
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d01e5dfedc038a790800000000000000
+      internalID: -7518705916844842739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_10
+      rect:
+        serializedVersion: 2
+        x: 1719
+        y: 706
+        width: 18
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc43181805b1b0440800000000000000
+      internalID: 4903042651906979020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_11
+      rect:
+        serializedVersion: 2
+        x: 1735
+        y: 705
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc73586d9e669dff0800000000000000
+      internalID: -10864369579247667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_12
+      rect:
+        serializedVersion: 2
+        x: 716
+        y: 691
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef3a697c85e0a5140800000000000000
+      internalID: 4709092134837724158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_13
+      rect:
+        serializedVersion: 2
+        x: 1335
+        y: 692
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a41273833af1a3a0800000000000000
+      internalID: -6655763675121314655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_14
+      rect:
+        serializedVersion: 2
+        x: 1341
+        y: 689
+        width: 18
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c7b547754b1d3630800000000000000
+      internalID: 3908310036795209669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_15
+      rect:
+        serializedVersion: 2
+        x: 1432
+        y: 692
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9a0b430e26d3b8a0800000000000000
+      internalID: -6290448761394361701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_16
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 690
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9eb639208bf8b12c0800000000000000
+      internalID: -4459812985500374039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_17
+      rect:
+        serializedVersion: 2
+        x: 1456
+        y: 691
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc326c69e50e26910800000000000000
+      internalID: 1829271095526958028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_18
+      rect:
+        serializedVersion: 2
+        x: 1665
+        y: 693
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4cc1d39d7928f15e0800000000000000
+      internalID: -1936685726049690428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_19
+      rect:
+        serializedVersion: 2
+        x: 1711
+        y: 697
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c812b61f8bb980b10800000000000000
+      internalID: 1947978057464357260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_20
+      rect:
+        serializedVersion: 2
+        x: 1729
+        y: 693
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a44bc85cd8d04dc0800000000000000
+      internalID: -3656684456530721625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_21
+      rect:
+        serializedVersion: 2
+        x: 1738
+        y: 692
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b1a9cb72422d0ab0800000000000000
+      internalID: -5040334739017719374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_22
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 681
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89857e8ab134974b0800000000000000
+      internalID: -5442244888623621992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_23
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 665
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6af8a4cbec2e97660800000000000000
+      internalID: 7384182441600782246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_24
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 665
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 208ccc7581376b9b0800000000000000
+      internalID: -5064734182542096382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_25
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 659
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7305aeceeba0439c0800000000000000
+      internalID: -3948519158162239433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_26
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 648
+        width: 32
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8c28656727387b30800000000000000
+      internalID: 4285235687787605130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_27
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 659
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b10ee6a86a266e750800000000000000
+      internalID: 6333858393369796635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_28
+      rect:
+        serializedVersion: 2
+        x: 497
+        y: 665
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea7a7ba5b915db400800000000000000
+      internalID: 341518874433791918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_29
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 664
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7856bf67a9974cb00800000000000000
+      internalID: 847936334180607367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_30
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 659
+        width: 29
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f369f56db20d5550800000000000000
+      internalID: 6151075678540882934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_31
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 641
+        width: 42
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e03a9555348550460800000000000000
+      internalID: 7207263824894337806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_32
+      rect:
+        serializedVersion: 2
+        x: 764
+        y: 594
+        width: 74
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69f6fae47fa26c280800000000000000
+      internalID: -9023477561724801130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_33
+      rect:
+        serializedVersion: 2
+        x: 810
+        y: 666
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 940cc847d41f86e70800000000000000
+      internalID: 9108795561326985289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_34
+      rect:
+        serializedVersion: 2
+        x: 847
+        y: 666
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b1ef4c4fb5b4efb0800000000000000
+      internalID: -4619367484551601739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_35
+      rect:
+        serializedVersion: 2
+        x: 1044
+        y: 648
+        width: 21
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92f5e28511142b3c0800000000000000
+      internalID: -4345339147709423831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_36
+      rect:
+        serializedVersion: 2
+        x: 1365
+        y: 659
+        width: 16
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f0e1513e418d7520800000000000000
+      internalID: 2701457524327047408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_37
+      rect:
+        serializedVersion: 2
+        x: 1454
+        y: 659
+        width: 9
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26d54b8e9f0e2d480800000000000000
+      internalID: -8875784551638213278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_38
+      rect:
+        serializedVersion: 2
+        x: 1526
+        y: 657
+        width: 15
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5b564e3e6594e060800000000000000
+      internalID: 6981869623054850908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_39
+      rect:
+        serializedVersion: 2
+        x: 1977
+        y: 659
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e14bc55a44ef6490800000000000000
+      internalID: -7750725425763237406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_40
+      rect:
+        serializedVersion: 2
+        x: 1987
+        y: 624
+        width: 39
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 323556375ed0821b0800000000000000
+      internalID: -5681275650793188573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_41
+      rect:
+        serializedVersion: 2
+        x: 2029
+        y: 657
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e58f5239ae7fb9b80800000000000000
+      internalID: -8386837294184269730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_42
+      rect:
+        serializedVersion: 2
+        x: 2081
+        y: 661
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e286b7d3570690fa0800000000000000
+      internalID: -5834025785622829010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_43
+      rect:
+        serializedVersion: 2
+        x: 2087
+        y: 592
+        width: 40
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7282f1b66cfb837f0800000000000000
+      internalID: -632544888723920857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_44
+      rect:
+        serializedVersion: 2
+        x: 1107
+        y: 657
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d0a1bfc6e1113cf0800000000000000
+      internalID: -274418419268214568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_45
+      rect:
+        serializedVersion: 2
+        x: 1910
+        y: 657
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45f406fc66cf3a370800000000000000
+      internalID: 8332781254061608788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_46
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 63
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1588bd12255f55ff0800000000000000
+      internalID: -47862487913363375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_47
+      rect:
+        serializedVersion: 2
+        x: 633
+        y: 45
+        width: 26
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9320e98a24c293750800000000000000
+      internalID: 6285103419780629049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_48
+      rect:
+        serializedVersion: 2
+        x: 657
+        y: 59
+        width: 14
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce0d1b294345b2960800000000000000
+      internalID: 7578243382757150956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_49
+      rect:
+        serializedVersion: 2
+        x: 1233
+        y: 66
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33bd8226ec945a050800000000000000
+      internalID: 5811132044950428467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_50
+      rect:
+        serializedVersion: 2
+        x: 1253
+        y: 65
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a26e170fa699c8680800000000000000
+      internalID: -8751451291308136918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_51
+      rect:
+        serializedVersion: 2
+        x: 1522
+        y: 63
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df06a515953f39ae0800000000000000
+      internalID: -1543622682315431683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_52
+      rect:
+        serializedVersion: 2
+        x: 1524
+        y: 69
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57a803e42d0b7d080800000000000000
+      internalID: -9162660499560560011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_53
+      rect:
+        serializedVersion: 2
+        x: 1762
+        y: 69
+        width: 23
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f09df06ccbcd6d70800000000000000
+      internalID: 9038104105863450870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_54
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 55
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e5094778fe0d6420800000000000000
+      internalID: 2624770618142819815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_55
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 53
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 423375e437b184b40800000000000000
+      internalID: 5424615933217288996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_56
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 49
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9f2a9fb00185e0e0800000000000000
+      internalID: -2241243399332417633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_57
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 51
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d62411db1801cdd0800000000000000
+      internalID: -2467682205257423143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_58
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 45
+        width: 17
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff1aff1f75e8a63d0800000000000000
+      internalID: -3212598875802066433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_59
+      rect:
+        serializedVersion: 2
+        x: 660
+        y: 47
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ede2df179510ec950800000000000000
+      internalID: 6471111198254116574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_60
+      rect:
+        serializedVersion: 2
+        x: 837
+        y: 55
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f7a6f69139b64020800000000000000
+      internalID: 2325749880220723187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_61
+      rect:
+        serializedVersion: 2
+        x: 843
+        y: 45
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be1bd565e35b3de60800000000000000
+      internalID: 7985925843599602155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_62
+      rect:
+        serializedVersion: 2
+        x: 859
+        y: 41
+        width: 9
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03cf5e2de0fee6a30800000000000000
+      internalID: 4210565548584860720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_63
+      rect:
+        serializedVersion: 2
+        x: 895
+        y: 33
+        width: 13
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e20a9bfb8e3eb84f0800000000000000
+      internalID: -825315517903822802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_64
+      rect:
+        serializedVersion: 2
+        x: 988
+        y: 55
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 001463f62aa9baa30800000000000000
+      internalID: 4227642697658548480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_65
+      rect:
+        serializedVersion: 2
+        x: 1180
+        y: 51
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca0f0596a3aeeaef0800000000000000
+      internalID: -94881005532286804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_66
+      rect:
+        serializedVersion: 2
+        x: 1233
+        y: 53
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99016867feafcb310800000000000000
+      internalID: 1422287488734859417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_67
+      rect:
+        serializedVersion: 2
+        x: 1341
+        y: 49
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48eb491a56a62ded0800000000000000
+      internalID: -2390731467445191036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_68
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 47
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e1fd071a1b16dd70800000000000000
+      internalID: 9067464698626961896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_69
+      rect:
+        serializedVersion: 2
+        x: 1583
+        y: 37
+        width: 11
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f06d50564b81d2f0800000000000000
+      internalID: -949824912286195471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_70
+      rect:
+        serializedVersion: 2
+        x: 1591
+        y: 41
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c60b9c100ad3990c0800000000000000
+      internalID: -4568552589556600724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_71
+      rect:
+        serializedVersion: 2
+        x: 1601
+        y: 39
+        width: 7
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36d11b4d997ba41a0800000000000000
+      internalID: -6824440414000308893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_72
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 47
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8df2194c7b52db010800000000000000
+      internalID: 1206161746412253144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_73
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 39
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f05fe5cd9d06217f0800000000000000
+      internalID: -643345307939179249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_74
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 37
+        width: 18
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b949f80cc085db220800000000000000
+      internalID: 2503253779681350811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_75
+      rect:
+        serializedVersion: 2
+        x: 481
+        y: 38
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0afc92ef03ffafe70800000000000000
+      internalID: 9149906178844250016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_76
+      rect:
+        serializedVersion: 2
+        x: 913
+        y: 29
+        width: 19
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 553fbf654f12db3a0800000000000000
+      internalID: -6648120141613894827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_77
+      rect:
+        serializedVersion: 2
+        x: 1508
+        y: 33
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4db9f69b79cb81f40800000000000000
+      internalID: 5699512688274545620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_78
+      rect:
+        serializedVersion: 2
+        x: 1540
+        y: 45
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 496f9f83716eb17a0800000000000000
+      internalID: -6405273057589856620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_79
+      rect:
+        serializedVersion: 2
+        x: 1559
+        y: 31
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9602e68d5983f5f0800000000000000
+      internalID: -724084080288594277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_80
+      rect:
+        serializedVersion: 2
+        x: 1534
+        y: 33
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef87230e29ee9b750800000000000000
+      internalID: 6321345866585241854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_81
+      rect:
+        serializedVersion: 2
+        x: 1542
+        y: 33
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bab40e62ea7fc8ca0800000000000000
+      internalID: -6013159075097850965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_82
+      rect:
+        serializedVersion: 2
+        x: 1790
+        y: 17
+        width: 16
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8469451c7d48309f0800000000000000
+      internalID: -503412671138982328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_83
+      rect:
+        serializedVersion: 2
+        x: 907
+        y: 17
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a75884686e46e040800000000000000
+      internalID: 4676511473341061025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartButtonBackground_84
+      rect:
+        serializedVersion: 2
+        x: 1898
+        y: 21
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f8b91f559c8979d0800000000000000
+      internalID: -2776033122123663118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      StartButtonBackground_0: 3194954939219947195
+      StartButtonBackground_1: 5910663410149208486
+      StartButtonBackground_10: 4903042651906979020
+      StartButtonBackground_11: -10864369579247667
+      StartButtonBackground_12: 4709092134837724158
+      StartButtonBackground_13: -6655763675121314655
+      StartButtonBackground_14: 3908310036795209669
+      StartButtonBackground_15: -6290448761394361701
+      StartButtonBackground_16: -4459812985500374039
+      StartButtonBackground_17: 1829271095526958028
+      StartButtonBackground_18: -1936685726049690428
+      StartButtonBackground_19: 1947978057464357260
+      StartButtonBackground_2: -4081304928630011986
+      StartButtonBackground_20: -3656684456530721625
+      StartButtonBackground_21: -5040334739017719374
+      StartButtonBackground_22: -5442244888623621992
+      StartButtonBackground_23: 7384182441600782246
+      StartButtonBackground_24: -5064734182542096382
+      StartButtonBackground_25: -3948519158162239433
+      StartButtonBackground_26: 4285235687787605130
+      StartButtonBackground_27: 6333858393369796635
+      StartButtonBackground_28: 341518874433791918
+      StartButtonBackground_29: 847936334180607367
+      StartButtonBackground_3: 7951086050094432939
+      StartButtonBackground_30: 6151075678540882934
+      StartButtonBackground_31: 7207263824894337806
+      StartButtonBackground_32: -9023477561724801130
+      StartButtonBackground_33: 9108795561326985289
+      StartButtonBackground_34: -4619367484551601739
+      StartButtonBackground_35: -4345339147709423831
+      StartButtonBackground_36: 2701457524327047408
+      StartButtonBackground_37: -8875784551638213278
+      StartButtonBackground_38: 6981869623054850908
+      StartButtonBackground_39: -7750725425763237406
+      StartButtonBackground_4: 3617325599231369135
+      StartButtonBackground_40: -5681275650793188573
+      StartButtonBackground_41: -8386837294184269730
+      StartButtonBackground_42: -5834025785622829010
+      StartButtonBackground_43: -632544888723920857
+      StartButtonBackground_44: -274418419268214568
+      StartButtonBackground_45: 8332781254061608788
+      StartButtonBackground_46: -47862487913363375
+      StartButtonBackground_47: 6285103419780629049
+      StartButtonBackground_48: 7578243382757150956
+      StartButtonBackground_49: 5811132044950428467
+      StartButtonBackground_5: 6166769136698686778
+      StartButtonBackground_50: -8751451291308136918
+      StartButtonBackground_51: -1543622682315431683
+      StartButtonBackground_52: -9162660499560560011
+      StartButtonBackground_53: 9038104105863450870
+      StartButtonBackground_54: 2624770618142819815
+      StartButtonBackground_55: 5424615933217288996
+      StartButtonBackground_56: -2241243399332417633
+      StartButtonBackground_57: -2467682205257423143
+      StartButtonBackground_58: -3212598875802066433
+      StartButtonBackground_59: 6471111198254116574
+      StartButtonBackground_6: -652958378914353935
+      StartButtonBackground_60: 2325749880220723187
+      StartButtonBackground_61: 7985925843599602155
+      StartButtonBackground_62: 4210565548584860720
+      StartButtonBackground_63: -825315517903822802
+      StartButtonBackground_64: 4227642697658548480
+      StartButtonBackground_65: -94881005532286804
+      StartButtonBackground_66: 1422287488734859417
+      StartButtonBackground_67: -2390731467445191036
+      StartButtonBackground_68: 9067464698626961896
+      StartButtonBackground_69: -949824912286195471
+      StartButtonBackground_7: 276534976171568415
+      StartButtonBackground_70: -4568552589556600724
+      StartButtonBackground_71: -6824440414000308893
+      StartButtonBackground_72: 1206161746412253144
+      StartButtonBackground_73: -643345307939179249
+      StartButtonBackground_74: 2503253779681350811
+      StartButtonBackground_75: 9149906178844250016
+      StartButtonBackground_76: -6648120141613894827
+      StartButtonBackground_77: 5699512688274545620
+      StartButtonBackground_78: -6405273057589856620
+      StartButtonBackground_79: -724084080288594277
+      StartButtonBackground_8: -1794360268252501140
+      StartButtonBackground_80: 6321345866585241854
+      StartButtonBackground_81: -6013159075097850965
+      StartButtonBackground_82: -503412671138982328
+      StartButtonBackground_83: 4676511473341061025
+      StartButtonBackground_84: -2776033122123663118
+      StartButtonBackground_9: -7518705916844842739
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
