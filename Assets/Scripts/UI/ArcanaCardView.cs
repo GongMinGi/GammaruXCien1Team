@@ -92,6 +92,7 @@ public class ArcanaCardView : MonoBehaviour,
             return;
         }
 
+        SoundManager.Instance.PlaySoundEffect("CardHover");
         cardRectTransform.DOKill();
         isDeckHovered = true;
         deckSiblingIndex = cardRectTransform.GetSiblingIndex();

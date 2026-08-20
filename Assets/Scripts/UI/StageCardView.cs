@@ -50,6 +50,7 @@ public class StageCardView : MonoBehaviour
     /// </summary>
     public IEnumerator PlayRevealRoutine()
     {
+        SoundManager.Instance.PlaySoundEffect("StageOpen");
         isFrontShown = false;
         frontFace.SetActive(false);
         backFace.SetActive(false);
