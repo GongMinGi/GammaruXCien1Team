@@ -133,12 +133,46 @@ public class CardMergePanel : MonoBehaviour
         animContainer.transform.SetParent(mergeRoot.transform, false);
         Stretch(animContainer.GetComponent<RectTransform>());
 
+        // 취소 버튼
+        GameObject cancelObj = new GameObject("CancelButton",
+            typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        cancelObj.transform.SetParent(mergeRoot.transform, false);
+
+        RectTransform cancelRect = cancelObj.GetComponent<RectTransform>();
+        cancelRect.anchorMin = new Vector2(0.5f, 0f);
+        cancelRect.anchorMax = new Vector2(0.5f, 0f);
+        cancelRect.pivot = new Vector2(0.5f, 0f);
+        cancelRect.anchoredPosition = new Vector2(0f, 30f);
+        cancelRect.sizeDelta = new Vector2(160f, 50f);
+
+        Image cancelBg = cancelObj.GetComponent<Image>();
+        cancelBg.color = buttonColor;
+        cancelBg.raycastTarget = true;
+
+        Button cancelButton = cancelObj.AddComponent<Button>();
+        cancelButton.targetGraphic = cancelBg;
+        cancelButton.onClick.AddListener(Close);
+
+        GameObject cancelTextObj = new GameObject("Label",
+            typeof(RectTransform), typeof(CanvasRenderer), typeof(Text));
+        cancelTextObj.transform.SetParent(cancelObj.transform, false);
+        Stretch(cancelTextObj.GetComponent<RectTransform>());
+
+        Text cancelText = cancelTextObj.GetComponent<Text>();
+        cancelText.font = koreanFont;
+        cancelText.fontSize = buttonFontSize;
+        cancelText.color = Color.white;
+        cancelText.alignment = TextAnchor.MiddleCenter;
+        cancelText.text = "취소";
+        cancelText.raycastTarget = false;
+
         mergeRoot.SetActive(false);
     }
 
     public void Open()
     {
         if (mergeActive) return;
+        if (handDisplay != null && handDisplay.IsAnimating) return;
         mergeActive = true;
         mergeRoot.SetActive(true);
         mergeRoot.transform.SetAsLastSibling();

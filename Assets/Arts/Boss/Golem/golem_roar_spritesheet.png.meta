@@ -194,7 +194,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 525
-        y: 24
+        y: 25
         width: 124
         height: 118
       alignment: 7
@@ -215,7 +215,7 @@ TextureImporter:
       name: golem_roar_spritesheet_4
       rect:
         serializedVersion: 2
-        x: 691
+        x: 692
         y: 24
         width: 129
         height: 122
@@ -303,7 +303,7 @@ TextureImporter:
       name: golem_roar_spritesheet_8
       rect:
         serializedVersion: 2
-        x: 1370
+        x: 1371
         y: 24
         width: 114
         height: 109

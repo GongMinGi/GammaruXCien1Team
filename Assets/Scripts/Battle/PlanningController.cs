@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -32,6 +33,7 @@ public class PlanningController : MonoBehaviour
     private bool elementSelectionActive;
     private int elementSelectionHandIndex;
 
+    private bool cardUseAnimating;
     private bool directionSelectionActive;
     private int directionSelectionAllowedDirs;
     private PendingCardUse pendingCardUse;
@@ -42,6 +44,9 @@ public class PlanningController : MonoBehaviour
     private bool transformTargetSelectionActive;
     private int observationSourceHandIndex;
     private bool zeroCostUsedThisCount;
+    private int resetRemaining;
+
+    public int ResetRemaining => resetRemaining;
 
     private HashSet<Vector2Int> existingTowerPositions;
     private Sprite cachedPreviewSprite;
@@ -88,6 +93,11 @@ public class PlanningController : MonoBehaviour
         return true;
     }
 
+    public void SetResetCount(int count)
+    {
+        resetRemaining = Mathf.Max(0, count);
+    }
+
     public void BeginPlanning(
         Vector2Int startPos,
         Action<List<PlannedAction>, Vector2Int> onConfirmed,
@@ -129,6 +139,8 @@ public class PlanningController : MonoBehaviour
         if (arcanaCodexPanel != null && arcanaCodexPanel.IsOpen)
             return;
         if (cardMergePanel != null && cardMergePanel.IsOpen)
+            return;
+        if (cardUseAnimating || handDisplay.IsAnimating)
             return;
 
         if (!planningActive)
@@ -257,6 +269,12 @@ public class PlanningController : MonoBehaviour
 
         Keyboard kb = Keyboard.current;
 
+        if (kb.tabKey.wasPressedThisFrame)
+        {
+            ResetCurrentTurn();
+            return;
+        }
+
         if (transformTargetSelectionActive)
         {
             if (kb.digit1Key.wasPressedThisFrame) CompleteTransformCard(0);
@@ -307,16 +325,6 @@ public class PlanningController : MonoBehaviour
                 CancelElementSelection();
             return;
         }
-
-#if UNITY_EDITOR
-        // Tab 언두는 개발용 — 빌드에는 이 블록이 컴파일되지 않는다.
-        // QA 빌드에서도 쓰려면 조건을 UNITY_EDITOR || DEVELOPMENT_BUILD로 넓힌다.
-        if (kb.tabKey.wasPressedThisFrame)
-        {
-            UndoLastAction();
-            return;
-        }
-#endif
 
         if (kb.enterKey.wasPressedThisFrame || kb.numpadEnterKey.wasPressedThisFrame)
             ConfirmPlan();
@@ -491,10 +499,40 @@ public class PlanningController : MonoBehaviour
         FinalizeCardUse(handIndex, effectiveCost, card, Vector2Int.zero);
     }
 
+    private bool TryConsumeAnimatedCard(int handIndex, out ArcanaData card)
+    {
+        if (playerHand.TryTakeCard(handIndex, out card))
+            return true;
+        handDisplay.UpdateHand(playerHand.Cards);
+        cardUseAnimating = false;
+        return false;
+    }
+
     private void FinalizeCardUse(int handIndex, int effectiveCost,
         ArcanaData card, Vector2Int direction)
     {
-        playerHand.TryTakeCard(handIndex, out _);
+        StartCoroutine(FinalizeCardUseAnimated(
+            handIndex, effectiveCost, card, direction));
+    }
+
+    private IEnumerator FinalizeCardUseAnimated(int handIndex, int effectiveCost,
+        ArcanaData card, Vector2Int direction)
+    {
+        cardUseAnimating = true;
+        SoundManager.Instance.PlaySoundEffect("CardSelect");
+
+        bool? animResult = null;
+        handDisplay.PlayCardUseAnimation(handIndex, success => animResult = success);
+        yield return new WaitUntil(() => animResult.HasValue);
+
+        if (!animResult.Value)
+        {
+            cardUseAnimating = false;
+            yield break;
+        }
+
+        if (!TryConsumeAnimatedCard(handIndex, out _))
+            yield break;
 
         ArcanaData[] consumedCards = null;
         int[] consumedIndices = null;
@@ -561,12 +599,34 @@ public class PlanningController : MonoBehaviour
         usedSlots += effectiveCost;
         zeroCostUsedThisCount = false;
         NotifyPlanningSlotChanged();
+        cardUseAnimating = false;
     }
 
     private void FinalizeCardUseWithTwoDirections(int handIndex, int effectiveCost,
         ArcanaData card, Vector2Int firstDirection, Vector2Int secondDirection)
     {
-        playerHand.TryTakeCard(handIndex, out _);
+        StartCoroutine(FinalizeCardUseWithTwoDirectionsAnimated(
+            handIndex, effectiveCost, card, firstDirection, secondDirection));
+    }
+
+    private IEnumerator FinalizeCardUseWithTwoDirectionsAnimated(int handIndex, int effectiveCost,
+        ArcanaData card, Vector2Int firstDirection, Vector2Int secondDirection)
+    {
+        cardUseAnimating = true;
+        SoundManager.Instance.PlaySoundEffect("CardSelect");
+
+        bool? animResult = null;
+        handDisplay.PlayCardUseAnimation(handIndex, success => animResult = success);
+        yield return new WaitUntil(() => animResult.HasValue);
+
+        if (!animResult.Value)
+        {
+            cardUseAnimating = false;
+            yield break;
+        }
+
+        if (!TryConsumeAnimatedCard(handIndex, out _))
+            yield break;
 
         InstantModifierType consumedCost = activeCostModifier;
         bool consumedElement = activeElementBuff;
@@ -576,7 +636,6 @@ public class PlanningController : MonoBehaviour
         activeElementBuff = false;
 
         bool isMove = HasMoveInLastSlot(card);
-        // Move 카드: prePos는 첫 이동 시뮬 전 위치 (ConfirmDirectionSelection에서 저장)
         Vector2Int prePos = isMove ? pendingCardUse.PreFirstMovePos : playerGridPos;
 
         bool placedTower = false;
@@ -586,14 +645,11 @@ public class PlanningController : MonoBehaviour
 
         if (isMove)
         {
-            // 첫 이동은 이미 시뮬됨 (ConfirmDirectionSelection에서)
-            // 두 번째 이동 시뮬
             playerGridPos = SimulateCardMovement(playerGridPos, secondDirection, card);
             playerDisplay.UpdateGhostPosition(playerGridPos.x, playerGridPos.y);
         }
         else
         {
-            // 타워 카드: 첫 타워 프리뷰 이미 생성됨
             placedTower = true;
             towerPos = pendingCardUse.FirstTowerPos;
 
@@ -631,6 +687,38 @@ public class PlanningController : MonoBehaviour
         usedSlots += effectiveCost;
         zeroCostUsedThisCount = false;
         NotifyPlanningSlotChanged();
+        cardUseAnimating = false;
+    }
+
+    private void ResetCurrentTurn()
+    {
+        if (!planningActive || resetRemaining <= 0)
+            return;
+
+        if (directionSelectionActive)
+            CancelDirectionSelection();
+        if (elementSelectionActive)
+            CancelElementSelection();
+        if (transformTargetSelectionActive)
+            CancelTransformCard();
+        CancelCardDrag();
+
+        if (plannedActions.Count == 0)
+            return;
+
+        while (plannedActions.Count > 0)
+        {
+            int before = plannedActions.Count;
+            UndoLastAction();
+
+            if (plannedActions.Count >= before)
+            {
+                Debug.LogError("턴 초기화 중 Undo가 진행되지 않았습니다.", this);
+                return;
+            }
+        }
+
+        resetRemaining--;
     }
 
     private void UndoLastAction()
@@ -777,31 +865,7 @@ public class PlanningController : MonoBehaviour
         switch (card.ObservationAction)
         {
             case ObservationActionType.DrawCard:
-                playerHand.TryTakeCard(handIndex, out _);
-                int countBefore = playerHand.Cards.Count;
-                playerHand.DrawOne(bag);
-                if (playerHand.Cards.Count <= countBefore)
-                {
-                    // 드로우 실패 — 관측 카드 복원
-                    playerHand.ReturnCard(handIndex, card);
-                    Debug.Log("드로우 실패: 백이 비어있습니다.");
-                    return;
-                }
-                int drawnIndex = playerHand.Cards.Count - 1;
-                ArcanaData drawn = playerHand.Cards[drawnIndex];
-                plannedActions.Add(new PlannedAction
-                {
-                    Type = ActionType.UseObservationCard,
-                    Cost = 0,
-                    CardData = card,
-                    OriginalHandIndex = handIndex,
-                    ObservationAction = ObservationActionType.DrawCard,
-                    DrawnCard = drawn,
-                    DrawnCardIndex = drawnIndex
-                });
-                if (ConsumesZeroCostLimit(card))
-                    zeroCostUsedThisCount = true;
-                Debug.Log($"{card.DisplayNumber} {card.KoreanName}: 카드 1장 드로우.");
+                StartCoroutine(QueueObservationDrawAnimated(handIndex, card));
                 break;
 
             case ObservationActionType.TransformCard:
@@ -810,6 +874,7 @@ public class PlanningController : MonoBehaviour
                     Debug.Log("변환할 대상 카드가 없습니다.");
                     return;
                 }
+                SoundManager.Instance.PlaySoundEffect("CardSelect");
                 playerHand.TryTakeCard(handIndex, out _);
                 observationSourceHandIndex = handIndex;
                 transformTargetSelectionActive = true;
@@ -827,6 +892,54 @@ public class PlanningController : MonoBehaviour
             default:
                 return;
         }
+    }
+
+    private IEnumerator QueueObservationDrawAnimated(int handIndex, ArcanaData card)
+    {
+        cardUseAnimating = true;
+        SoundManager.Instance.PlaySoundEffect("CardSelect");
+
+        bool? animResult = null;
+        handDisplay.PlayCardUseAnimation(handIndex, success => animResult = success);
+        yield return new WaitUntil(() => animResult.HasValue);
+
+        if (!animResult.Value)
+        {
+            cardUseAnimating = false;
+            yield break;
+        }
+
+        if (!TryConsumeAnimatedCard(handIndex, out _))
+            yield break;
+
+        int countBefore = playerHand.Cards.Count;
+        playerHand.DrawOne(bag);
+        if (playerHand.Cards.Count <= countBefore)
+        {
+            playerHand.ReturnCard(handIndex, card);
+            Debug.Log("드로우 실패: 백이 비어있습니다.");
+            cardUseAnimating = false;
+            yield break;
+        }
+
+        int drawnIndex = playerHand.Cards.Count - 1;
+        ArcanaData drawn = playerHand.Cards[drawnIndex];
+        plannedActions.Add(new PlannedAction
+        {
+            Type = ActionType.UseObservationCard,
+            Cost = 0,
+            CardData = card,
+            OriginalHandIndex = handIndex,
+            ObservationAction = ObservationActionType.DrawCard,
+            DrawnCard = drawn,
+            DrawnCardIndex = drawnIndex
+        });
+
+        if (ConsumesZeroCostLimit(card))
+            zeroCostUsedThisCount = true;
+
+        Debug.Log($"{card.DisplayNumber} {card.KoreanName}: 카드 1장 드로우.");
+        cardUseAnimating = false;
     }
 
     private bool HandleTransformClick()
@@ -944,7 +1057,27 @@ public class PlanningController : MonoBehaviour
 
     private void ApplyInstantModifier(int handIndex, InstantModifierType modifier)
     {
-        playerHand.TryTakeCard(handIndex, out ArcanaData card);
+        StartCoroutine(ApplyInstantModifierAnimated(handIndex, modifier));
+    }
+
+    private IEnumerator ApplyInstantModifierAnimated(int handIndex, InstantModifierType modifier)
+    {
+        cardUseAnimating = true;
+        SoundManager.Instance.PlaySoundEffect("CardSelect");
+        SoundManager.Instance.PlaySoundEffect("PlayerGeneralBuff");
+
+        bool? animResult = null;
+        handDisplay.PlayCardUseAnimation(handIndex, success => animResult = success);
+        yield return new WaitUntil(() => animResult.HasValue);
+
+        if (!animResult.Value)
+        {
+            cardUseAnimating = false;
+            yield break;
+        }
+
+        if (!TryConsumeAnimatedCard(handIndex, out ArcanaData card))
+            yield break;
 
         plannedActions.Add(new PlannedAction
         {
@@ -971,6 +1104,7 @@ public class PlanningController : MonoBehaviour
             zeroCostUsedThisCount = true;
 
         NotifyPlanningSlotChanged();
+        cardUseAnimating = false;
     }
 
     private void EnterElementSelection(int handIndex)

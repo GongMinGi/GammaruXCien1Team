@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
@@ -16,17 +17,19 @@ public class PlayerDisplay : MonoBehaviour
     [SerializeField, Min(0.01f)] private float teleportFadeDuration = 0.12f;
     [SerializeField, Min(0f)] private float teleportPause = 0.05f;
 
+    [Header("Visual")]
+    [SerializeField] private SpriteRenderer playerRenderer;
+    [SerializeField] private Sprite idleSprite;
+
     public Vector2Int GridPosition => new(gridX, gridY);
+    public event Action<bool> MovementStateChanged;
 
-    private bool isGenerated;
     private ParticleSystem dustParticle;
-    private Sprite cachedSprite;
-    private Texture2D cachedTexture;
-
-    private SpriteRenderer playerRenderer;
     private Vector3 playerVisualBaseScale;
     private Color playerVisualBaseColor;
     private Coroutine teleportCoroutine;
+    private Tween moveTween;
+    private bool isMoving;
 
     private GameObject ghostObject;
     private SpriteRenderer ghostRenderer;
@@ -41,7 +44,17 @@ public class PlayerDisplay : MonoBehaviour
             return;
         }
 
-        GenerateVisual();
+        if (playerRenderer == null || idleSprite == null)
+        {
+            Debug.LogError("playerRenderer or idleSprite is not assigned.", this);
+            return;
+        }
+
+        playerRenderer.sprite = idleSprite;
+        playerRenderer.color = playerColor;
+        playerRenderer.sortingOrder = 3;
+        playerVisualBaseScale = playerRenderer.transform.localScale;
+        playerVisualBaseColor = playerColor;
     }
 
     private void Start()
@@ -56,9 +69,32 @@ public class PlayerDisplay : MonoBehaviour
         startCell?.StartPulse();
     }
 
+    private void SetMoving(bool value)
+    {
+        if (isMoving == value) return;
+        isMoving = value;
+        MovementStateChanged?.Invoke(value);
+    }
+
+    private void StopMovement()
+    {
+        Tween tween = moveTween;
+        moveTween = null;
+        tween?.Kill();
+        SetMoving(false);
+    }
+
+    public void CancelMovement()
+    {
+        CleanupTeleport();
+        StopMovement();
+    }
+
     public void UpdateGridPosition(int x, int y)
     {
         CleanupTeleport();
+        StopMovement();
+        if (x == gridX && y == gridY) return;
 
         GridCell prevCell = gridManager.GetCell(gridX, gridY);
         prevCell?.StopPulse();
@@ -66,8 +102,16 @@ public class PlayerDisplay : MonoBehaviour
         gridX = x;
         gridY = y;
         Vector3 target = gridManager.GridToWorldPosition(gridX, gridY);
-        transform.DOKill();
-        transform.DOMove(target, moveDuration).SetEase(moveEase);
+
+        Tween tween = transform.DOMove(target, moveDuration).SetEase(moveEase);
+        moveTween = tween;
+        SetMoving(true);
+        tween.OnComplete(() =>
+        {
+            if (moveTween != tween) return;
+            moveTween = null;
+            SetMoving(false);
+        });
 
         GridCell newCell = gridManager.GetCell(gridX, gridY);
         newCell?.StartPulse();
@@ -76,15 +120,32 @@ public class PlayerDisplay : MonoBehaviour
             dustParticle.Play();
     }
 
+    public void SetGridPositionImmediate(int x, int y)
+    {
+        CleanupTeleport();
+        StopMovement();
+
+        GridCell prevCell = gridManager.GetCell(gridX, gridY);
+        prevCell?.StopPulse();
+
+        gridX = x;
+        gridY = y;
+        transform.position = gridManager.GridToWorldPosition(gridX, gridY);
+
+        GridCell newCell = gridManager.GetCell(gridX, gridY);
+        newCell?.StartPulse();
+    }
+
     public void TeleportToGridPosition(int x, int y)
     {
+        StopMovement();
+
         GridCell prevCell = gridManager.GetCell(gridX, gridY);
         prevCell?.StopPulse();
 
         gridX = x;
         gridY = y;
 
-        transform.DOKill();
         CleanupTeleport();
         teleportCoroutine = StartCoroutine(TeleportSequence());
     }
@@ -94,7 +155,6 @@ public class PlayerDisplay : MonoBehaviour
         Vector3 target = gridManager.GridToWorldPosition(gridX, gridY);
         Transform visual = playerRenderer.transform;
 
-        // 사라짐: 스케일 축소 + 페이드아웃
         float elapsed = 0f;
         while (elapsed < teleportFadeDuration)
         {
@@ -107,14 +167,11 @@ public class PlayerDisplay : MonoBehaviour
             yield return null;
         }
 
-        // 순간 이동
         transform.position = target;
 
-        // 짧은 대기
         if (teleportPause > 0f)
             yield return new WaitForSeconds(teleportPause);
 
-        // 나타남: 스케일 복원 + 페이드인
         elapsed = 0f;
         while (elapsed < teleportFadeDuration)
         {
@@ -156,7 +213,7 @@ public class PlayerDisplay : MonoBehaviour
     {
         DestroyGhost();
 
-        if (cachedSprite == null)
+        if (idleSprite == null)
             return;
 
         ghostGridX = gridX;
@@ -167,10 +224,10 @@ public class PlayerDisplay : MonoBehaviour
 
         GameObject visual = new GameObject("Visual");
         visual.transform.SetParent(ghostObject.transform, false);
-        visual.transform.localScale = new Vector3(size, size, 1f);
+        visual.transform.localScale = playerVisualBaseScale;
 
         ghostRenderer = visual.AddComponent<SpriteRenderer>();
-        ghostRenderer.sprite = cachedSprite;
+        ghostRenderer.sprite = idleSprite;
         ghostRenderer.color = new Color(playerColor.r, playerColor.g, playerColor.b, 0.4f);
         ghostRenderer.sortingOrder = 2;
 
@@ -224,38 +281,6 @@ public class PlayerDisplay : MonoBehaviour
 
         if (ghostDustParticle != null)
             ghostDustParticle.Play();
-    }
-
-    private void GenerateVisual()
-    {
-        if (isGenerated)
-            return;
-
-        int texSize = 16;
-        cachedTexture = new Texture2D(texSize, texSize);
-        cachedTexture.filterMode = FilterMode.Point;
-
-        for (int y = 0; y < texSize; y++)
-            for (int x = 0; x < texSize; x++)
-                cachedTexture.SetPixel(x, y, Color.white);
-
-        cachedTexture.Apply();
-        cachedSprite = Sprite.Create(cachedTexture, new Rect(0, 0, texSize, texSize), new Vector2(0.5f, 0f), texSize);
-
-        GameObject visual = new GameObject("Visual");
-        visual.transform.SetParent(transform, false);
-        visual.transform.localScale = new Vector3(size, size, 1f);
-
-        SpriteRenderer renderer = visual.AddComponent<SpriteRenderer>();
-        renderer.sprite = cachedSprite;
-        renderer.color = playerColor;
-        renderer.sortingOrder = 3;
-
-        playerRenderer = renderer;
-        playerVisualBaseScale = visual.transform.localScale;
-        playerVisualBaseColor = playerColor;
-
-        isGenerated = true;
     }
 
     private ParticleSystem CreateDustParticle(Transform parent)
@@ -314,14 +339,12 @@ public class PlayerDisplay : MonoBehaviour
 
     private void OnDisable()
     {
-        CleanupTeleport();
+        CancelMovement();
     }
 
     private void OnDestroy()
     {
-        CleanupTeleport();
+        CancelMovement();
         DestroyGhost();
-        if (cachedSprite != null) Destroy(cachedSprite);
-        if (cachedTexture != null) Destroy(cachedTexture);
     }
 }

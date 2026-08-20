@@ -73,6 +73,7 @@ public class BattleFlowController : MonoBehaviour
                 wheelDisplay.gameObject.SetActive(false);
         }
 
+        planningController.SetResetCount(3);
         StartTurn();
     }
 
@@ -95,7 +96,10 @@ public class BattleFlowController : MonoBehaviour
         Debug.Log($"Turn {turnNumber} started.");
 
         bossStats.TickBurnTimer();
+        int handCountBefore = playerHand.Cards.Count;
         playerHand.DrawToCapacity();
+        if (playerHand.Cards.Count > handCountBefore)
+            SoundManager.Instance.PlaySoundEffect("CardShuffle");
 
         if (!bossController.GenerateAndShow(playerDisplay.GridPosition))
         {
@@ -320,6 +324,7 @@ public class BattleFlowController : MonoBehaviour
                         return null;
                     }
                     timeline[slotCursor].HasMainAction = true;
+                    timeline[slotCursor].IsActionStart = true;
                     timeline[slotCursor].MainAction = action;
                     timeline[slotCursor].Effects.Add(new ScheduledEffect
                     {
@@ -337,6 +342,7 @@ public class BattleFlowController : MonoBehaviour
                         return null;
                     }
                     timeline[slotCursor].HasMainAction = true;
+                    timeline[slotCursor].IsActionStart = true;
                     timeline[slotCursor].MainAction = action;
                     timeline[slotCursor].Effects.Add(new ScheduledEffect
                     {
@@ -353,6 +359,7 @@ public class BattleFlowController : MonoBehaviour
                         return null;
                     }
                     timeline[slotCursor].HasMainAction = true;
+                    timeline[slotCursor].IsActionStart = true;
                     timeline[slotCursor].MainAction = action;
                     timeline[slotCursor].Effects.Add(new ScheduledEffect
                     {
@@ -448,6 +455,7 @@ public class BattleFlowController : MonoBehaviour
                         if (i == 0)
                         {
                             timeline[slotCursor + i].HasMainAction = true;
+                            timeline[slotCursor + i].IsActionStart = true;
                             timeline[slotCursor + i].MainAction = action;
                         }
                         bool isDuplicatedSlot =

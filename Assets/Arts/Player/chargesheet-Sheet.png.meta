@@ -1,0 +1,2009 @@
+fileFormatVersion: 2
+guid: fb01741fab97bb3428d37b44513070be
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3739926641544879746
+    second: chargesheet-Sheet_0
+  - first:
+      213: 2981820763583702081
+    second: chargesheet-Sheet_1
+  - first:
+      213: 4388613454363471267
+    second: chargesheet-Sheet_2
+  - first:
+      213: 4913214086788487536
+    second: chargesheet-Sheet_3
+  - first:
+      213: 4928685363767245354
+    second: chargesheet-Sheet_4
+  - first:
+      213: -5185906285829659645
+    second: chargesheet-Sheet_5
+  - first:
+      213: 6646950909548456264
+    second: chargesheet-Sheet_6
+  - first:
+      213: -1894488871347731479
+    second: chargesheet-Sheet_7
+  - first:
+      213: 1782146256575836342
+    second: chargesheet-Sheet_8
+  - first:
+      213: 531426260951098119
+    second: chargesheet-Sheet_9
+  - first:
+      213: -5274897601039703986
+    second: chargesheet-Sheet_10
+  - first:
+      213: 4710593070152549316
+    second: chargesheet-Sheet_11
+  - first:
+      213: -6225344965663276601
+    second: chargesheet-Sheet_12
+  - first:
+      213: -1334095911058210687
+    second: chargesheet-Sheet_13
+  - first:
+      213: -3975561363760368214
+    second: chargesheet-Sheet_14
+  - first:
+      213: 2939530996930066622
+    second: chargesheet-Sheet_15
+  - first:
+      213: -744568205354413318
+    second: chargesheet-Sheet_16
+  - first:
+      213: 4990073923690205100
+    second: chargesheet-Sheet_17
+  - first:
+      213: -8479722440271235395
+    second: chargesheet-Sheet_18
+  - first:
+      213: -536252179796935942
+    second: chargesheet-Sheet_19
+  - first:
+      213: 6337566321211068628
+    second: chargesheet-Sheet_20
+  - first:
+      213: 6791701484112149555
+    second: chargesheet-Sheet_21
+  - first:
+      213: -6143929215309357893
+    second: chargesheet-Sheet_22
+  - first:
+      213: 1171065295250914864
+    second: chargesheet-Sheet_23
+  - first:
+      213: -3034150822930497279
+    second: chargesheet-Sheet_24
+  - first:
+      213: -7923584358419438212
+    second: chargesheet-Sheet_25
+  - first:
+      213: 7549736236154880799
+    second: chargesheet-Sheet_26
+  - first:
+      213: -8718177596993782686
+    second: chargesheet-Sheet_27
+  - first:
+      213: -4035448330489041138
+    second: chargesheet-Sheet_28
+  - first:
+      213: -2157427781452467124
+    second: chargesheet-Sheet_29
+  - first:
+      213: -7147772297014272824
+    second: chargesheet-Sheet_30
+  - first:
+      213: -7270837593964083279
+    second: chargesheet-Sheet_31
+  - first:
+      213: 2744526386071491875
+    second: chargesheet-Sheet_32
+  - first:
+      213: -8217924608479245287
+    second: chargesheet-Sheet_33
+  - first:
+      213: -879762987162125928
+    second: chargesheet-Sheet_34
+  - first:
+      213: 6421958321864904643
+    second: chargesheet-Sheet_35
+  - first:
+      213: -2777043443236100618
+    second: chargesheet-Sheet_36
+  - first:
+      213: 8014878424479476257
+    second: chargesheet-Sheet_37
+  - first:
+      213: -7265850344001635217
+    second: chargesheet-Sheet_38
+  - first:
+      213: -1185609093353630236
+    second: chargesheet-Sheet_39
+  - first:
+      213: 5382227827558231464
+    second: chargesheet-Sheet_40
+  - first:
+      213: -7212863427800653603
+    second: chargesheet-Sheet_41
+  - first:
+      213: -1950952258039851192
+    second: chargesheet-Sheet_42
+  - first:
+      213: 8094382093184899289
+    second: chargesheet-Sheet_43
+  - first:
+      213: -2579378388555821443
+    second: chargesheet-Sheet_44
+  - first:
+      213: 294820289379725569
+    second: chargesheet-Sheet_45
+  - first:
+      213: 7086715137416796519
+    second: chargesheet-Sheet_46
+  - first:
+      213: -8886612643169283016
+    second: chargesheet-Sheet_47
+  - first:
+      213: -5703972995344648242
+    second: chargesheet-Sheet_48
+  - first:
+      213: -3624686309386727809
+    second: chargesheet-Sheet_49
+  - first:
+      213: -6870300724715402510
+    second: chargesheet-Sheet_50
+  - first:
+      213: -6306711464122220276
+    second: chargesheet-Sheet_51
+  - first:
+      213: -1344179127012096537
+    second: chargesheet-Sheet_52
+  - first:
+      213: -8437878242493311531
+    second: chargesheet-Sheet_53
+  - first:
+      213: -5002589730921955412
+    second: chargesheet-Sheet_54
+  - first:
+      213: -3524737048330925210
+    second: chargesheet-Sheet_55
+  - first:
+      213: 2280331767740591985
+    second: chargesheet-Sheet_56
+  - first:
+      213: -217580929981612261
+    second: chargesheet-Sheet_57
+  - first:
+      213: -42483221557180904
+    second: chargesheet-Sheet_58
+  - first:
+      213: 359145533653189565
+    second: chargesheet-Sheet_59
+  - first:
+      213: -4157585238516280921
+    second: chargesheet-Sheet_60
+  - first:
+      213: 785087942694613077
+    second: chargesheet-Sheet_61
+  - first:
+      213: 5710579781467660973
+    second: chargesheet-Sheet_62
+  - first:
+      213: -2252687243957882921
+    second: chargesheet-Sheet_63
+  - first:
+      213: 3708948605820942548
+    second: chargesheet-Sheet_64
+  - first:
+      213: 3191763434491870971
+    second: chargesheet-Sheet_65
+  - first:
+      213: 4512829291315999887
+    second: chargesheet-Sheet_66
+  - first:
+      213: -8592554010423745308
+    second: chargesheet-Sheet_67
+  - first:
+      213: -6427513047298189255
+    second: chargesheet-Sheet_68
+  - first:
+      213: -5125659424909974372
+    second: chargesheet-Sheet_69
+  - first:
+      213: 7029199540897076851
+    second: chargesheet-Sheet_70
+  - first:
+      213: -4617979526622780325
+    second: chargesheet-Sheet_71
+  - first:
+      213: -6999013657816116608
+    second: chargesheet-Sheet_72
+  - first:
+      213: 3110862196275480777
+    second: chargesheet-Sheet_73
+  - first:
+      213: -7739538969666702488
+    second: chargesheet-Sheet_74
+  - first:
+      213: 5741447330725349513
+    second: chargesheet-Sheet_75
+  - first:
+      213: 5449278430454135985
+    second: chargesheet-Sheet_76
+  - first:
+      213: 3969575655549937643
+    second: chargesheet-Sheet_77
+  - first:
+      213: -85009672861766794
+    second: chargesheet-Sheet_78
+  - first:
+      213: 6099726280480094233
+    second: chargesheet-Sheet_79
+  - first:
+      213: -8218392923491841593
+    second: chargesheet-Sheet_80
+  - first:
+      213: 183315631826109310
+    second: chargesheet-Sheet_81
+  - first:
+      213: -4379190093868166559
+    second: chargesheet-Sheet_82
+  - first:
+      213: -3410304072844827197
+    second: chargesheet-Sheet_83
+  - first:
+      213: 5134797421440457251
+    second: chargesheet-Sheet_84
+  - first:
+      213: -9190001165382311131
+    second: chargesheet-Sheet_85
+  - first:
+      213: -376872110524823290
+    second: chargesheet-Sheet_86
+  - first:
+      213: -8204994750108765518
+    second: chargesheet-Sheet_87
+  - first:
+      213: 5467850148190069998
+    second: chargesheet-Sheet_88
+  - first:
+      213: -2842122371453298790
+    second: chargesheet-Sheet_89
+  - first:
+      213: 626250538276400843
+    second: chargesheet-Sheet_90
+  - first:
+      213: 8472656832856946963
+    second: chargesheet-Sheet_91
+  - first:
+      213: 8795743099843201949
+    second: chargesheet-Sheet_92
+  - first:
+      213: 3380744417464756394
+    second: chargesheet-Sheet_93
+  - first:
+      213: -5939902803357594293
+    second: chargesheet-Sheet_94
+  - first:
+      213: 8334711023618429790
+    second: chargesheet-Sheet_95
+  - first:
+      213: -3878365763670302818
+    second: chargesheet-Sheet_96
+  - first:
+      213: 2176370096227916257
+    second: chargesheet-Sheet_97
+  - first:
+      213: -7878512039857156128
+    second: chargesheet-Sheet_98
+  - first:
+      213: -1839819965984620673
+    second: chargesheet-Sheet_99
+  - first:
+      213: -1150008886129803099
+    second: chargesheet-Sheet_100
+  - first:
+      213: 450289719867867216
+    second: chargesheet-Sheet_101
+  - first:
+      213: 3320300182179091349
+    second: chargesheet-Sheet_102
+  - first:
+      213: -4593119925648390779
+    second: chargesheet-Sheet_103
+  - first:
+      213: 3994830378408381872
+    second: chargesheet-Sheet_104
+  - first:
+      213: 4261310037637952888
+    second: chargesheet-Sheet_105
+  - first:
+      213: -7013186462554226971
+    second: chargesheet-Sheet_106
+  - first:
+      213: 1759027022297846844
+    second: chargesheet-Sheet_107
+  - first:
+      213: 7198069236280338508
+    second: chargesheet-Sheet_108
+  - first:
+      213: 5305925029392643773
+    second: chargesheet-Sheet_109
+  - first:
+      213: 806342547203825817
+    second: chargesheet-Sheet_110
+  - first:
+      213: -6155591291060803950
+    second: chargesheet-Sheet_111
+  - first:
+      213: 2927377403724614516
+    second: chargesheet-Sheet_112
+  - first:
+      213: -4241687646647077104
+    second: chargesheet-Sheet_113
+  - first:
+      213: 3511682735976271406
+    second: chargesheet-Sheet_114
+  - first:
+      213: -8663210302090090234
+    second: chargesheet-Sheet_115
+  - first:
+      213: -8507743813798746281
+    second: chargesheet-Sheet_116
+  - first:
+      213: -7422866030046147013
+    second: chargesheet-Sheet_117
+  - first:
+      213: -8656643775525584080
+    second: chargesheet-Sheet_118
+  - first:
+      213: 8116628570468991313
+    second: chargesheet-Sheet_119
+  - first:
+      213: 3783784095498172702
+    second: chargesheet-Sheet_120
+  - first:
+      213: -4566119601088405292
+    second: chargesheet-Sheet_121
+  - first:
+      213: 8972549505928659444
+    second: chargesheet-Sheet_122
+  - first:
+      213: 5959105194089517059
+    second: chargesheet-Sheet_123
+  - first:
+      213: 6655747002485492651
+    second: chargesheet-Sheet_124
+  - first:
+      213: 9061493760537966738
+    second: chargesheet-Sheet_125
+  - first:
+      213: -3418937492583877535
+    second: chargesheet-Sheet_126
+  - first:
+      213: 749519188525955247
+    second: chargesheet-Sheet_127
+  - first:
+      213: -6959846585054926838
+    second: chargesheet-Sheet_128
+  - first:
+      213: -85527319845374506
+    second: chargesheet-Sheet_129
+  - first:
+      213: -2091417553552468399
+    second: chargesheet-Sheet_130
+  - first:
+      213: -242357254565026788
+    second: chargesheet-Sheet_131
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: chargesheet-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e71a2b4d88c191cc0800000000000000
+      internalID: -3739926641544879746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ada5d35fac77ec30800000000000000
+      internalID: 4388613454363471267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2a730d9935366440800000000000000
+      internalID: 4928685363767245354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 849681b92a6be3c50800000000000000
+      internalID: 6646950909548456264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b0bef004947bb810800000000000000
+      internalID: 1782146256575836342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e40e777549ccbc6b0800000000000000
+      internalID: -5274897601039703986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c1cf5dacb12b99a0800000000000000
+      internalID: -6225344965663276601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa5bb4ac008f3d8c0800000000000000
+      internalID: -3975561363760368214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af2dcc08923caa5f0800000000000000
+      internalID: -744568205354413318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db679b93e59f15a80800000000000000
+      internalID: -8479722440271235395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_20
+      rect:
+        serializedVersion: 2
+        x: 1284
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d0d344cdfe83f750800000000000000
+      internalID: 6337566321211068628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_22
+      rect:
+        serializedVersion: 2
+        x: 1414
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbc575c3ee06cbaa0800000000000000
+      internalID: -6143929215309357893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_24
+      rect:
+        serializedVersion: 2
+        x: 1542
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 101c444f6e784e5d0800000000000000
+      internalID: -3034150822930497279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_25
+      rect:
+        serializedVersion: 2
+        x: 1670
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c756198c106c90290800000000000000
+      internalID: -7923584358419438212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_28
+      rect:
+        serializedVersion: 2
+        x: 1798
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0fe1c7cf153ff7c0800000000000000
+      internalID: -4035448330489041138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_31
+      rect:
+        serializedVersion: 2
+        x: 1926
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b707381bbbc81b90800000000000000
+      internalID: -7270837593964083279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_37
+      rect:
+        serializedVersion: 2
+        x: 2054
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12aaa0166719a3f60800000000000000
+      internalID: 8014878424479476257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_38
+      rect:
+        serializedVersion: 2
+        x: 2182
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6cf1a6bb938a2b90800000000000000
+      internalID: -7265850344001635217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_41
+      rect:
+        serializedVersion: 2
+        x: 2310
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd029848de2c6eb90800000000000000
+      internalID: -7212863427800653603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_43
+      rect:
+        serializedVersion: 2
+        x: 2438
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d8919cb0a5055070800000000000000
+      internalID: 8094382093184899289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_45
+      rect:
+        serializedVersion: 2
+        x: 2566
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1017e0dbd79671400800000000000000
+      internalID: 294820289379725569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_47
+      rect:
+        serializedVersion: 2
+        x: 2694
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 834566362e86ca480800000000000000
+      internalID: -8886612643169283016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_49
+      rect:
+        serializedVersion: 2
+        x: 2822
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7e48ca810782bdc0800000000000000
+      internalID: -3624686309386727809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_50
+      rect:
+        serializedVersion: 2
+        x: 2950
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2faca3b24e9c7a0a0800000000000000
+      internalID: -6870300724715402510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_51
+      rect:
+        serializedVersion: 2
+        x: 3078
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c018c18765f0a78a0800000000000000
+      internalID: -6306711464122220276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_55
+      rect:
+        serializedVersion: 2
+        x: 3206
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66b8393545e951fc0800000000000000
+      internalID: -3524737048330925210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_58
+      rect:
+        serializedVersion: 2
+        x: 3334
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8168b2e2cb1196ff0800000000000000
+      internalID: -42483221557180904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_61
+      rect:
+        serializedVersion: 2
+        x: 3462
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55031c5035135ea00800000000000000
+      internalID: 785087942694613077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_63
+      rect:
+        serializedVersion: 2
+        x: 3590
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7df26d903e8dcb0e0800000000000000
+      internalID: -2252687243957882921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_66
+      rect:
+        serializedVersion: 2
+        x: 3718
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f843ed8945ac0ae30800000000000000
+      internalID: 4512829291315999887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_67
+      rect:
+        serializedVersion: 2
+        x: 3846
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e4a55f17ad11c880800000000000000
+      internalID: -8592554010423745308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_70
+      rect:
+        serializedVersion: 2
+        x: 3974
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 376528a7dbbbc8160800000000000000
+      internalID: 7029199540897076851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_72
+      rect:
+        serializedVersion: 2
+        x: 4102
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08253cb19228ede90800000000000000
+      internalID: -6999013657816116608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_74
+      rect:
+        serializedVersion: 2
+        x: 4230
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86339bb1052a79490800000000000000
+      internalID: -7739538969666702488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_77
+      rect:
+        serializedVersion: 2
+        x: 4358
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be7a71ae604c61730800000000000000
+      internalID: 3969575655549937643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_79
+      rect:
+        serializedVersion: 2
+        x: 4486
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 918712ffbb496a450800000000000000
+      internalID: 6099726280480094233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_81
+      rect:
+        serializedVersion: 2
+        x: 4614
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7385cc88944b8200800000000000000
+      internalID: 183315631826109310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_83
+      rect:
+        serializedVersion: 2
+        x: 4742
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c5240aa38a2ca0d0800000000000000
+      internalID: -3410304072844827197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_85
+      rect:
+        serializedVersion: 2
+        x: 4870
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52326fb71ae867080800000000000000
+      internalID: -9190001165382311131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_87
+      rect:
+        serializedVersion: 2
+        x: 4998
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b272d72fb0022e80800000000000000
+      internalID: -8204994750108765518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_89
+      rect:
+        serializedVersion: 2
+        x: 5126
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a97d559e2c0ce88d0800000000000000
+      internalID: -2842122371453298790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_91
+      rect:
+        serializedVersion: 2
+        x: 5254
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 319793adf7ce49570800000000000000
+      internalID: 8472656832856946963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_92
+      rect:
+        serializedVersion: 2
+        x: 5382
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9b4fb95fb1c01a70800000000000000
+      internalID: 8795743099843201949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_95
+      rect:
+        serializedVersion: 2
+        x: 5510
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e531f4c4487daa370800000000000000
+      internalID: 8334711023618429790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_97
+      rect:
+        serializedVersion: 2
+        x: 5638
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e992755215043e10800000000000000
+      internalID: 2176370096227916257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_99
+      rect:
+        serializedVersion: 2
+        x: 5766
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7fb0dc1d75a776e0800000000000000
+      internalID: -1839819965984620673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_101
+      rect:
+        serializedVersion: 2
+        x: 5894
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0500cbe4d10cf3600800000000000000
+      internalID: 450289719867867216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_103
+      rect:
+        serializedVersion: 2
+        x: 6022
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58585f453c5f140c0800000000000000
+      internalID: -4593119925648390779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_105
+      rect:
+        serializedVersion: 2
+        x: 6150
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 875773fd6e6332b30800000000000000
+      internalID: 4261310037637952888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_107
+      rect:
+        serializedVersion: 2
+        x: 6278
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c34506ec1c1596810800000000000000
+      internalID: 1759027022297846844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_109
+      rect:
+        serializedVersion: 2
+        x: 6406
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db67dc5c3be62a940800000000000000
+      internalID: 5305925029392643773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_111
+      rect:
+        serializedVersion: 2
+        x: 6534
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29625d1a552f29aa0800000000000000
+      internalID: -6155591291060803950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_113
+      rect:
+        serializedVersion: 2
+        x: 6662
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 017307d0f8f7225c0800000000000000
+      internalID: -4241687646647077104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_115
+      rect:
+        serializedVersion: 2
+        x: 6790
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6096a61412816c780800000000000000
+      internalID: -8663210302090090234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_117
+      rect:
+        serializedVersion: 2
+        x: 6918
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3e09c77caeacf890800000000000000
+      internalID: -7422866030046147013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_119
+      rect:
+        serializedVersion: 2
+        x: 7046
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 151479c5eae04a070800000000000000
+      internalID: 8116628570468991313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_121
+      rect:
+        serializedVersion: 2
+        x: 7174
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d06d274a62e1a0c0800000000000000
+      internalID: -4566119601088405292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_123
+      rect:
+        serializedVersion: 2
+        x: 7302
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30014e0f99ef2b250800000000000000
+      internalID: 5959105194089517059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_125
+      rect:
+        serializedVersion: 2
+        x: 7430
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 298b84bb094e0cd70800000000000000
+      internalID: 9061493760537966738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_127
+      rect:
+        serializedVersion: 2
+        x: 7558
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa8bd681bb3d66a00800000000000000
+      internalID: 749519188525955247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_129
+      rect:
+        serializedVersion: 2
+        x: 7686
+        y: 0
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d576021b5520def0800000000000000
+      internalID: -85527319845374506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: chargesheet-Sheet_131
+      rect:
+        serializedVersion: 2
+        x: 7814
+        y: 0
+        width: 122
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c14a9ec6c59f2acf0800000000000000
+      internalID: -242357254565026788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: ddb1193300a540e41b61058eb38c32c8
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      chargesheet-Sheet_0: -3739926641544879746
+      chargesheet-Sheet_1: 2981820763583702081
+      chargesheet-Sheet_10: -5274897601039703986
+      chargesheet-Sheet_100: -1150008886129803099
+      chargesheet-Sheet_101: 450289719867867216
+      chargesheet-Sheet_102: 3320300182179091349
+      chargesheet-Sheet_103: -4593119925648390779
+      chargesheet-Sheet_104: 3994830378408381872
+      chargesheet-Sheet_105: 4261310037637952888
+      chargesheet-Sheet_106: -7013186462554226971
+      chargesheet-Sheet_107: 1759027022297846844
+      chargesheet-Sheet_108: 7198069236280338508
+      chargesheet-Sheet_109: 5305925029392643773
+      chargesheet-Sheet_11: 4710593070152549316
+      chargesheet-Sheet_110: 806342547203825817
+      chargesheet-Sheet_111: -6155591291060803950
+      chargesheet-Sheet_112: 2927377403724614516
+      chargesheet-Sheet_113: -4241687646647077104
+      chargesheet-Sheet_114: 3511682735976271406
+      chargesheet-Sheet_115: -8663210302090090234
+      chargesheet-Sheet_116: -8507743813798746281
+      chargesheet-Sheet_117: -7422866030046147013
+      chargesheet-Sheet_118: -8656643775525584080
+      chargesheet-Sheet_119: 8116628570468991313
+      chargesheet-Sheet_12: -6225344965663276601
+      chargesheet-Sheet_120: 3783784095498172702
+      chargesheet-Sheet_121: -4566119601088405292
+      chargesheet-Sheet_122: 8972549505928659444
+      chargesheet-Sheet_123: 5959105194089517059
+      chargesheet-Sheet_124: 6655747002485492651
+      chargesheet-Sheet_125: 9061493760537966738
+      chargesheet-Sheet_126: -3418937492583877535
+      chargesheet-Sheet_127: 749519188525955247
+      chargesheet-Sheet_128: -6959846585054926838
+      chargesheet-Sheet_129: -85527319845374506
+      chargesheet-Sheet_13: -1334095911058210687
+      chargesheet-Sheet_130: -2091417553552468399
+      chargesheet-Sheet_131: -242357254565026788
+      chargesheet-Sheet_14: -3975561363760368214
+      chargesheet-Sheet_15: 2939530996930066622
+      chargesheet-Sheet_16: -744568205354413318
+      chargesheet-Sheet_17: 4990073923690205100
+      chargesheet-Sheet_18: -8479722440271235395
+      chargesheet-Sheet_19: -536252179796935942
+      chargesheet-Sheet_2: 4388613454363471267
+      chargesheet-Sheet_20: 6337566321211068628
+      chargesheet-Sheet_21: 6791701484112149555
+      chargesheet-Sheet_22: -6143929215309357893
+      chargesheet-Sheet_23: 1171065295250914864
+      chargesheet-Sheet_24: -3034150822930497279
+      chargesheet-Sheet_25: -7923584358419438212
+      chargesheet-Sheet_26: 7549736236154880799
+      chargesheet-Sheet_27: -8718177596993782686
+      chargesheet-Sheet_28: -4035448330489041138
+      chargesheet-Sheet_29: -2157427781452467124
+      chargesheet-Sheet_3: 4913214086788487536
+      chargesheet-Sheet_30: -7147772297014272824
+      chargesheet-Sheet_31: -7270837593964083279
+      chargesheet-Sheet_32: 2744526386071491875
+      chargesheet-Sheet_33: -8217924608479245287
+      chargesheet-Sheet_34: -879762987162125928
+      chargesheet-Sheet_35: 6421958321864904643
+      chargesheet-Sheet_36: -2777043443236100618
+      chargesheet-Sheet_37: 8014878424479476257
+      chargesheet-Sheet_38: -7265850344001635217
+      chargesheet-Sheet_39: -1185609093353630236
+      chargesheet-Sheet_4: 4928685363767245354
+      chargesheet-Sheet_40: 5382227827558231464
+      chargesheet-Sheet_41: -7212863427800653603
+      chargesheet-Sheet_42: -1950952258039851192
+      chargesheet-Sheet_43: 8094382093184899289
+      chargesheet-Sheet_44: -2579378388555821443
+      chargesheet-Sheet_45: 294820289379725569
+      chargesheet-Sheet_46: 7086715137416796519
+      chargesheet-Sheet_47: -8886612643169283016
+      chargesheet-Sheet_48: -5703972995344648242
+      chargesheet-Sheet_49: -3624686309386727809
+      chargesheet-Sheet_5: -5185906285829659645
+      chargesheet-Sheet_50: -6870300724715402510
+      chargesheet-Sheet_51: -6306711464122220276
+      chargesheet-Sheet_52: -1344179127012096537
+      chargesheet-Sheet_53: -8437878242493311531
+      chargesheet-Sheet_54: -5002589730921955412
+      chargesheet-Sheet_55: -3524737048330925210
+      chargesheet-Sheet_56: 2280331767740591985
+      chargesheet-Sheet_57: -217580929981612261
+      chargesheet-Sheet_58: -42483221557180904
+      chargesheet-Sheet_59: 359145533653189565
+      chargesheet-Sheet_6: 6646950909548456264
+      chargesheet-Sheet_60: -4157585238516280921
+      chargesheet-Sheet_61: 785087942694613077
+      chargesheet-Sheet_62: 5710579781467660973
+      chargesheet-Sheet_63: -2252687243957882921
+      chargesheet-Sheet_64: 3708948605820942548
+      chargesheet-Sheet_65: 3191763434491870971
+      chargesheet-Sheet_66: 4512829291315999887
+      chargesheet-Sheet_67: -8592554010423745308
+      chargesheet-Sheet_68: -6427513047298189255
+      chargesheet-Sheet_69: -5125659424909974372
+      chargesheet-Sheet_7: -1894488871347731479
+      chargesheet-Sheet_70: 7029199540897076851
+      chargesheet-Sheet_71: -4617979526622780325
+      chargesheet-Sheet_72: -6999013657816116608
+      chargesheet-Sheet_73: 3110862196275480777
+      chargesheet-Sheet_74: -7739538969666702488
+      chargesheet-Sheet_75: 5741447330725349513
+      chargesheet-Sheet_76: 5449278430454135985
+      chargesheet-Sheet_77: 3969575655549937643
+      chargesheet-Sheet_78: -85009672861766794
+      chargesheet-Sheet_79: 6099726280480094233
+      chargesheet-Sheet_8: 1782146256575836342
+      chargesheet-Sheet_80: -8218392923491841593
+      chargesheet-Sheet_81: 183315631826109310
+      chargesheet-Sheet_82: -4379190093868166559
+      chargesheet-Sheet_83: -3410304072844827197
+      chargesheet-Sheet_84: 5134797421440457251
+      chargesheet-Sheet_85: -9190001165382311131
+      chargesheet-Sheet_86: -376872110524823290
+      chargesheet-Sheet_87: -8204994750108765518
+      chargesheet-Sheet_88: 5467850148190069998
+      chargesheet-Sheet_89: -2842122371453298790
+      chargesheet-Sheet_9: 531426260951098119
+      chargesheet-Sheet_90: 626250538276400843
+      chargesheet-Sheet_91: 8472656832856946963
+      chargesheet-Sheet_92: 8795743099843201949
+      chargesheet-Sheet_93: 3380744417464756394
+      chargesheet-Sheet_94: -5939902803357594293
+      chargesheet-Sheet_95: 8334711023618429790
+      chargesheet-Sheet_96: -3878365763670302818
+      chargesheet-Sheet_97: 2176370096227916257
+      chargesheet-Sheet_98: -7878512039857156128
+      chargesheet-Sheet_99: -1839819965984620673
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

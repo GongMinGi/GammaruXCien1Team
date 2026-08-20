@@ -34,3 +34,43 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: b7fc3f2674ab73847ba15e2ef51d0eca, type: 3}
   - soundEffectName: GameStart
     clip: {fileID: 8300000, guid: 5c1396bbb8b2314429574ba84b14db36, type: 3}
+  - soundEffectName: PlayerMagicianI
+    clip: {fileID: 8300000, guid: 7ee46ef262b07cc46b8a899c75f44296, type: 3}
+  - soundEffectName: PlayerHealIII
+    clip: {fileID: 8300000, guid: 6171968949b1f2544b7f7bdb7d69a0cd, type: 3}
+  - soundEffectName: PlayerGeneralBuff
+    clip: {fileID: 8300000, guid: 8bd76b914c06a8f4aa932a324e74835c, type: 3}
+  - soundEffectName: PlayerReviveVI
+    clip: {fileID: 8300000, guid: 5e0d38f76c1c944499378f0961a1df32, type: 3}
+  - soundEffectName: PlayerWarpVII
+    clip: {fileID: 8300000, guid: 3fe7e37556aa0214b8cb41488104f621, type: 3}
+  - soundEffectName: PlayerStrengthVIII
+    clip: {fileID: 8300000, guid: ccb1df68c88875d4fbfc88ddc02bc515, type: 3}
+  - soundEffectName: PlayerEvadeIX
+    clip: {fileID: 8300000, guid: 365167ee80c7879449f4cc03f95d53a9, type: 3}
+  - soundEffectName: PlayerJusticeDeath1
+    clip: {fileID: 8300000, guid: 925dad6e5fef02d41a7340254ea00a60, type: 3}
+  - soundEffectName: PlayerJustice2XI
+    clip: {fileID: 8300000, guid: b80c6907471532c458cffd7103131ee5, type: 3}
+  - soundEffectName: PlayerDeath2XIII
+    clip: {fileID: 8300000, guid: 4fb8fd8f1cea5f64da58734ebb5d83ed, type: 3}
+  - soundEffectName: PlayerStar1XVII
+    clip: {fileID: 8300000, guid: c1b5e691fb36207459505f3135f2df65, type: 3}
+  - soundEffectName: PlayerStar2XVII
+    clip: {fileID: 8300000, guid: 52433f68ddd56dc419ce1f2e468e3eeb, type: 3}
+  - soundEffectName: PlayerMoonXVIII
+    clip: {fileID: 8300000, guid: a4b7a2eaa95a4ae4d9e972d3ab78a8a8, type: 3}
+  - soundEffectName: PlayerSunXIX
+    clip: {fileID: 8300000, guid: 35e7fe49bd5ff4c4c861faecbfa69cfa, type: 3}
+  - soundEffectName: PlayerTempestXX
+    clip: {fileID: 8300000, guid: 20764a6f35c1d3f44b1575809af5cc2c, type: 3}
+  - soundEffectName: PlayerWalk
+    clip: {fileID: 8300000, guid: fc4f7cbd7d0a266419538d01b4da3d22, type: 3}
+  - soundEffectName: CardSelect
+    clip: {fileID: 8300000, guid: d0873af83dd8b7d4eadfb82b8985a361, type: 3}
+  - soundEffectName: CardShuffle
+    clip: {fileID: 8300000, guid: 61e1b581baa4ade4d879d6c0cc6d4dcc, type: 3}
+  - soundEffectName: GolemGroundSlam
+    clip: {fileID: 8300000, guid: 068be8cced9c01947af89b97470d09eb, type: 3}
+  - soundEffectName: GolemLandBlast
+    clip: {fileID: 8300000, guid: 90850513123d0cb4c8d3aa696d8bcfcd, type: 3}

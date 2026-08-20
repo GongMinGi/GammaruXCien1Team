@@ -81,6 +81,16 @@ public class GolemBossPresentation : MonoBehaviour
 
         if (prefab == null) return;
 
+        string impactSfx = action.impactEffect switch
+        {
+            BossImpactEffect.FallingStone => "GolemGroundSlam",
+            BossImpactEffect.GroundBurst => "GolemLandBlast",
+            BossImpactEffect.ShockwaveRing => "GolemLandBlast",
+            _ => null
+        };
+        if (impactSfx != null)
+            SoundManager.Instance.PlaySoundEffect(impactSfx);
+
         foreach (Vector2Int cell in action.targetCells)
         {
             Vector3 worldPos = gridManager.GridToWorldPosition(cell.x, cell.y);
