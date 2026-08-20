@@ -13,6 +13,8 @@ public class ArcanaSelectionController : MonoBehaviour
     [SerializeField] private ArcanaCatalog arcanaCatalog;
     [SerializeField] private ArcanaSelectionView arcanaSelectionView;
     [SerializeField] private SceneTransitionController sceneTransitionController;
+    [SerializeField] private TutorialController deckTutorialController;
+    [SerializeField] private TutorialController battleReadyTutorialController;
     [SerializeField] private int maximumDisplayedArcanaId = 10;
     [SerializeField] private ArcanaDeckRowLayout deckRowLayout
         = ArcanaDeckRowLayout.TwoRows;
@@ -52,6 +54,12 @@ public class ArcanaSelectionController : MonoBehaviour
     public void OpenArcanaSelection()
     {
         arcanaSelectionView.ShowSelection();
+
+        // 아직 1스테이지만 열려 있는 첫 판에서만 튜토리얼을 띄운다.
+        if (StageProgressData.UnlockedStageCount == 1)
+        {
+            deckTutorialController.StartTutorial();
+        }
     }
 
     /// <summary>
@@ -60,6 +68,7 @@ public class ArcanaSelectionController : MonoBehaviour
     private void HandleLeftClick(ArcanaCardView selectedArcanaCard)
     {
         arcanaSelectionView.ShowCardDetails(selectedArcanaCard.CardData);
+        TutorialController.NotifyActionCompleted("ArcanaCardSelected");
 
         if (selectedArcanaCard.IsInDeck
             && selectedArcanaCards.Count < MaximumSelectedCardCount)
@@ -67,6 +76,13 @@ public class ArcanaSelectionController : MonoBehaviour
             arcanaSelectionView.MoveCardToInventory(selectedArcanaCard);
             selectedArcanaCards.Add(selectedArcanaCard.CardData);
             UpdateBattleStartButtonState();
+
+            // 수정구가 막 켜진 순간에 마지막 튜토리얼을 띄운다.
+            if (selectedArcanaCards.Count == MinimumSelectedCardCount
+                && StageProgressData.UnlockedStageCount == 1)
+            {
+                battleReadyTutorialController.StartTutorial();
+            }
         }
     }
 
