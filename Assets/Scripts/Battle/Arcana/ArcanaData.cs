@@ -22,6 +22,7 @@ public class ArcanaData : ScriptableObject
     [SerializeField] private bool zeroCostUnlimited;
     [SerializeField, Min(0)] private int cooldownTurns;
     [SerializeField] private bool blocksCostModifiers;
+    [SerializeField] private PlayerAnimationCue animationCue;
 
     public int Id => id;
     public string DisplayNumber => displayNumber;
@@ -42,6 +43,7 @@ public class ArcanaData : ScriptableObject
     public bool ZeroCostUnlimited => zeroCostUnlimited;
     public int CooldownTurns => cooldownTurns;
     public bool BlocksCostModifiers => blocksCostModifiers;
+    public PlayerAnimationCue AnimationCue => animationCue;
 
     public bool CanEnterPool =>
         usageType != ArcanaUsageType.AlwaysAvailable &&

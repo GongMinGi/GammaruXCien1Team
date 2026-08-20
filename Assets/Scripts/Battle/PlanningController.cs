@@ -519,6 +519,7 @@ public class PlanningController : MonoBehaviour
         ArcanaData card, Vector2Int direction)
     {
         cardUseAnimating = true;
+        SoundManager.Instance.PlaySoundEffect("CardSelect");
 
         bool? animResult = null;
         handDisplay.PlayCardUseAnimation(handIndex, success => animResult = success);
@@ -612,6 +613,7 @@ public class PlanningController : MonoBehaviour
         ArcanaData card, Vector2Int firstDirection, Vector2Int secondDirection)
     {
         cardUseAnimating = true;
+        SoundManager.Instance.PlaySoundEffect("CardSelect");
 
         bool? animResult = null;
         handDisplay.PlayCardUseAnimation(handIndex, success => animResult = success);
@@ -872,6 +874,7 @@ public class PlanningController : MonoBehaviour
                     Debug.Log("변환할 대상 카드가 없습니다.");
                     return;
                 }
+                SoundManager.Instance.PlaySoundEffect("CardSelect");
                 playerHand.TryTakeCard(handIndex, out _);
                 observationSourceHandIndex = handIndex;
                 transformTargetSelectionActive = true;
@@ -894,6 +897,7 @@ public class PlanningController : MonoBehaviour
     private IEnumerator QueueObservationDrawAnimated(int handIndex, ArcanaData card)
     {
         cardUseAnimating = true;
+        SoundManager.Instance.PlaySoundEffect("CardSelect");
 
         bool? animResult = null;
         handDisplay.PlayCardUseAnimation(handIndex, success => animResult = success);
@@ -1059,6 +1063,8 @@ public class PlanningController : MonoBehaviour
     private IEnumerator ApplyInstantModifierAnimated(int handIndex, InstantModifierType modifier)
     {
         cardUseAnimating = true;
+        SoundManager.Instance.PlaySoundEffect("CardSelect");
+        SoundManager.Instance.PlaySoundEffect("PlayerGeneralBuff");
 
         bool? animResult = null;
         handDisplay.PlayCardUseAnimation(handIndex, success => animResult = success);

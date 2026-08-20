@@ -21,6 +21,8 @@ public class BattleExecutor : MonoBehaviour
     public event Action<BossAnimationCue> BossAnimationRequested;
     /// 보스 타격 이펙트 요청 (피해 슬롯)
     public event Action<BossAction> BossImpactRequested;
+    /// 플레이어 애니메이션 요청 (카드 사용 시작 슬롯)
+    public event Action<PlayerAnimationCue> PlayerAnimationRequested;
 
     private CombatResolver combatResolver;
     private Coroutine executionCoroutine;
@@ -37,6 +39,7 @@ public class BattleExecutor : MonoBehaviour
     }
 
     private readonly List<TowerState> towers = new();
+    private readonly Dictionary<int, List<string>> scheduledSfx = new();
 
     private Texture2D cachedSquareTexture;
     private Texture2D cachedTriangleTexture;
@@ -135,6 +138,7 @@ public class BattleExecutor : MonoBehaviour
     {
         Coroutine coroutine = executionCoroutine;
         CleanupExecution();
+        playerDisplay?.CancelMovement();
 
         if (coroutine != null)
             StopCoroutine(coroutine);
@@ -165,16 +169,59 @@ public class BattleExecutor : MonoBehaviour
         try
         {
             Vector2Int currentPos = startPos;
-            playerDisplay.UpdateGridPosition(startPos.x, startPos.y);
+            playerDisplay.SetGridPositionImmediate(startPos.x, startPos.y);
             yield return new WaitForSeconds(0.3f);
 
             SlotModifiers modifiers = default;
+            scheduledSfx.Clear();
 
             for (int slot = 0; slot < timeline.Length; slot++)
             {
                 modifiers.ResetPerSlot();
+
+                // 예약된 SFX 재생
+                if (scheduledSfx.TryGetValue(slot, out List<string> sfxList))
+                {
+                    foreach (string sfx in sfxList)
+                        SoundManager.Instance.PlaySoundEffect(sfx);
+                    scheduledSfx.Remove(slot);
+                }
+
+                // 카드 SFX
+                if (timeline[slot].HasMainAction &&
+                    timeline[slot].MainAction.Type == ActionType.UseCard)
+                {
+                    ArcanaData card = timeline[slot].MainAction.CardData;
+                    string sfx1 = GetCardSfxPart1(card.Id);
+                    if (sfx1 != null)
+                        SoundManager.Instance.PlaySoundEffect(sfx1);
+
+                    string sfx2 = GetCardSfxPart2(card.Id);
+                    if (sfx2 != null)
+                    {
+                        int lastSlot = Mathf.Min(
+                            timeline.Length - 1,
+                            slot + timeline[slot].MainAction.Cost - 1);
+
+                        if (lastSlot <= slot)
+                        {
+                            SoundManager.Instance.PlaySoundEffect(sfx2);
+                        }
+                        else
+                        {
+                            if (!scheduledSfx.TryGetValue(lastSlot, out List<string> list))
+                            {
+                                list = new List<string>();
+                                scheduledSfx[lastSlot] = list;
+                            }
+                            list.Add(sfx2);
+                        }
+                    }
+                }
+
                 SlotStarted?.Invoke(slot, bossPattern);
                 FireAnimationCues(slot, bossPattern);
+                FirePlayerAnimationCue(timeline[slot]);
 
                 if (bossStats.IsDead)
                     break;
@@ -268,7 +315,10 @@ public class BattleExecutor : MonoBehaviour
                         if (effect.MovementPresentation == MovementPresentation.Teleport)
                             playerDisplay.TeleportToGridPosition(currentPos.x, currentPos.y);
                         else
+                        {
+                            SoundManager.Instance.PlaySoundEffect("PlayerWalk");
                             playerDisplay.UpdateGridPosition(currentPos.x, currentPos.y);
+                        }
                     }
                     break;
 
@@ -369,6 +419,18 @@ public class BattleExecutor : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void FirePlayerAnimationCue(TimelineSlot timelineSlot)
+    {
+        if (!timelineSlot.IsActionStart) return;
+        if (!timelineSlot.HasMainAction) return;
+        if (timelineSlot.MainAction.Type != ActionType.UseCard) return;
+
+        ArcanaData card = timelineSlot.MainAction.CardData;
+        if (card == null || card.AnimationCue == PlayerAnimationCue.None) return;
+
+        PlayerAnimationRequested?.Invoke(card.AnimationCue);
     }
 
     private void ProcessBossActions(
@@ -567,6 +629,31 @@ public class BattleExecutor : MonoBehaviour
 
         return obj;
     }
+
+    private static string GetCardSfxPart1(int cardId) => cardId switch
+    {
+        1 => "PlayerMagicianI",
+        3 => "PlayerHealIII",
+        6 => "PlayerReviveVI",
+        7 => "PlayerWarpVII",
+        8 => "PlayerStrengthVIII",
+        9 => "PlayerEvadeIX",
+        11 => "PlayerJusticeDeath1",
+        13 => "PlayerJusticeDeath1",
+        17 => "PlayerStar1XVII",
+        18 => "PlayerMoonXVIII",
+        19 => "PlayerSunXIX",
+        20 => "PlayerTempestXX",
+        _ => null
+    };
+
+    private static string GetCardSfxPart2(int cardId) => cardId switch
+    {
+        11 => "PlayerJustice2XI",
+        13 => "PlayerDeath2XIII",
+        17 => "PlayerStar2XVII",
+        _ => null
+    };
 
     private void OnDestroy()
     {

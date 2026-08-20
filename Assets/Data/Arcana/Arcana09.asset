@@ -35,3 +35,4 @@ MonoBehaviour:
   zeroCostUnlimited: 0
   cooldownTurns: 3
   blocksCostModifiers: 1
+  animationCue: 2
