@@ -95,6 +95,7 @@ public class PlanningController : MonoBehaviour
         HashSet<int> cooldownIds = null,
         HashSet<Vector2Int> existingTowers = null)
     {
+        playerDisplay.DestroyGhost();
         plannedActions.Clear();
         usedSlots = 0;
         battleStartPos = startPos;
@@ -117,6 +118,7 @@ public class PlanningController : MonoBehaviour
         ClearTowerPreviews();
         CancelCardDrag();
         NotifyPlanningSlotChanged();
+        playerDisplay.CreateGhost();
     }
 
     private void Update()
@@ -358,7 +360,7 @@ public class PlanningController : MonoBehaviour
         usedSlots++;
         zeroCostUsedThisCount = false;
         playerGridPos = newPos;
-        playerDisplay.UpdateGridPosition(newPos.x, newPos.y);
+        playerDisplay.UpdateGhostPosition(newPos.x, newPos.y);
         actionBar.FillSlot(usedSlots - 1, ActionType.Move);
         NotifyPlanningSlotChanged();
 
@@ -510,7 +512,7 @@ public class PlanningController : MonoBehaviour
         {
             playerGridPos = SimulateCardMovement(playerGridPos, direction, card);
             if (playerGridPos != prePos)
-                playerDisplay.UpdateGridPosition(playerGridPos.x, playerGridPos.y);
+                playerDisplay.UpdateGhostPosition(playerGridPos.x, playerGridPos.y);
 
             towerPos = SimulateTowerPlacement(prePos, direction, card);
             if (towerPos != Vector2Int.zero)
@@ -572,7 +574,7 @@ public class PlanningController : MonoBehaviour
             // 첫 이동은 이미 시뮬됨 (ConfirmDirectionSelection에서)
             // 두 번째 이동 시뮬
             playerGridPos = SimulateCardMovement(playerGridPos, secondDirection, card);
-            playerDisplay.UpdateGridPosition(playerGridPos.x, playerGridPos.y);
+            playerDisplay.UpdateGhostPosition(playerGridPos.x, playerGridPos.y);
         }
         else
         {
@@ -631,7 +633,7 @@ public class PlanningController : MonoBehaviour
         {
             case ActionType.Move:
                 playerGridPos -= action.Direction;
-                playerDisplay.UpdateGridPosition(playerGridPos.x, playerGridPos.y);
+                playerDisplay.UpdateGhostPosition(playerGridPos.x, playerGridPos.y);
                 actionBar.ClearSlot(usedSlots);
                 break;
             case ActionType.Stay:
@@ -646,7 +648,7 @@ public class PlanningController : MonoBehaviour
                 if (action.PreCardPosition != playerGridPos)
                 {
                     playerGridPos = action.PreCardPosition;
-                    playerDisplay.UpdateGridPosition(playerGridPos.x, playerGridPos.y);
+                    playerDisplay.UpdateGhostPosition(playerGridPos.x, playerGridPos.y);
                 }
                 if (action.PlacedSecondTower && towerPreviewObjects.Count > 0)
                 {
@@ -737,6 +739,7 @@ public class PlanningController : MonoBehaviour
             return;
 
         planningActive = false;
+        playerDisplay.DestroyGhost();
         ClearTowerPreviews();
         PlanningStateChanged?.Invoke(plannedActions, battleStartPos, -1);
 
@@ -1000,7 +1003,7 @@ public class PlanningController : MonoBehaviour
                 playerGridPos = SimulateCardMovement(playerGridPos, direction,
                     pendingCardUse.Card);
                 if (playerGridPos != pendingCardUse.PreFirstMovePos)
-                    playerDisplay.UpdateGridPosition(playerGridPos.x, playerGridPos.y);
+                    playerDisplay.UpdateGhostPosition(playerGridPos.x, playerGridPos.y);
             }
             else
             {
@@ -1068,7 +1071,7 @@ public class PlanningController : MonoBehaviour
             if (pendingCardUse.HasSimulatedFirstMove)
             {
                 playerGridPos = pendingCardUse.PreFirstMovePos;
-                playerDisplay.UpdateGridPosition(playerGridPos.x, playerGridPos.y);
+                playerDisplay.UpdateGhostPosition(playerGridPos.x, playerGridPos.y);
                 pendingCardUse.HasSimulatedFirstMove = false;
             }
 
@@ -1345,8 +1348,14 @@ public class PlanningController : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        if (playerDisplay != null) playerDisplay.DestroyGhost();
+    }
+
     private void OnDestroy()
     {
+        if (playerDisplay != null) playerDisplay.DestroyGhost();
         if (cachedPreviewSprite != null) Destroy(cachedPreviewSprite);
         if (cachedPreviewTexture != null) Destroy(cachedPreviewTexture);
     }

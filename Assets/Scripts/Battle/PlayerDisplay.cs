@@ -15,8 +15,15 @@ public class PlayerDisplay : MonoBehaviour
 
     private bool isGenerated;
     private ParticleSystem dustParticle;
+    private Sprite cachedSprite;
+    private Texture2D cachedTexture;
 
-    private void Start()
+    private GameObject ghostObject;
+    private SpriteRenderer ghostRenderer;
+    private int ghostGridX, ghostGridY;
+    private ParticleSystem ghostDustParticle;
+
+    private void Awake()
     {
         if (gridManager == null)
         {
@@ -24,9 +31,16 @@ public class PlayerDisplay : MonoBehaviour
             return;
         }
 
-        transform.position = gridManager.GridToWorldPosition(gridX, gridY);
         GenerateVisual();
-        CreateDustParticle();
+    }
+
+    private void Start()
+    {
+        if (gridManager == null)
+            return;
+
+        transform.position = gridManager.GridToWorldPosition(gridX, gridY);
+        dustParticle = CreateDustParticle(transform);
 
         GridCell startCell = gridManager.GetCell(gridX, gridY);
         startCell?.StartPulse();
@@ -50,44 +64,118 @@ public class PlayerDisplay : MonoBehaviour
             dustParticle.Play();
     }
 
+    public void CreateGhost()
+    {
+        DestroyGhost();
+
+        if (cachedSprite == null)
+            return;
+
+        ghostGridX = gridX;
+        ghostGridY = gridY;
+
+        ghostObject = new GameObject("PlayerGhost");
+        ghostObject.transform.position = gridManager.GridToWorldPosition(gridX, gridY);
+
+        GameObject visual = new GameObject("Visual");
+        visual.transform.SetParent(ghostObject.transform, false);
+        visual.transform.localScale = new Vector3(size, size, 1f);
+
+        ghostRenderer = visual.AddComponent<SpriteRenderer>();
+        ghostRenderer.sprite = cachedSprite;
+        ghostRenderer.color = new Color(playerColor.r, playerColor.g, playerColor.b, 0.4f);
+        ghostRenderer.sortingOrder = 2;
+
+        ghostDustParticle = CreateDustParticle(ghostObject.transform);
+    }
+
+    public void DestroyGhost()
+    {
+        if (ghostObject == null)
+            return;
+
+        bool sameCell = ghostGridX == gridX && ghostGridY == gridY;
+        if (!sameCell)
+        {
+            GridCell ghostCell = gridManager.GetCell(ghostGridX, ghostGridY);
+            ghostCell?.StopPulse();
+        }
+
+        ghostObject.transform.DOKill();
+        Destroy(ghostObject);
+        ghostObject = null;
+        ghostRenderer = null;
+        ghostDustParticle = null;
+    }
+
+    public void UpdateGhostPosition(int x, int y)
+    {
+        if (ghostObject == null)
+            return;
+
+        bool prevSameAsPlayer = ghostGridX == gridX && ghostGridY == gridY;
+        if (!prevSameAsPlayer)
+        {
+            GridCell prevCell = gridManager.GetCell(ghostGridX, ghostGridY);
+            prevCell?.StopPulse();
+        }
+
+        ghostGridX = x;
+        ghostGridY = y;
+
+        Vector3 target = gridManager.GridToWorldPosition(x, y);
+        ghostObject.transform.DOKill();
+        ghostObject.transform.DOMove(target, moveDuration).SetEase(moveEase);
+
+        bool newSameAsPlayer = ghostGridX == gridX && ghostGridY == gridY;
+        if (!newSameAsPlayer)
+        {
+            GridCell newCell = gridManager.GetCell(ghostGridX, ghostGridY);
+            newCell?.StartPulse();
+        }
+
+        if (ghostDustParticle != null)
+            ghostDustParticle.Play();
+    }
+
     private void GenerateVisual()
     {
         if (isGenerated)
             return;
 
         int texSize = 16;
-        Texture2D tex = new Texture2D(texSize, texSize);
-        tex.filterMode = FilterMode.Point;
+        cachedTexture = new Texture2D(texSize, texSize);
+        cachedTexture.filterMode = FilterMode.Point;
 
         for (int y = 0; y < texSize; y++)
             for (int x = 0; x < texSize; x++)
-                tex.SetPixel(x, y, Color.white);
+                cachedTexture.SetPixel(x, y, Color.white);
 
-        tex.Apply();
-        Sprite sprite = Sprite.Create(tex, new Rect(0, 0, texSize, texSize), new Vector2(0.5f, 0f), texSize);
+        cachedTexture.Apply();
+        cachedSprite = Sprite.Create(cachedTexture, new Rect(0, 0, texSize, texSize), new Vector2(0.5f, 0f), texSize);
 
         GameObject visual = new GameObject("Visual");
         visual.transform.SetParent(transform, false);
         visual.transform.localScale = new Vector3(size, size, 1f);
 
         SpriteRenderer renderer = visual.AddComponent<SpriteRenderer>();
-        renderer.sprite = sprite;
+        renderer.sprite = cachedSprite;
         renderer.color = playerColor;
         renderer.sortingOrder = 3;
 
         isGenerated = true;
     }
 
-    private void CreateDustParticle()
+    private ParticleSystem CreateDustParticle(Transform parent)
     {
         GameObject particleObj = new GameObject("DustParticle");
-        particleObj.transform.SetParent(transform, false);
+        particleObj.transform.SetParent(parent, false);
         particleObj.transform.localPosition = Vector3.zero;
 
-        dustParticle = particleObj.AddComponent<ParticleSystem>();
-        dustParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        ParticleSystem ps = particleObj.AddComponent<ParticleSystem>();
+        ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
 
-        ParticleSystem.MainModule main = dustParticle.main;
+        ParticleSystem.MainModule main = ps.main;
         main.duration = 0.3f;
         main.loop = false;
         main.startLifetime = 0.3f;
@@ -97,17 +185,17 @@ public class PlayerDisplay : MonoBehaviour
         main.simulationSpace = ParticleSystemSimulationSpace.World;
         main.gravityModifier = 0.5f;
 
-        ParticleSystem.EmissionModule emission = dustParticle.emission;
+        ParticleSystem.EmissionModule emission = ps.emission;
         emission.rateOverTime = 0f;
         emission.SetBursts(new[] {
             new ParticleSystem.Burst(0f, 6, 10)
         });
 
-        ParticleSystem.ShapeModule shape = dustParticle.shape;
+        ParticleSystem.ShapeModule shape = ps.shape;
         shape.shapeType = ParticleSystemShapeType.Circle;
         shape.radius = 0.15f;
 
-        ParticleSystem.ColorOverLifetimeModule colorOverLifetime = dustParticle.colorOverLifetime;
+        ParticleSystem.ColorOverLifetimeModule colorOverLifetime = ps.colorOverLifetime;
         colorOverLifetime.enabled = true;
         Gradient gradient = new Gradient();
         gradient.SetKeys(
@@ -122,11 +210,20 @@ public class PlayerDisplay : MonoBehaviour
         );
         colorOverLifetime.color = gradient;
 
-        ParticleSystem.SizeOverLifetimeModule sizeOverLifetime = dustParticle.sizeOverLifetime;
+        ParticleSystem.SizeOverLifetimeModule sizeOverLifetime = ps.sizeOverLifetime;
         sizeOverLifetime.enabled = true;
         sizeOverLifetime.size = new ParticleSystem.MinMaxCurve(1f, 0.3f);
 
         ParticleSystemRenderer psRenderer = particleObj.GetComponent<ParticleSystemRenderer>();
         psRenderer.sortingOrder = 4;
+
+        return ps;
+    }
+
+    private void OnDestroy()
+    {
+        DestroyGhost();
+        if (cachedSprite != null) Destroy(cachedSprite);
+        if (cachedTexture != null) Destroy(cachedTexture);
     }
 }

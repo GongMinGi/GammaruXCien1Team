@@ -138,49 +138,77 @@ public class AbandonedMagicGolemPatternDefinition : BossPatternDefinition
         {
             case AttackKind.I:
                 AddHit(actions, startSlot + 1,
-                    BossTargetResolver.Center(playerPosition), punchDamage);
+                    BossTargetResolver.Center(playerPosition), punchDamage,
+                    new[] { new BossAnimationEvent { slot = startSlot, cue = BossAnimationCue.Primary } },
+                    BossImpactEffect.FallingStone);
                 break;
             case AttackKind.II:
                 AddHit(actions, startSlot + 1,
-                    BossTargetResolver.CardinalNeighbors(playerPosition), explosionDamage);
+                    BossTargetResolver.CardinalNeighbors(playerPosition), explosionDamage,
+                    new[] { new BossAnimationEvent { slot = startSlot, cue = BossAnimationCue.Heavy } },
+                    BossImpactEffect.GroundBurst);
                 break;
             case AttackKind.IThenII:
                 AddHit(actions, startSlot + 1,
-                    BossTargetResolver.Center(playerPosition), punchDamage);
+                    BossTargetResolver.Center(playerPosition), punchDamage,
+                    new[] { new BossAnimationEvent { slot = startSlot, cue = BossAnimationCue.Primary } },
+                    BossImpactEffect.FallingStone);
                 AddHit(actions, startSlot + 2,
-                    BossTargetResolver.CardinalNeighbors(playerPosition), explosionDamage);
+                    BossTargetResolver.CardinalNeighbors(playerPosition), explosionDamage,
+                    new[] { new BossAnimationEvent { slot = startSlot + 1, cue = BossAnimationCue.Heavy } },
+                    BossImpactEffect.GroundBurst);
                 break;
             case AttackKind.IIThenI:
                 AddHit(actions, startSlot + 1,
-                    BossTargetResolver.CardinalNeighbors(playerPosition), explosionDamage);
+                    BossTargetResolver.CardinalNeighbors(playerPosition), explosionDamage,
+                    new[] { new BossAnimationEvent { slot = startSlot, cue = BossAnimationCue.Heavy } },
+                    BossImpactEffect.GroundBurst);
                 AddHit(actions, startSlot + 2,
-                    BossTargetResolver.Center(playerPosition), punchDamage);
+                    BossTargetResolver.Center(playerPosition), punchDamage,
+                    new[] { new BossAnimationEvent { slot = startSlot + 1, cue = BossAnimationCue.Primary } },
+                    BossImpactEffect.FallingStone);
                 break;
             case AttackKind.VII:
                 AddHit(actions, startSlot + 2,
-                    BossTargetResolver.Cross(), crossDamage);
+                    BossTargetResolver.Cross(), crossDamage,
+                    new[] { new BossAnimationEvent { slot = startSlot, cue = BossAnimationCue.Heavy } },
+                    BossImpactEffect.GroundBurst);
                 break;
             case AttackKind.VIIThenI:
                 AddHit(actions, startSlot + 2,
-                    BossTargetResolver.DiagonalCross(), diagonalDamage);
+                    BossTargetResolver.DiagonalCross(), diagonalDamage,
+                    new[] { new BossAnimationEvent { slot = startSlot, cue = BossAnimationCue.Heavy } },
+                    BossImpactEffect.GroundBurst);
                 break;
             case AttackKind.VIIThenII:
                 AddHit(actions, startSlot + 2,
-                    BossTargetResolver.DiamondPerimeter(), diamondDamage);
+                    BossTargetResolver.DiamondPerimeter(), diamondDamage,
+                    new[] { new BossAnimationEvent { slot = startSlot, cue = BossAnimationCue.Heavy } },
+                    BossImpactEffect.GroundBurst);
                 break;
             case AttackKind.VIII:
                 AddHit(actions, startSlot + 3,
-                    BossTargetResolver.Center(Vector2Int.zero), shockwaveDamage);
+                    BossTargetResolver.Center(Vector2Int.zero), shockwaveDamage,
+                    new[]
+                    {
+                        new BossAnimationEvent { slot = startSlot, cue = BossAnimationCue.Ultimate },
+                        new BossAnimationEvent { slot = startSlot + 2, cue = BossAnimationCue.Heavy }
+                    },
+                    BossImpactEffect.ShockwaveRing);
                 AddHit(actions, startSlot + 4,
-                    BossTargetResolver.ManhattanRing(Vector2Int.zero, 1), shockwaveDamage);
+                    BossTargetResolver.ManhattanRing(Vector2Int.zero, 1), shockwaveDamage,
+                    impactEffect: BossImpactEffect.ShockwaveRing);
                 AddHit(actions, startSlot + 5,
-                    BossTargetResolver.ManhattanRing(Vector2Int.zero, 2), shockwaveDamage);
+                    BossTargetResolver.ManhattanRing(Vector2Int.zero, 2), shockwaveDamage,
+                    impactEffect: BossImpactEffect.ShockwaveRing);
                 break;
         }
     }
 
     private void AddHit(List<BossAction> actions, int timingSlot,
-        Vector2Int[] cells, int damage)
+        Vector2Int[] cells, int damage,
+        BossAnimationEvent[] animationEvents = null,
+        BossImpactEffect impactEffect = BossImpactEffect.None)
     {
         actions.Add(new BossAction
         {
@@ -189,7 +217,9 @@ public class AbandonedMagicGolemPatternDefinition : BossPatternDefinition
             targetCells = cells,
             baseDamage = damage,
             isInstantKill = false,
-            element = attackElement
+            element = attackElement,
+            animationEvents = animationEvents,
+            impactEffect = impactEffect
         });
     }
 

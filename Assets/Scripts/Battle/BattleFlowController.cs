@@ -18,6 +18,7 @@ public class BattleFlowController : MonoBehaviour
     [SerializeField] private ArcanaCatalog arcanaCatalog;
     [SerializeField] private ArcanaData[] selectedArcanaPool;
     [SerializeField] private ClownBossMechanic clownBossMechanic;  // 광대 보스일 때만 연결
+    [SerializeField] private WheelDisplay wheelDisplay;  // 광대 보스일 때만 연결
 
     private BattlePhase currentPhase;
     private ArcanaBag bag;
@@ -46,6 +47,31 @@ public class BattleFlowController : MonoBehaviour
         battleExecutor.ClearTowers();
         planningController.PlanningStateChanged += bossController.UpdatePlanningPreview;
         battleExecutor.SlotStarted += OnSlotStarted;
+
+        bool isClown = bossStats.Data != null &&
+            bossStats.Data.Pattern is ThreadBoundClownPatternDefinition;
+
+        if (isClown && (clownBossMechanic == null || wheelDisplay == null))
+        {
+            Debug.LogError(
+                "광대 보스에 필요한 ClownBossMechanic 또는 WheelDisplay가 연결되지 않았습니다.",
+                this);
+            EndBattleDueToError();
+            return;
+        }
+
+        if (isClown)
+        {
+            wheelDisplay.gameObject.SetActive(true);
+            clownBossMechanic.gameObject.SetActive(true);
+        }
+        else
+        {
+            if (clownBossMechanic != null)
+                clownBossMechanic.gameObject.SetActive(false);
+            if (wheelDisplay != null)
+                wheelDisplay.gameObject.SetActive(false);
+        }
 
         StartTurn();
     }

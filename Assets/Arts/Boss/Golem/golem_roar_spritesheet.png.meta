@@ -1,0 +1,351 @@
+fileFormatVersion: 2
+guid: cc42a55d9cac34949912df88006132fc
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5278412181693289937
+    second: golem_roar_spritesheet_0
+  - first:
+      213: 6735135030587168121
+    second: golem_roar_spritesheet_1
+  - first:
+      213: 2809832671267115353
+    second: golem_roar_spritesheet_2
+  - first:
+      213: -2517497675738969512
+    second: golem_roar_spritesheet_3
+  - first:
+      213: 9113813783130541935
+    second: golem_roar_spritesheet_4
+  - first:
+      213: -2906828575088068916
+    second: golem_roar_spritesheet_5
+  - first:
+      213: 3066692538057876736
+    second: golem_roar_spritesheet_6
+  - first:
+      213: -6378090576430344444
+    second: golem_roar_spritesheet_7
+  - first:
+      213: 1494395364659644685
+    second: golem_roar_spritesheet_8
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 48
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: golem_roar_spritesheet_0
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 25
+        width: 106
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d55cebb9efa04940800000000000000
+      internalID: 5278412181693289937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: golem_roar_spritesheet_1
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 24
+        width: 109
+        height: 109
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 975107440a1087d50800000000000000
+      internalID: 6735135030587168121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: golem_roar_spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 361
+        y: 24
+        width: 117
+        height: 114
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 951d9296de78ef620800000000000000
+      internalID: 2809832671267115353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: golem_roar_spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 525
+        y: 24
+        width: 124
+        height: 118
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85a05b2c33d001dd0800000000000000
+      internalID: -2517497675738969512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: golem_roar_spritesheet_4
+      rect:
+        serializedVersion: 2
+        x: 691
+        y: 24
+        width: 129
+        height: 122
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6f0e844955ca7e70800000000000000
+      internalID: 9113813783130541935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: golem_roar_spritesheet_5
+      rect:
+        serializedVersion: 2
+        x: 859
+        y: 24
+        width: 129
+        height: 120
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc6bbeedfced8a7d0800000000000000
+      internalID: -2906828575088068916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: golem_roar_spritesheet_6
+      rect:
+        serializedVersion: 2
+        x: 1027
+        y: 24
+        width: 129
+        height: 118
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 005e7468d941f8a20800000000000000
+      internalID: 3066692538057876736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: golem_roar_spritesheet_7
+      rect:
+        serializedVersion: 2
+        x: 1199
+        y: 24
+        width: 123
+        height: 112
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4075a9ec9687c77a0800000000000000
+      internalID: -6378090576430344444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: golem_roar_spritesheet_8
+      rect:
+        serializedVersion: 2
+        x: 1370
+        y: 24
+        width: 114
+        height: 109
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d094780aaa82db410800000000000000
+      internalID: 1494395364659644685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 7f3fa98a7aac3934287b16dc8c863dd5
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      golem_roar_spritesheet_0: 5278412181693289937
+      golem_roar_spritesheet_1: 6735135030587168121
+      golem_roar_spritesheet_2: 2809832671267115353
+      golem_roar_spritesheet_3: -2517497675738969512
+      golem_roar_spritesheet_4: 9113813783130541935
+      golem_roar_spritesheet_5: -2906828575088068916
+      golem_roar_spritesheet_6: 3066692538057876736
+      golem_roar_spritesheet_7: -6378090576430344444
+      golem_roar_spritesheet_8: 1494395364659644685
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

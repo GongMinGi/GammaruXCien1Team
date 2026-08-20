@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d57b1e40119a7444afcce20a4057244, type: 3}
   m_Name: AbandonedMagicGolemPattern
   m_EditorClassIdentifier: Assembly-CSharp::AbandonedMagicGolemPatternDefinition
-  punchDamage: 60
+  punchDamage: 10
   explosionDamage: 10
   crossDamage: 10
   diagonalDamage: 10
