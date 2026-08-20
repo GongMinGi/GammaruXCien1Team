@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,10 +17,27 @@ public class HandDisplay : MonoBehaviour
     [SerializeField] private float maxFanAngle = 15f;
     [SerializeField] private float arcHeight = 0.4f;
 
+    [Header("Resting Position")]
+    [SerializeField] private float restingYOffset = -1.2f;
+
     [Header("Hover")]
     [SerializeField] private float hoverRise = 0.5f;
     [SerializeField] private float hoverScale = 1.3f;
     [SerializeField] private float hoverSpeed = 10f;
+
+    [Header("DOTween Animation")]
+    [SerializeField] private float layoutTweenDuration = 0.25f;
+    [SerializeField] private Ease layoutEase = Ease.OutCubic;
+    [SerializeField] private float drawSlideInDuration = 0.35f;
+    [SerializeField] private Ease drawSlideInEase = Ease.OutBack;
+    [SerializeField] private float drawOffscreenX = 6f;
+    [SerializeField] private float useAnimDuration = 0.3f;
+    [SerializeField] private float useDisplayDuration = 0.4f;
+    [SerializeField] private float useConsumedDuration = 0.2f;
+    [SerializeField] private Ease useAnimEase = Ease.OutQuad;
+    [SerializeField] private Transform useTargetPoint;
+    [SerializeField] private float useTargetScale = 1.5f;
+    [SerializeField] private float drawStaggerDelay = 0.08f;
 
     private const int MaxCardCount = 7;
 
@@ -54,8 +72,17 @@ public class HandDisplay : MonoBehaviour
     private bool isDragging;
     private Vector3 dragWorldOffset;
 
+    private bool isAnimating;
+    private Sequence activeLayoutSequence;
+    private Sequence activeUseSequence;
+    private System.Action<bool> pendingUseCallback;
+    private int previousActiveCount;
+    private int[] previousCardIds;
+
     private Sprite baseCardSprite;
     private Texture2D cachedCardTexture;
+
+    public bool IsAnimating => isAnimating;
 
     private void Awake()
     {
@@ -84,6 +111,8 @@ public class HandDisplay : MonoBehaviour
     {
         if (!isGenerated)
             return;
+
+        HashSet<int> newSlots = DetectNewSlots(cards);
 
         currentCards = cards;
         lastHoveredIndex = -1;
@@ -140,6 +169,9 @@ public class HandDisplay : MonoBehaviour
                 cardTransforms[i].gameObject.SetActive(false);
             }
         }
+
+        AnimateToLayoutPositions(newSlots);
+        StoreCardIds(cards);
     }
 
     private void GenerateCardObjects()
@@ -232,20 +264,13 @@ public class HandDisplay : MonoBehaviour
             float t = count > 1 ? centerOffset / ((count - 1) * 0.5f) : 0f;
 
             float x = centerOffset * cardSpacing;
-            float y = -arcHeight * t * t;
+            float y = restingYOffset - arcHeight * t * t;
             float angle = -maxFanAngle * t;
 
             restPositions[i] = new Vector3(x, y, 0f);
             restRotations[i] = Quaternion.Euler(0f, 0f, angle);
             restScales[i] = new Vector3(cardWidth, cardHeight, 1f);
             restSortingOrders[i] = 10 + i;
-
-            cardTransforms[i].localPosition = restPositions[i];
-            cardTransforms[i].localRotation = restRotations[i];
-            cardTransforms[i].localScale = restScales[i];
-            cardRenderers[i].sortingOrder = restSortingOrders[i];
-            artworkRenderers[i].sortingOrder = restSortingOrders[i] + 1;
-            numberRenderers[i].sortingOrder = restSortingOrders[i] + 2;
         }
     }
 
@@ -300,6 +325,8 @@ public class HandDisplay : MonoBehaviour
 
     private void AnimateCards(int hoveredIndex)
     {
+        if (isAnimating) return;
+
         float dt = hoverSpeed * Time.deltaTime;
 
         for (int i = 0; i < activeCount; i++)
@@ -414,8 +441,199 @@ public class HandDisplay : MonoBehaviour
         return Sprite.Create(cachedCardTexture, new Rect(0, 0, w, h), new Vector2(0.5f, 0f), w);
     }
 
+    private HashSet<int> DetectNewSlots(IReadOnlyList<ArcanaData> newCards)
+    {
+        var newSlots = new HashSet<int>();
+        int newCount = Mathf.Min(newCards.Count, MaxCardCount);
+
+        if (previousCardIds == null)
+        {
+            for (int i = 0; i < newCount; i++)
+                newSlots.Add(i);
+            return newSlots;
+        }
+
+        var oldCounts = new Dictionary<int, int>();
+        for (int i = 0; i < previousActiveCount; i++)
+        {
+            int id = previousCardIds[i];
+            oldCounts[id] = oldCounts.TryGetValue(id, out int c) ? c + 1 : 1;
+        }
+
+        for (int i = 0; i < newCount; i++)
+        {
+            int id = newCards[i].Id;
+            if (oldCounts.TryGetValue(id, out int remaining) && remaining > 0)
+                oldCounts[id] = remaining - 1;
+            else
+                newSlots.Add(i);
+        }
+        return newSlots;
+    }
+
+    private void StoreCardIds(IReadOnlyList<ArcanaData> cards)
+    {
+        int count = Mathf.Min(cards.Count, MaxCardCount);
+        if (previousCardIds == null || previousCardIds.Length < MaxCardCount)
+            previousCardIds = new int[MaxCardCount];
+        for (int i = 0; i < count; i++)
+            previousCardIds[i] = cards[i].Id;
+        previousActiveCount = count;
+    }
+
+    private void AnimateToLayoutPositions(HashSet<int> newSlots)
+    {
+        activeLayoutSequence?.Kill();
+
+        if (activeCount == 0)
+        {
+            activeLayoutSequence = null;
+            isAnimating = false;
+            return;
+        }
+
+        activeLayoutSequence = DOTween.Sequence();
+        isAnimating = true;
+        int drawIndex = 0;
+
+        for (int i = 0; i < activeCount; i++)
+        {
+            cardTransforms[i].DOKill();
+            cardVisualTransforms[i].DOKill();
+
+            cardVisualTransforms[i].localPosition = Vector3.zero;
+            cardVisualTransforms[i].localRotation = Quaternion.identity;
+            cardVisualTransforms[i].localScale = Vector3.one;
+
+            if (newSlots != null && newSlots.Contains(i))
+            {
+                cardTransforms[i].localPosition = new Vector3(
+                    drawOffscreenX, restPositions[i].y, 0f);
+                cardTransforms[i].localRotation = restRotations[i];
+                cardTransforms[i].localScale = restScales[i];
+
+                float delay = drawIndex * drawStaggerDelay;
+                activeLayoutSequence.Insert(delay,
+                    cardTransforms[i].DOLocalMove(restPositions[i], drawSlideInDuration)
+                        .SetEase(drawSlideInEase));
+                drawIndex++;
+            }
+            else
+            {
+                activeLayoutSequence.Insert(0f,
+                    cardTransforms[i].DOLocalMove(restPositions[i], layoutTweenDuration)
+                        .SetEase(layoutEase));
+                activeLayoutSequence.Insert(0f,
+                    cardTransforms[i].DOLocalRotateQuaternion(restRotations[i], layoutTweenDuration)
+                        .SetEase(layoutEase));
+                activeLayoutSequence.Insert(0f,
+                    cardTransforms[i].DOScale(restScales[i], layoutTweenDuration)
+                        .SetEase(layoutEase));
+            }
+
+            cardRenderers[i].sortingOrder = restSortingOrders[i];
+            artworkRenderers[i].sortingOrder = restSortingOrders[i] + 1;
+            numberRenderers[i].sortingOrder = restSortingOrders[i] + 2;
+        }
+
+        activeLayoutSequence.OnComplete(() => isAnimating = false);
+    }
+
+    public void PlayCardUseAnimation(int cardIndex, System.Action<bool> onFinished)
+    {
+        if (cardIndex < 0 || cardIndex >= activeCount)
+        {
+            onFinished?.Invoke(false);
+            return;
+        }
+
+        CancelUseAnimation();
+
+        pendingUseCallback = onFinished;
+        isAnimating = true;
+
+        Transform card = cardTransforms[cardIndex];
+        Transform visual = cardVisualTransforms[cardIndex];
+
+        card.DOKill();
+        visual.DOKill();
+
+        Vector3 visibleWorldPos = visual.position;
+        Quaternion visibleWorldRot = visual.rotation;
+        Vector3 visualScaleMultiplier = visual.localScale;
+
+        card.position = visibleWorldPos;
+        card.rotation = visibleWorldRot;
+        card.localScale = Vector3.Scale(card.localScale, visualScaleMultiplier);
+
+        visual.localPosition = Vector3.zero;
+        visual.localRotation = Quaternion.identity;
+        visual.localScale = Vector3.one;
+
+        cardRenderers[cardIndex].color = cardBaseColors[cardIndex];
+        artworkRenderers[cardIndex].color = Color.white;
+
+        cardRenderers[cardIndex].sortingOrder = 200;
+        artworkRenderers[cardIndex].sortingOrder = 201;
+        numberRenderers[cardIndex].sortingOrder = 202;
+
+        Vector3 worldTarget = useTargetPoint != null
+            ? useTargetPoint.position
+            : transform.TransformPoint(new Vector3(0f, 3f, 0f));
+        Vector3 localTarget = transform.InverseTransformPoint(worldTarget);
+
+        activeUseSequence = DOTween.Sequence();
+
+        activeUseSequence.Append(
+            card.DOLocalMove(localTarget, useAnimDuration).SetEase(useAnimEase));
+        activeUseSequence.Join(
+            card.DOScale(restScales[cardIndex] * useTargetScale, useAnimDuration)
+                .SetEase(useAnimEase));
+        activeUseSequence.Join(
+            card.DOLocalRotateQuaternion(Quaternion.identity, useAnimDuration));
+
+        activeUseSequence.AppendInterval(useDisplayDuration);
+
+        activeUseSequence.Append(
+            card.DOScale(Vector3.zero, useConsumedDuration).SetEase(Ease.InBack));
+
+        activeUseSequence.OnComplete(() =>
+        {
+            card.gameObject.SetActive(false);
+            FinishUseAnimation(true);
+        });
+    }
+
+    private void FinishUseAnimation(bool success)
+    {
+        var callback = pendingUseCallback;
+        pendingUseCallback = null;
+        activeUseSequence = null;
+        isAnimating = false;
+        callback?.Invoke(success);
+    }
+
+    private void CancelUseAnimation()
+    {
+        if (activeUseSequence != null)
+        {
+            activeUseSequence.Kill();
+            FinishUseAnimation(false);
+        }
+    }
+
+    private void OnDisable()
+    {
+        activeLayoutSequence?.Kill();
+        activeLayoutSequence = null;
+        CancelUseAnimation();
+        isAnimating = false;
+    }
+
     private void OnDestroy()
     {
+        activeLayoutSequence?.Kill();
+        CancelUseAnimation();
         if (baseCardSprite != null)
             Destroy(baseCardSprite);
         if (cachedCardTexture != null)

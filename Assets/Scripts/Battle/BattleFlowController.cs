@@ -73,6 +73,7 @@ public class BattleFlowController : MonoBehaviour
                 wheelDisplay.gameObject.SetActive(false);
         }
 
+        planningController.SetResetCount(3);
         StartTurn();
     }
 
