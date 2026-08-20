@@ -119,6 +119,72 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &235014422
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 235014424}
+  - component: {fileID: 235014423}
+  m_Layer: 0
+  m_Name: ArcanaCodexPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &235014423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235014422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f36dbd726773464b9767d2cf3dca96a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ArcanaCodexPanel
+  canvas: {fileID: 800000002}
+  koreanFont: {fileID: 12800000, guid: 019940a8a7bae2b409a635eccded3d27, type: 3}
+  arcanaCatalog: {fileID: 11400000, guid: b0b0b0b0b0b0b0b0b0b0b0b0b0b0b000, type: 2}
+  dimColor: {r: 0, g: 0, b: 0, a: 0.6}
+  windowColor: {r: 0.1, g: 0.1, b: 0.15, a: 0.98}
+  viewportColor: {r: 0.05, g: 0.05, b: 0.08, a: 1}
+  itemColor: {r: 0.18, g: 0.18, b: 0.24, a: 1}
+  selectedItemColor: {r: 0.45, g: 0.35, b: 0.6, a: 1}
+  buttonColor: {r: 0.25, g: 0.2, b: 0.35, a: 1}
+  subTextColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
+  windowSize: {x: 1200, y: 700}
+  listWidth: 420
+  itemHeight: 44
+  padding: 20
+  scrollSensitivity: 30
+  toggleButtonSize: {x: 160, y: 50}
+  toggleButtonOffset: {x: -20, y: -575}
+  itemFontSize: 20
+  nameFontSize: 30
+  costFontSize: 25
+  descFontSize: 25
+  buttonFontSize: 24
+--- !u!4 &235014424
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235014422}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &244219052
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,6 +654,37 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.91445, y: -0.3276, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &731195270
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 731195271}
+  m_Layer: 0
+  m_Name: CardUseTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &731195271
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 731195270}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1149,9 +1246,22 @@ MonoBehaviour:
   cardSpacing: 1.15
   maxFanAngle: 0
   arcHeight: 0
+  restingYOffset: -1.2
   hoverRise: 1
   hoverScale: 1.3
   hoverSpeed: 10
+  layoutTweenDuration: 0.25
+  layoutEase: 9
+  drawSlideInDuration: 0.35
+  drawSlideInEase: 27
+  drawOffscreenX: 6
+  useAnimDuration: 0.3
+  useDisplayDuration: 0.4
+  useConsumedDuration: 0.2
+  useAnimEase: 6
+  useTargetPoint: {fileID: 731195271}
+  useTargetScale: 1.5
+  drawStaggerDelay: 0.08
   infoPanel: {fileID: 622129119}
   dragHighlightColor: {r: 1, g: 1, b: 0.5, a: 1}
   selectedHighlightColor: {r: 0.5, g: 1, b: 0.5, a: 1}
@@ -1633,7 +1743,7 @@ MonoBehaviour:
   arcanaCatalog: {fileID: 11400000, guid: b0b0b0b0b0b0b0b0b0b0b0b0b0b0b000, type: 2}
   handDisplay: {fileID: 900000041}
   tangleField: {fileID: 732133655}
-  arcanaCodexPanel: {fileID: 0}
+  arcanaCodexPanel: {fileID: 235014423}
   cardMergePanel: {fileID: 2147215987}
 --- !u!114 &2147215984
 MonoBehaviour:
@@ -1738,3 +1848,5 @@ SceneRoots:
   - {fileID: 1650548728}
   - {fileID: 538817120}
   - {fileID: 244219054}
+  - {fileID: 731195271}
+  - {fileID: 235014424}
