@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a49024c8a09a72d4baf2ef5e56b152e8, type: 3}
+  m_Name: Selena
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSpeakerData
+  speakerName: Selena
+  expressions:
+  - expressionName: Default
+    illustration: {fileID: 7446896503161338369, guid: 174f5101ad71d5644bc53df627e580e0, type: 3}
+  - expressionName: Anger
+    illustration: {fileID: -7016797152916819441, guid: 7d0ac5c6b3cb1134b969f4bc6deefd55, type: 3}
+  - expressionName: Battle
+    illustration: {fileID: -1938997801891140261, guid: 36237564bd5f7a14a96feb5817ddfc78, type: 3}
+  - expressionName: CloseEye
+    illustration: {fileID: 4147252899868128112, guid: 26222c56a53e31b4ab9bcba1649a2de4, type: 3}
+  - expressionName: Crying
+    illustration: {fileID: -2128677237938575144, guid: 2a9b7c3d036e1334e9b565e334a67610, type: 3}
+  - expressionName: Laughter
+    illustration: {fileID: -7331059818898391601, guid: 44416aa8d7348514f9e32897a3d25d4e, type: 3}
+  - expressionName: Sadness
+    illustration: {fileID: -8394456446468094955, guid: 46b0247216e70224daa84fcb55213c16, type: 3}
+  - expressionName: Saying
+    illustration: {fileID: -703920598792923868, guid: d37d9fcd993741d499c62c0042253573, type: 3}
+  - expressionName: Surprise
+    illustration: {fileID: 3196751167820367485, guid: 3c8c7379ffa708f4eafbb501160feac2, type: 3}

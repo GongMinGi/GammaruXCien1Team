@@ -16,6 +16,14 @@ public static class StageProgressData
     }
 
     /// <summary>
+    /// 첫 스테이지를 클리어했는지 반환한다.
+    /// </summary>
+    public static bool IsFirstStageCleared
+    {
+        get { return unlockedStageCount > 1; }
+    }
+
+    /// <summary>
     /// 플레이할 스테이지 번호와 전체 스테이지 수를 저장한다.
     /// </summary>
     public static void SelectStage(int stageNumber, int stageCount)
