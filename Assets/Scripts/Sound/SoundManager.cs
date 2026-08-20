@@ -39,14 +39,17 @@ public class SoundManager : MonoBehaviour
 
     private void PlayBackgroundMusicOfScene(string sceneName)
     {
-        AudioClip clip = soundLibrary.FindBackgroundMusic(sceneName);
-        if (clip == null)
+        SceneBackgroundMusic backgroundMusic = soundLibrary.FindBackgroundMusic(sceneName);
+        if (backgroundMusic == null || backgroundMusic.clip == null)
         {
             soundPlayer.StopBackgroundMusic();
             return;
         }
 
-        soundPlayer.PlayBackgroundMusic(clip);
+        soundPlayer.PlayBackgroundMusic(
+            backgroundMusic.clip,
+            backgroundMusic.loopStart,
+            backgroundMusic.loopEnd);
     }
 
     /// <summary>
