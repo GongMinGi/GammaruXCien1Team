@@ -7,6 +7,11 @@ public class PlayerStatsDisplay : MonoBehaviour
     [SerializeField] private ActionBar actionBar;
     [SerializeField] private Slider hpSlider;
 
+    private RectTransform hpFillRect;
+    private Image hpFillImage;
+    private Text hpText;
+    private Text spellPowerText;
+    private Canvas canvas;
     private float barWidth;
     private TextMesh hpText;
     private TextMesh spellPowerText;
@@ -48,9 +53,8 @@ public class PlayerStatsDisplay : MonoBehaviour
         hpText.fontSize = 32;
         hpText.characterSize = 0.06f;
         hpText.color = Color.white;
-
-        MeshRenderer hpTextRenderer = hpTextObj.GetComponent<MeshRenderer>();
-        hpTextRenderer.sortingOrder = 3;
+        hpText.raycastTarget = false;
+        if (font != null) hpText.font = font;
 
         GameObject spObj = new GameObject("SpellPowerText");
         spObj.transform.SetParent(transform, false);
@@ -62,9 +66,8 @@ public class PlayerStatsDisplay : MonoBehaviour
         spellPowerText.fontSize = 32;
         spellPowerText.characterSize = 0.08f;
         spellPowerText.color = new Color(0.6f, 0.7f, 1f);
-
-        MeshRenderer spRenderer = spObj.GetComponent<MeshRenderer>();
-        spRenderer.sortingOrder = 3;
+        spellPowerText.raycastTarget = false;
+        if (font != null) spellPowerText.font = font;
     }
 
     private void Refresh()
@@ -79,6 +82,6 @@ public class PlayerStatsDisplay : MonoBehaviour
 
     private void ShowDamage(int amount)
     {
-        DamagePopup.Spawn(transform, amount, new Vector3(0f, 0.55f, -0.02f));
+        DamagePopup.Spawn(canvas.transform, amount, new Vector3(0f, 55f, 0f), font);
     }
 }

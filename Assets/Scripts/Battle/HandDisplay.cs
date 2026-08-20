@@ -420,7 +420,7 @@ public class HandDisplay : MonoBehaviour
     private Sprite CreateCardSprite()
     {
         int w = 16;
-        int h = 24;
+        int h = 28;
         cachedCardTexture = new Texture2D(w, h);
         cachedCardTexture.filterMode = FilterMode.Point;
 

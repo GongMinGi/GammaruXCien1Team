@@ -228,6 +228,7 @@ public class PlayerDisplay : MonoBehaviour
 
         ghostRenderer = visual.AddComponent<SpriteRenderer>();
         ghostRenderer.sprite = idleSprite;
+        ghostRenderer.flipX = playerRenderer.flipX;
         ghostRenderer.color = new Color(playerColor.r, playerColor.g, playerColor.b, 0.4f);
         ghostRenderer.sortingOrder = 2;
 

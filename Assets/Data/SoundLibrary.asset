@@ -15,8 +15,16 @@ MonoBehaviour:
   sceneBackgroundMusics:
   - sceneName: StageSelectScene
     clip: {fileID: 8300000, guid: 17e003290c24aff43bf89e6ffcb577e7, type: 3}
+    loopStart: 0
+    loopEnd: 0
   - sceneName: TitleScene
     clip: {fileID: 8300000, guid: 17e003290c24aff43bf89e6ffcb577e7, type: 3}
+    loopStart: 0
+    loopEnd: 0
+  - sceneName: BattleScene
+    clip: {fileID: 8300000, guid: 6f59b4e265507094ea4db5167e459f5a, type: 3}
+    loopStart: 57
+    loopEnd: 197
   soundEffects:
   - soundEffectName: ButtonHover
     clip: {fileID: 8300000, guid: e11b3f45d369e8044b1fc64d77d0ddb0, type: 3}
@@ -65,7 +73,7 @@ MonoBehaviour:
   - soundEffectName: PlayerTempestXX
     clip: {fileID: 8300000, guid: 20764a6f35c1d3f44b1575809af5cc2c, type: 3}
   - soundEffectName: PlayerWalk
-    clip: {fileID: 8300000, guid: fc4f7cbd7d0a266419538d01b4da3d22, type: 3}
+    clip: {fileID: 0}
   - soundEffectName: CardSelect
     clip: {fileID: 8300000, guid: d0873af83dd8b7d4eadfb82b8985a361, type: 3}
   - soundEffectName: CardShuffle

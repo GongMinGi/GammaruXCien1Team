@@ -44,9 +44,8 @@ public class BossStatsDisplay : MonoBehaviour
         hpText.fontSize = 32;
         hpText.characterSize = 0.06f;
         hpText.color = Color.white;
-
-        MeshRenderer hpTextRenderer = hpTextObj.GetComponent<MeshRenderer>();
-        hpTextRenderer.sortingOrder = 3;
+        hpText.raycastTarget = false;
+        if (font != null) hpText.font = font;
     }
 
     private void Refresh()
