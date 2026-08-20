@@ -54,7 +54,14 @@ public class PlayerPresentation : MonoBehaviour
     }
 
     private void OnMovementStateChanged(bool moving)
-    {
-        playerAnimator.SetBool(IsRunningHash, moving);
-    }
+  {
+      playerAnimator.SetBool(IsRunningHash, moving);
+
+      if (moving)
+          playerAnimator.Play("Base Layer.Running", 0, 0f);
+      else
+          playerAnimator.Play("Base Layer.Idle", 0, 0f);
+  }
+
+   
 }
