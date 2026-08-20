@@ -1,3 +1,4 @@
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 
@@ -11,12 +12,21 @@ public class PlayerDisplay : MonoBehaviour
     [SerializeField] private float moveDuration = 0.15f;
     [SerializeField] private Ease moveEase = Ease.OutQuad;
 
+    [Header("Teleport")]
+    [SerializeField, Min(0.01f)] private float teleportFadeDuration = 0.12f;
+    [SerializeField, Min(0f)] private float teleportPause = 0.05f;
+
     public Vector2Int GridPosition => new(gridX, gridY);
 
     private bool isGenerated;
     private ParticleSystem dustParticle;
     private Sprite cachedSprite;
     private Texture2D cachedTexture;
+
+    private SpriteRenderer playerRenderer;
+    private Vector3 playerVisualBaseScale;
+    private Color playerVisualBaseColor;
+    private Coroutine teleportCoroutine;
 
     private GameObject ghostObject;
     private SpriteRenderer ghostRenderer;
@@ -48,6 +58,8 @@ public class PlayerDisplay : MonoBehaviour
 
     public void UpdateGridPosition(int x, int y)
     {
+        CleanupTeleport();
+
         GridCell prevCell = gridManager.GetCell(gridX, gridY);
         prevCell?.StopPulse();
 
@@ -62,6 +74,82 @@ public class PlayerDisplay : MonoBehaviour
 
         if (dustParticle != null)
             dustParticle.Play();
+    }
+
+    public void TeleportToGridPosition(int x, int y)
+    {
+        GridCell prevCell = gridManager.GetCell(gridX, gridY);
+        prevCell?.StopPulse();
+
+        gridX = x;
+        gridY = y;
+
+        transform.DOKill();
+        CleanupTeleport();
+        teleportCoroutine = StartCoroutine(TeleportSequence());
+    }
+
+    private IEnumerator TeleportSequence()
+    {
+        Vector3 target = gridManager.GridToWorldPosition(gridX, gridY);
+        Transform visual = playerRenderer.transform;
+
+        // 사라짐: 스케일 축소 + 페이드아웃
+        float elapsed = 0f;
+        while (elapsed < teleportFadeDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / teleportFadeDuration);
+            visual.localScale = playerVisualBaseScale * (1f - t);
+            playerRenderer.color = new Color(
+                playerVisualBaseColor.r, playerVisualBaseColor.g,
+                playerVisualBaseColor.b, playerVisualBaseColor.a * (1f - t));
+            yield return null;
+        }
+
+        // 순간 이동
+        transform.position = target;
+
+        // 짧은 대기
+        if (teleportPause > 0f)
+            yield return new WaitForSeconds(teleportPause);
+
+        // 나타남: 스케일 복원 + 페이드인
+        elapsed = 0f;
+        while (elapsed < teleportFadeDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / teleportFadeDuration);
+            visual.localScale = playerVisualBaseScale * t;
+            playerRenderer.color = new Color(
+                playerVisualBaseColor.r, playerVisualBaseColor.g,
+                playerVisualBaseColor.b, playerVisualBaseColor.a * t);
+            yield return null;
+        }
+
+        visual.localScale = playerVisualBaseScale;
+        playerRenderer.color = playerVisualBaseColor;
+        teleportCoroutine = null;
+
+        GridCell newCell = gridManager.GetCell(gridX, gridY);
+        newCell?.StartPulse();
+
+        if (dustParticle != null)
+            dustParticle.Play();
+    }
+
+    private void CleanupTeleport()
+    {
+        if (teleportCoroutine != null)
+        {
+            StopCoroutine(teleportCoroutine);
+            teleportCoroutine = null;
+        }
+        if (playerRenderer != null)
+        {
+            playerRenderer.transform.localScale = playerVisualBaseScale;
+            playerRenderer.color = playerVisualBaseColor;
+        }
     }
 
     public void CreateGhost()
@@ -163,6 +251,10 @@ public class PlayerDisplay : MonoBehaviour
         renderer.color = playerColor;
         renderer.sortingOrder = 3;
 
+        playerRenderer = renderer;
+        playerVisualBaseScale = visual.transform.localScale;
+        playerVisualBaseColor = playerColor;
+
         isGenerated = true;
     }
 
@@ -220,8 +312,14 @@ public class PlayerDisplay : MonoBehaviour
         return ps;
     }
 
+    private void OnDisable()
+    {
+        CleanupTeleport();
+    }
+
     private void OnDestroy()
     {
+        CleanupTeleport();
         DestroyGhost();
         if (cachedSprite != null) Destroy(cachedSprite);
         if (cachedTexture != null) Destroy(cachedTexture);

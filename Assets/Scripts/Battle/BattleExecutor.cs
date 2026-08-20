@@ -265,7 +265,10 @@ public class BattleExecutor : MonoBehaviour
                     if (moveTarget != currentPos)
                     {
                         currentPos = moveTarget;
-                        playerDisplay.UpdateGridPosition(currentPos.x, currentPos.y);
+                        if (effect.MovementPresentation == MovementPresentation.Teleport)
+                            playerDisplay.TeleportToGridPosition(currentPos.x, currentPos.y);
+                        else
+                            playerDisplay.UpdateGridPosition(currentPos.x, currentPos.y);
                     }
                     break;
 

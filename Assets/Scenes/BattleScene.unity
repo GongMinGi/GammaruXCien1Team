@@ -1079,8 +1079,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardWidth: 0.9
-  cardHeight: 1.6
+  cardWidth: 1
+  cardHeight: 1
   spacing: 0.15
   cardColor: {r: 0.3, g: 0.15, b: 0.25, a: 1}
   borderColor: {r: 0.5, g: 0.2, b: 0.3, a: 1}
@@ -1089,7 +1089,9 @@ MonoBehaviour:
   hoverSpeed: 10
   groupSpacing: 0.4
   cardInGroupSpacing: 0.05
-  timingTextColor: {r: 0.9, g: 0.8, b: 0.3, a: 1}
+  timingTextColor: {r: 1, g: 0.9880878, b: 0, a: 1}
+  timingCharSize: 0.3
+  numberCharSize: 0.4
   instantKillCardColor: {r: 0.6, g: 0.05, b: 0.05, a: 1}
   instantKillBorderColor: {r: 1, g: 0.15, b: 0.15, a: 1}
   glowSpeed: 3
@@ -1139,15 +1141,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardWidth: 0.9
-  cardHeight: 1.6
+  cardWidth: 1
+  cardHeight: 1
   cardColor: {r: 0.25, g: 0.28, b: 0.4, a: 1}
   borderColor: {r: 0.45, g: 0.5, b: 0.65, a: 1}
   showNumberOverlay: 0
-  cardSpacing: 0.8
+  cardSpacing: 1.15
   maxFanAngle: 0
   arcHeight: 0
-  hoverRise: 0.5
+  hoverRise: 0.7
   hoverScale: 1.3
   hoverSpeed: 10
   infoPanel: {fileID: 622129119}
@@ -1378,6 +1380,8 @@ MonoBehaviour:
   playerColor: {r: 1, g: 1, b: 1, a: 1}
   moveDuration: 0.15
   moveEase: 6
+  teleportFadeDuration: 0.12
+  teleportPause: 0.05
 --- !u!4 &900000062
 Transform:
   m_ObjectHideFlags: 0
