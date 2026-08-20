@@ -15,4 +15,22 @@ MonoBehaviour:
   sceneBackgroundMusics:
   - sceneName: StageSelectScene
     clip: {fileID: 8300000, guid: 17e003290c24aff43bf89e6ffcb577e7, type: 3}
-  soundEffects: []
+  - sceneName: TitleScene
+    clip: {fileID: 8300000, guid: 17e003290c24aff43bf89e6ffcb577e7, type: 3}
+  soundEffects:
+  - soundEffectName: ButtonHover
+    clip: {fileID: 8300000, guid: e11b3f45d369e8044b1fc64d77d0ddb0, type: 3}
+  - soundEffectName: ButtonClick
+    clip: {fileID: 8300000, guid: d8b9709927f4d874fb82e04ebb6671ce, type: 3}
+  - soundEffectName: CrystalLightOn
+    clip: {fileID: 8300000, guid: 53ba001828bdf9e4980458e99ea6272b, type: 3}
+  - soundEffectName: PageFlip
+    clip: {fileID: 8300000, guid: 0dbdea43b44a68541b2fcb3f02bf077f, type: 3}
+  - soundEffectName: CardHover
+    clip: {fileID: 8300000, guid: e4ba32933b046b2488e40c53e43cbcff, type: 3}
+  - soundEffectName: StageLine
+    clip: {fileID: 8300000, guid: 899ebf3eae46fd14cb828455965928c9, type: 3}
+  - soundEffectName: StageOpen
+    clip: {fileID: 8300000, guid: b7fc3f2674ab73847ba15e2ef51d0eca, type: 3}
+  - soundEffectName: GameStart
+    clip: {fileID: 8300000, guid: 5c1396bbb8b2314429574ba84b14db36, type: 3}
