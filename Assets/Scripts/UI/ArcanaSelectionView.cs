@@ -137,6 +137,7 @@ public class ArcanaSelectionView : MonoBehaviour
         detailEffectText.text = arcanaData.EffectDescription;
         detailImage.sprite = arcanaData.DetailImage;
         cardDetailPanel.SetActive(false);
+        SoundManager.Instance.PlaySoundEffect("PageFlip");
         bookFlipAnimator.gameObject.SetActive(true);
         bookFlipAnimator.Play(BookFlipAnimationStateName, 0, 0f);
         StartCoroutine(ShowCardDetailsAfterBookFlip());
@@ -189,6 +190,11 @@ public class ArcanaSelectionView : MonoBehaviour
     /// </summary>
     public void SetBattleStartButtonInteractable(bool isInteractable)
     {
+        if (isInteractable && !battleStartButton.interactable)
+        {
+            SoundManager.Instance.PlaySoundEffect("CrystalLightOn");
+        }
+
         battleStartButton.interactable = isInteractable;
 
         if (isInteractable)
