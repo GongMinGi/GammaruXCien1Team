@@ -652,6 +652,7 @@ GameObject:
   - component: {fileID: 800000002}
   - component: {fileID: 800000003}
   - component: {fileID: 800000004}
+  - component: {fileID: 800000006}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -736,6 +737,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &800000006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &800000010
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,6 +765,7 @@ GameObject:
   - component: {fileID: 800000013}
   - component: {fileID: 800000011}
   - component: {fileID: 800000014}
+  - component: {fileID: 800000015}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -796,6 +815,37 @@ MonoBehaviour:
   m_Script: {fileID: 19105, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.InputSystem.InputSystemEventSystem
+--- !u!114 &800000015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800000010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.UI.InputSystemUIInputModule
+  m_SendPointerHoverToParent: 1
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
+  m_ScrollDeltaPerTick: 6
 --- !u!1 &900000001
 GameObject:
   m_ObjectHideFlags: 0
@@ -982,6 +1032,9 @@ MonoBehaviour:
   executionColor: {r: 0, g: 0, b: 0, a: 1}
   shakeMagnitude: 0.02
   shakeCycleDuration: 0.5
+  indicatorColor: {r: 1, g: 1, b: 1, a: 1}
+  indicatorSize: 0.15
+  indicatorGap: 0.08
 --- !u!4 &900000022
 Transform:
   m_ObjectHideFlags: 0
@@ -1099,6 +1152,7 @@ MonoBehaviour:
   hoverSpeed: 10
   infoPanel: {fileID: 622129119}
   dragHighlightColor: {r: 1, g: 1, b: 0.5, a: 1}
+  selectedHighlightColor: {r: 0.5, g: 1, b: 0.5, a: 1}
 --- !u!4 &900000042
 Transform:
   m_ObjectHideFlags: 0
@@ -1512,6 +1566,7 @@ GameObject:
   - component: {fileID: 2147215982}
   - component: {fileID: 2147215981}
   - component: {fileID: 2147215986}
+  - component: {fileID: 2147215987}
   m_Layer: 0
   m_Name: BattleSystem
   m_TagString: Untagged
@@ -1575,6 +1630,7 @@ MonoBehaviour:
   handDisplay: {fileID: 900000041}
   tangleField: {fileID: 732133655}
   arcanaCodexPanel: {fileID: 0}
+  cardMergePanel: {fileID: 2147215987}
 --- !u!114 &2147215984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1630,6 +1686,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dcec89078ef42f43a05c866f4618c40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObservationController
+--- !u!114 &2147215987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2147215980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b86b4ec04906064486a6ee545c1efbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardMergePanel
+  canvas: {fileID: 800000002}
+  koreanFont: {fileID: 12800000, guid: 019940a8a7bae2b409a635eccded3d27, type: 3}
+  planningController: {fileID: 2147215983}
+  playerHand: {fileID: 569059164}
+  handDisplay: {fileID: 900000041}
+  dimColor: {r: 0, g: 0, b: 0, a: 0.5}
+  buttonColor: {r: 0.25, g: 0.2, b: 0.35, a: 1}
+  mergeButtonSize: {x: 160, y: 50}
+  mergeButtonOffset: {x: -20, y: 0}
+  cardMoveSpeed: 5
+  resultDisplayTime: 1
+  promptFontSize: 36
+  buttonFontSize: 24
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -15,6 +15,7 @@ public class PlanningController : MonoBehaviour
     [SerializeField] private HandDisplay handDisplay;
     [SerializeField] private TangleField tangleField;  // 광대 보스일 때만 연결
     [SerializeField] private ArcanaCodexPanel arcanaCodexPanel;  // 없어도 동작한다
+    [SerializeField] private CardMergePanel cardMergePanel;
 
     private readonly List<PlannedAction> plannedActions = new();
     private int usedSlots;
@@ -117,14 +118,17 @@ public class PlanningController : MonoBehaviour
         ClearDirectionTargets();
         ClearTowerPreviews();
         CancelCardDrag();
+        if (cardMergePanel != null) cardMergePanel.SetButtonVisible(true);
         NotifyPlanningSlotChanged();
         playerDisplay.CreateGhost();
     }
 
     private void Update()
     {
-        // 도감이 열려 있는 동안에는 전투 입력을 받지 않는다.
+        // 도감이나 조합 UI가 열려 있는 동안에는 전투 입력을 받지 않는다.
         if (arcanaCodexPanel != null && arcanaCodexPanel.IsOpen)
+            return;
+        if (cardMergePanel != null && cardMergePanel.IsOpen)
             return;
 
         if (!planningActive)
@@ -187,44 +191,48 @@ public class PlanningController : MonoBehaviour
         handDisplay.ClearDragSource();
     }
 
-    private void TryMerge(int indexA, int indexB)
+    public bool TryGetMergeResult(int indexA, int indexB, out ArcanaData result)
     {
+        result = null;
+        if (indexA == indexB) return false;
+
         int lo = Mathf.Min(indexA, indexB);
         int hi = Mathf.Max(indexA, indexB);
 
         if (!playerHand.TryGetCard(lo, out ArcanaData sourceLo) ||
             !playerHand.TryGetCard(hi, out ArcanaData sourceHi))
-            return;
+            return false;
 
         int sumId = sourceLo.Id + sourceHi.Id;
+        if (sumId < 2 || sumId > 20)
+            return false;
 
-        const int minMergeResultId = 2;
-        const int maxMergeResultId = 20;
+        result = arcanaCatalog.GetById(sumId);
+        return result != null;
+    }
 
-        if (sumId < minMergeResultId || sumId > maxMergeResultId)
-        {
-            Debug.Log($"Merge rejected: result ID {sumId} out of range (valid: {minMergeResultId}~{maxMergeResultId}).");
-            return;
-        }
+    public bool CommitMerge(int indexA, int indexB, ArcanaData expectedResult)
+    {
+        if (!TryGetMergeResult(indexA, indexB, out ArcanaData currentResult))
+            return false;
+        if (currentResult != expectedResult)
+            return false;
 
-        ArcanaData result = arcanaCatalog.GetById(sumId);
-        if (result == null)
-        {
-            Debug.Log($"Merge rejected: no arcana with ID {sumId}.");
-            return;
-        }
+        int lo = Mathf.Min(indexA, indexB);
+        int hi = Mathf.Max(indexA, indexB);
 
-        if (!playerHand.TryMergeCards(lo, hi, result))
-        {
-            Debug.LogError("Failed to merge cards.");
-            return;
-        }
+        if (!playerHand.TryGetCard(lo, out ArcanaData sourceLo) ||
+            !playerHand.TryGetCard(hi, out ArcanaData sourceHi))
+            return false;
+
+        if (!playerHand.TryMergeCards(lo, hi, expectedResult))
+            return false;
 
         plannedActions.Add(new PlannedAction
         {
             Type = ActionType.MergeCards,
             Cost = 0,
-            CardData = result,
+            CardData = expectedResult,
             MergeSource1 = sourceLo,
             MergeSourceIndex1 = lo,
             MergeSource2 = sourceHi,
@@ -232,7 +240,14 @@ public class PlanningController : MonoBehaviour
             MergeResultIndex = lo
         });
 
-        Debug.Log($"Merged {sourceLo.DisplayNumber} + {sourceHi.DisplayNumber} = {result.DisplayNumber}");
+        return true;
+    }
+
+    private void TryMerge(int indexA, int indexB)
+    {
+        if (!TryGetMergeResult(indexA, indexB, out ArcanaData result))
+            return;
+        CommitMerge(indexA, indexB, result);
     }
 
     private void HandleKeyboardInput()
@@ -739,6 +754,8 @@ public class PlanningController : MonoBehaviour
             return;
 
         planningActive = false;
+        actionBar.HideIndicator();
+        if (cardMergePanel != null) cardMergePanel.SetButtonVisible(false);
         playerDisplay.DestroyGhost();
         ClearTowerPreviews();
         PlanningStateChanged?.Invoke(plannedActions, battleStartPos, -1);
@@ -1237,6 +1254,7 @@ public class PlanningController : MonoBehaviour
     private void NotifyPlanningSlotChanged()
     {
         int slotIndex = usedSlots < ActionBar.SlotCount ? usedSlots : -1;
+        actionBar.ShowIndicator(slotIndex);
         PlanningStateChanged?.Invoke(plannedActions, battleStartPos, slotIndex);
     }
 

@@ -47,6 +47,13 @@ public class HandDisplay : MonoBehaviour
     [Header("Drag")]
     [SerializeField] private Color dragHighlightColor = new Color(1f, 1f, 0.5f);
 
+    [Header("Selection")]
+    [SerializeField] private Color selectedHighlightColor = new Color(0.5f, 1f, 0.5f);
+    private int selectedCardIndex = -1;
+
+    private bool isDragging;
+    private Vector3 dragWorldOffset;
+
     private Sprite baseCardSprite;
     private Texture2D cachedCardTexture;
 
@@ -244,8 +251,30 @@ public class HandDisplay : MonoBehaviour
 
     public int GetHoveredCardIndex() => DetectHover();
 
-    public void SetDragSource(int index) { dragSourceIndex = index; }
-    public void ClearDragSource() { dragSourceIndex = -1; }
+    public void SetDragSource(int index)
+    {
+        if (Mouse.current == null || Camera.main == null ||
+            index < 0 || index >= activeCount)
+            return;
+
+        dragSourceIndex = index;
+        isDragging = true;
+
+        Vector2 screenPos = Mouse.current.position.ReadValue();
+        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(
+            new Vector3(screenPos.x, screenPos.y, 0f));
+        mouseWorld.z = 0f;
+        dragWorldOffset = cardVisualTransforms[index].position - mouseWorld;
+    }
+
+    public void SetSelectedCard(int index) { selectedCardIndex = index; }
+    public void ClearSelectedCard() { selectedCardIndex = -1; }
+
+    public void ClearDragSource()
+    {
+        dragSourceIndex = -1;
+        isDragging = false;
+    }
 
     private int DetectHover()
     {
@@ -275,6 +304,39 @@ public class HandDisplay : MonoBehaviour
 
         for (int i = 0; i < activeCount; i++)
         {
+            // 드래그 중: Visual만 마우스 따라 이동, Root 고정
+            if (i == dragSourceIndex && isDragging)
+            {
+                if (Mouse.current == null || Camera.main == null)
+                {
+                    ClearDragSource();
+                    continue;
+                }
+
+                Vector2 screenPos = Mouse.current.position.ReadValue();
+                Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(
+                    new Vector3(screenPos.x, screenPos.y, 0f));
+                mouseWorld.z = 0f;
+                Vector3 dragTargetWorld = mouseWorld + dragWorldOffset;
+
+                Vector3 visualLocalTarget =
+                    cardTransforms[i].InverseTransformPoint(dragTargetWorld);
+
+                cardVisualTransforms[i].localPosition = visualLocalTarget;
+                cardVisualTransforms[i].localRotation =
+                    Quaternion.Inverse(cardTransforms[i].localRotation);
+                cardVisualTransforms[i].localScale =
+                    new Vector3(hoverScale, hoverScale, 1f);
+
+                cardRenderers[i].sortingOrder = 100;
+                artworkRenderers[i].sortingOrder = 101;
+                numberRenderers[i].sortingOrder = 102;
+
+                cardRenderers[i].color = dragHighlightColor;
+                artworkRenderers[i].color = dragHighlightColor;
+                continue;
+            }
+
             Vector3 targetPos;
             Quaternion targetRot;
             Vector3 targetScale;
@@ -301,16 +363,23 @@ public class HandDisplay : MonoBehaviour
                 targetRot = Quaternion.identity;
                 targetScale = Vector3.one;
                 cardRenderers[i].sortingOrder = restSortingOrders[i];
-                artworkRenderers[i].sortingOrder = restSortingOrders[i];
-                numberRenderers[i].sortingOrder = restSortingOrders[i] + 1;
+                artworkRenderers[i].sortingOrder = restSortingOrders[i] + 1;
+                numberRenderers[i].sortingOrder = restSortingOrders[i] + 2;
             }
 
-            if (i == dragSourceIndex)
-                cardRenderers[i].color = dragHighlightColor;
-            else if (cardBaseColors[i] != Color.white)
-                cardRenderers[i].color = cardBaseColors[i];
+            if (i == selectedCardIndex)
+            {
+                cardRenderers[i].color = selectedHighlightColor;
+                artworkRenderers[i].color = selectedHighlightColor;
+            }
             else
-                cardRenderers[i].color = Color.white;
+            {
+                if (cardBaseColors[i] != Color.white)
+                    cardRenderers[i].color = cardBaseColors[i];
+                else
+                    cardRenderers[i].color = Color.white;
+                artworkRenderers[i].color = Color.white;
+            }
 
             cardVisualTransforms[i].localPosition = Vector3.Lerp(
                 cardVisualTransforms[i].localPosition, targetPos, dt);
