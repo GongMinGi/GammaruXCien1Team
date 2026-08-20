@@ -9,6 +9,7 @@ public class HandDisplay : MonoBehaviour
     [SerializeField] private float cardHeight = 1.2f;
     [SerializeField] private Color cardColor = new Color(0.25f, 0.28f, 0.4f);
     [SerializeField] private Color borderColor = new Color(0.45f, 0.5f, 0.65f);
+    [SerializeField] private bool showNumberOverlay = false;
 
     [Header("Fan Layout")]
     [SerializeField, Min(0f)] private float cardSpacing = 0.67f;
@@ -25,6 +26,8 @@ public class HandDisplay : MonoBehaviour
     private Transform[] cardTransforms;
     private Transform[] cardVisualTransforms;
     private SpriteRenderer[] cardRenderers;
+    private SpriteRenderer[] artworkRenderers;
+    private Transform[] artworkTransforms;
     private TextMesh[] numberTexts;
     private MeshRenderer[] numberRenderers;
     private Vector3[] restPositions;
@@ -43,6 +46,16 @@ public class HandDisplay : MonoBehaviour
 
     [Header("Drag")]
     [SerializeField] private Color dragHighlightColor = new Color(1f, 1f, 0.5f);
+
+    [Header("Selection")]
+    [SerializeField] private Color selectedHighlightColor = new Color(0.5f, 1f, 0.5f);
+    private int selectedCardIndex = -1;
+
+    private bool isDragging;
+    private Vector3 dragWorldOffset;
+
+    private Sprite baseCardSprite;
+    private Texture2D cachedCardTexture;
 
     private void Awake()
     {
@@ -85,9 +98,42 @@ public class HandDisplay : MonoBehaviour
             if (i < activeCount)
             {
                 cardTransforms[i].gameObject.SetActive(true);
-                cardBaseColors[i] = cards[i].CardColor;
-                cardRenderers[i].color = cardBaseColors[i];
+
+                Sprite artwork = cards[i].CardImage;
+                if (artwork != null)
+                {
+                    artworkRenderers[i].sprite = artwork;
+                    artworkRenderers[i].enabled = true;
+                    cardRenderers[i].color = Color.white;
+                    cardBaseColors[i] = Color.white;
+
+                    Vector2 spriteSize = artwork.bounds.size;
+                    Vector2 targetSize = baseCardSprite.bounds.size;
+                    float fitScale = Mathf.Max(
+                        targetSize.x / spriteSize.x,
+                        targetSize.y / spriteSize.y);
+                    artworkTransforms[i].localScale =
+                        new Vector3(fitScale, fitScale, 1f);
+
+                    Vector3 cardCenter = baseCardSprite.bounds.center;
+                    Vector3 artCenter = artwork.bounds.center * fitScale;
+                    artworkTransforms[i].localPosition =
+                        new Vector3(
+                            cardCenter.x - artCenter.x,
+                            cardCenter.y - artCenter.y,
+                            -0.01f);
+                }
+                else
+                {
+                    artworkRenderers[i].sprite = null;
+                    artworkRenderers[i].enabled = false;
+                    artworkTransforms[i].localPosition = new Vector3(0f, 0f, -0.01f);
+                    cardBaseColors[i] = cards[i].CardColor;
+                    cardRenderers[i].color = cardBaseColors[i];
+                }
+
                 numberTexts[i].text = cards[i].DisplayNumber;
+                numberTexts[i].gameObject.SetActive(showNumberOverlay || artwork == null);
             }
             else
             {
@@ -101,11 +147,13 @@ public class HandDisplay : MonoBehaviour
         if (isGenerated)
             return;
 
-        Sprite sprite = CreateCardSprite();
+        baseCardSprite = CreateCardSprite();
 
         cardTransforms = new Transform[MaxCardCount];
         cardVisualTransforms = new Transform[MaxCardCount];
         cardRenderers = new SpriteRenderer[MaxCardCount];
+        artworkRenderers = new SpriteRenderer[MaxCardCount];
+        artworkTransforms = new Transform[MaxCardCount];
         numberTexts = new TextMesh[MaxCardCount];
         numberRenderers = new MeshRenderer[MaxCardCount];
         restPositions = new Vector3[MaxCardCount];
@@ -122,15 +170,26 @@ public class HandDisplay : MonoBehaviour
             cardObj.transform.localScale = new Vector3(cardWidth, cardHeight, 1f);
 
             BoxCollider2D hitbox = cardObj.AddComponent<BoxCollider2D>();
-            hitbox.size = sprite.bounds.size;
-            hitbox.offset = sprite.bounds.center;
+            hitbox.size = baseCardSprite.bounds.size;
+            hitbox.offset = baseCardSprite.bounds.center;
 
             GameObject visualObj = new GameObject("Visual");
             visualObj.transform.SetParent(cardObj.transform, false);
 
             SpriteRenderer renderer = visualObj.AddComponent<SpriteRenderer>();
-            renderer.sprite = sprite;
+            renderer.sprite = baseCardSprite;
             renderer.sortingOrder = 10 + i;
+
+            SpriteMask mask = visualObj.AddComponent<SpriteMask>();
+            mask.sprite = baseCardSprite;
+
+            GameObject artworkObj = new GameObject("Artwork");
+            artworkObj.transform.SetParent(visualObj.transform, false);
+
+            SpriteRenderer artworkRenderer = artworkObj.AddComponent<SpriteRenderer>();
+            artworkRenderer.sortingOrder = 11 + i;
+            artworkRenderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+            artworkRenderer.enabled = false;
 
             GameObject textObj = new GameObject("Number");
             textObj.transform.SetParent(visualObj.transform);
@@ -146,11 +205,13 @@ public class HandDisplay : MonoBehaviour
             textMesh.color = Color.white;
 
             MeshRenderer meshRenderer = textObj.GetComponent<MeshRenderer>();
-            meshRenderer.sortingOrder = 11 + i;
+            meshRenderer.sortingOrder = 12 + i;
 
             cardTransforms[i] = cardObj.transform;
             cardVisualTransforms[i] = visualObj.transform;
             cardRenderers[i] = renderer;
+            artworkRenderers[i] = artworkRenderer;
+            artworkTransforms[i] = artworkObj.transform;
             numberTexts[i] = textMesh;
             numberRenderers[i] = meshRenderer;
             cardObj.SetActive(false);
@@ -183,14 +244,37 @@ public class HandDisplay : MonoBehaviour
             cardTransforms[i].localRotation = restRotations[i];
             cardTransforms[i].localScale = restScales[i];
             cardRenderers[i].sortingOrder = restSortingOrders[i];
-            numberRenderers[i].sortingOrder = restSortingOrders[i] + 1;
+            artworkRenderers[i].sortingOrder = restSortingOrders[i] + 1;
+            numberRenderers[i].sortingOrder = restSortingOrders[i] + 2;
         }
     }
 
     public int GetHoveredCardIndex() => DetectHover();
 
-    public void SetDragSource(int index) { dragSourceIndex = index; }
-    public void ClearDragSource() { dragSourceIndex = -1; }
+    public void SetDragSource(int index)
+    {
+        if (Mouse.current == null || Camera.main == null ||
+            index < 0 || index >= activeCount)
+            return;
+
+        dragSourceIndex = index;
+        isDragging = true;
+
+        Vector2 screenPos = Mouse.current.position.ReadValue();
+        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(
+            new Vector3(screenPos.x, screenPos.y, 0f));
+        mouseWorld.z = 0f;
+        dragWorldOffset = cardVisualTransforms[index].position - mouseWorld;
+    }
+
+    public void SetSelectedCard(int index) { selectedCardIndex = index; }
+    public void ClearSelectedCard() { selectedCardIndex = -1; }
+
+    public void ClearDragSource()
+    {
+        dragSourceIndex = -1;
+        isDragging = false;
+    }
 
     private int DetectHover()
     {
@@ -220,6 +304,39 @@ public class HandDisplay : MonoBehaviour
 
         for (int i = 0; i < activeCount; i++)
         {
+            // 드래그 중: Visual만 마우스 따라 이동, Root 고정
+            if (i == dragSourceIndex && isDragging)
+            {
+                if (Mouse.current == null || Camera.main == null)
+                {
+                    ClearDragSource();
+                    continue;
+                }
+
+                Vector2 screenPos = Mouse.current.position.ReadValue();
+                Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(
+                    new Vector3(screenPos.x, screenPos.y, 0f));
+                mouseWorld.z = 0f;
+                Vector3 dragTargetWorld = mouseWorld + dragWorldOffset;
+
+                Vector3 visualLocalTarget =
+                    cardTransforms[i].InverseTransformPoint(dragTargetWorld);
+
+                cardVisualTransforms[i].localPosition = visualLocalTarget;
+                cardVisualTransforms[i].localRotation =
+                    Quaternion.Inverse(cardTransforms[i].localRotation);
+                cardVisualTransforms[i].localScale =
+                    new Vector3(hoverScale, hoverScale, 1f);
+
+                cardRenderers[i].sortingOrder = 100;
+                artworkRenderers[i].sortingOrder = 101;
+                numberRenderers[i].sortingOrder = 102;
+
+                cardRenderers[i].color = dragHighlightColor;
+                artworkRenderers[i].color = dragHighlightColor;
+                continue;
+            }
+
             Vector3 targetPos;
             Quaternion targetRot;
             Vector3 targetScale;
@@ -237,7 +354,8 @@ public class HandDisplay : MonoBehaviour
                 targetRot = Quaternion.Inverse(restRotations[i]);
                 targetScale = new Vector3(hoverScale, hoverScale, 1f);
                 cardRenderers[i].sortingOrder = 100;
-                numberRenderers[i].sortingOrder = 101;
+                artworkRenderers[i].sortingOrder = 101;
+                numberRenderers[i].sortingOrder = 102;
             }
             else
             {
@@ -245,12 +363,23 @@ public class HandDisplay : MonoBehaviour
                 targetRot = Quaternion.identity;
                 targetScale = Vector3.one;
                 cardRenderers[i].sortingOrder = restSortingOrders[i];
-                numberRenderers[i].sortingOrder = restSortingOrders[i] + 1;
+                artworkRenderers[i].sortingOrder = restSortingOrders[i] + 1;
+                numberRenderers[i].sortingOrder = restSortingOrders[i] + 2;
             }
 
-            cardRenderers[i].color = i == dragSourceIndex
-                ? dragHighlightColor
-                : cardBaseColors[i];
+            if (i == selectedCardIndex)
+            {
+                cardRenderers[i].color = selectedHighlightColor;
+                artworkRenderers[i].color = selectedHighlightColor;
+            }
+            else
+            {
+                if (cardBaseColors[i] != Color.white)
+                    cardRenderers[i].color = cardBaseColors[i];
+                else
+                    cardRenderers[i].color = Color.white;
+                artworkRenderers[i].color = Color.white;
+            }
 
             cardVisualTransforms[i].localPosition = Vector3.Lerp(
                 cardVisualTransforms[i].localPosition, targetPos, dt);
@@ -265,8 +394,8 @@ public class HandDisplay : MonoBehaviour
     {
         int w = 16;
         int h = 24;
-        Texture2D tex = new Texture2D(w, h);
-        tex.filterMode = FilterMode.Point;
+        cachedCardTexture = new Texture2D(w, h);
+        cachedCardTexture.filterMode = FilterMode.Point;
 
         for (int y = 0; y < h; y++)
         {
@@ -277,11 +406,19 @@ public class HandDisplay : MonoBehaviour
                 Color c = isBorder ? borderColor
                     : isInner ? Color.Lerp(cardColor, borderColor, 0.3f)
                     : cardColor;
-                tex.SetPixel(x, y, c);
+                cachedCardTexture.SetPixel(x, y, c);
             }
         }
 
-        tex.Apply();
-        return Sprite.Create(tex, new Rect(0, 0, w, h), new Vector2(0.5f, 0f), w);
+        cachedCardTexture.Apply();
+        return Sprite.Create(cachedCardTexture, new Rect(0, 0, w, h), new Vector2(0.5f, 0f), w);
+    }
+
+    private void OnDestroy()
+    {
+        if (baseCardSprite != null)
+            Destroy(baseCardSprite);
+        if (cachedCardTexture != null)
+            Destroy(cachedCardTexture);
     }
 }

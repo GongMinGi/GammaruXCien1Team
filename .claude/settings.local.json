@@ -9,7 +9,9 @@
       "mcp__UnityMCP__manage_scriptable_object",
       "mcp__UnityMCP__execute_code",
       "Bash(find:*)",
-      "mcp__UnityMCP__manage_components"
+      "mcp__UnityMCP__manage_components",
+      "mcp__UnityMCP__manage_prefabs",
+      "mcp__UnityMCP__read_console"
     ]
   }
 }

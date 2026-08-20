@@ -1,5 +1,11 @@
 using UnityEngine;
 
+public enum MovementPresentation
+{
+    Slide,
+    Teleport
+}
+
 public enum EffectType
 {
     Move,
@@ -20,6 +26,7 @@ public enum EffectType
 public struct ScheduledEffect
 {
     public EffectType Type;
+    public MovementPresentation MovementPresentation;
     public Vector2Int Direction;
     public int BaseValue;
     public float SpellPowerCoefficient;

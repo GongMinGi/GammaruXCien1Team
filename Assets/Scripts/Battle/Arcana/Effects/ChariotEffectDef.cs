@@ -36,6 +36,7 @@ public class ChariotEffectDef : ArcanaEffectDefinition
         effects[cost - 1] = new[] { new ScheduledEffect
         {
             Type = EffectType.Move,
+            MovementPresentation = MovementPresentation.Teleport,
             BaseValue = rushDistance,
             SourceCard = card
         }};

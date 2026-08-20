@@ -17,6 +17,10 @@ public class BattleExecutor : MonoBehaviour
     public event Action<int, BossAction[]> SlotStarted;
     /// 보스 액션이 플레이어에게 명중했을 때
     public event Action<BossAction> BossActionHit;
+    /// 보스 몸체 애니메이션 요청 (시전 슬롯)
+    public event Action<BossAnimationCue> BossAnimationRequested;
+    /// 보스 타격 이펙트 요청 (피해 슬롯)
+    public event Action<BossAction> BossImpactRequested;
 
     private CombatResolver combatResolver;
     private Coroutine executionCoroutine;
@@ -170,6 +174,7 @@ public class BattleExecutor : MonoBehaviour
             {
                 modifiers.ResetPerSlot();
                 SlotStarted?.Invoke(slot, bossPattern);
+                FireAnimationCues(slot, bossPattern);
 
                 if (bossStats.IsDead)
                     break;
@@ -260,7 +265,10 @@ public class BattleExecutor : MonoBehaviour
                     if (moveTarget != currentPos)
                     {
                         currentPos = moveTarget;
-                        playerDisplay.UpdateGridPosition(currentPos.x, currentPos.y);
+                        if (effect.MovementPresentation == MovementPresentation.Teleport)
+                            playerDisplay.TeleportToGridPosition(currentPos.x, currentPos.y);
+                        else
+                            playerDisplay.UpdateGridPosition(currentPos.x, currentPos.y);
                     }
                     break;
 
@@ -330,6 +338,39 @@ public class BattleExecutor : MonoBehaviour
         }
     }
 
+    private void FireAnimationCues(int slotIndex, BossAction[] bossPattern)
+    {
+        bool firedPrimary = false, firedHeavy = false, firedUltimate = false;
+
+        foreach (BossAction action in bossPattern)
+        {
+            if (action.animationEvents == null) continue;
+            foreach (BossAnimationEvent evt in action.animationEvents)
+            {
+                if (evt.slot != slotIndex || evt.cue == BossAnimationCue.None)
+                    continue;
+
+                bool alreadyFired = evt.cue switch
+                {
+                    BossAnimationCue.Primary => firedPrimary,
+                    BossAnimationCue.Heavy => firedHeavy,
+                    BossAnimationCue.Ultimate => firedUltimate,
+                    _ => false
+                };
+                if (alreadyFired) continue;
+
+                BossAnimationRequested?.Invoke(evt.cue);
+
+                switch (evt.cue)
+                {
+                    case BossAnimationCue.Primary: firedPrimary = true; break;
+                    case BossAnimationCue.Heavy: firedHeavy = true; break;
+                    case BossAnimationCue.Ultimate: firedUltimate = true; break;
+                }
+            }
+        }
+    }
+
     private void ProcessBossActions(
         int slotIndex,
         BossAction[] bossPattern,
@@ -350,6 +391,9 @@ public class BattleExecutor : MonoBehaviour
                 GridCell gridCell = gridManager.GetCell(cell.x, cell.y);
                 gridCell?.SetHighlight(attackHighlightColor);
             }
+
+            if (bossAction.impactEffect != BossImpactEffect.None)
+                BossImpactRequested?.Invoke(bossAction);
 
             bool playerOnTangle =
                 tangleField != null && tangleField.Contains(playerPos);
