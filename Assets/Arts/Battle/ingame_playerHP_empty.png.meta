@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b70ed2a56d3a16340b4093882e623415
+guid: b1d4c89a93e9f51418dcbc62dc49079c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6138627477862247628
-    second: ingame_monsterHP_0
+      213: 5462471488468302402
+    second: ingame_playerHP_empty_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -101,7 +101,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,11 +113,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ingame_monsterHP_0
+      name: ingame_playerHP_empty_0
       rect:
         serializedVersion: 2
-        x: 18
-        y: 187
+        x: 26
+        y: 171
         width: 209
         height: 8
       alignment: 0
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 433919d25d63fcaa0800000000000000
-      internalID: -6138627477862247628
+      spriteID: 24a3ad990e89ecb40800000000000000
+      internalID: 5462471488468302402
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      ingame_monsterHP_0: -6138627477862247628
+      ingame_playerHP_empty_0: 5462471488468302402
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

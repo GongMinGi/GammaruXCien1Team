@@ -1120,18 +1120,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  emptySlotSprite: {fileID: 5315964860411017886, guid: bb6d42ce6a9dc5841bf12ccd48d0ae9c, type: 3}
+  filledSlotSprite: {fileID: 5157789367955863420, guid: bb6d42ce6a9dc5841bf12ccd48d0ae9c, type: 3}
+  currentTurnSprite: {fileID: 1725383900014260013, guid: bb6d42ce6a9dc5841bf12ccd48d0ae9c, type: 3}
   slotSize: 0.6
   spacing: 0.08
-  slotColor: {r: 0.4, g: 0.45, b: 0.55, a: 1}
-  borderColor: {r: 0.2, g: 0.22, b: 0.3, a: 1}
-  filledMoveColor: {r: 0.3, g: 0.6, b: 0.9, a: 1}
-  filledStayColor: {r: 0.6, g: 0.6, b: 0.3, a: 1}
-  executionColor: {r: 0, g: 0, b: 0, a: 1}
+  blinkDuration: 0.5
+  blinkMinAlpha: 0.2
   shakeMagnitude: 0.02
   shakeCycleDuration: 0.5
-  indicatorColor: {r: 1, g: 1, b: 1, a: 1}
-  indicatorSize: 0.15
-  indicatorGap: 0.08
 --- !u!4 &900000022
 Transform:
   m_ObjectHideFlags: 0
